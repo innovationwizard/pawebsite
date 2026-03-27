@@ -39,11 +39,11 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="shrink-0">
             <Image
-              src="/icons/logo.jpg"
+              src="/icons/logo.png"
               alt="Puerta Abierta Inmobiliaria"
               width={160}
               height={50}
-              className="h-10 w-auto brightness-0 invert"
+              className="h-10 w-auto"
               priority
             />
           </Link>

@@ -54,7 +54,7 @@ export function AdminSidebar() {
       <div className="mb-8 flex items-center justify-between">
         <Link href="/admin" className="block">
           <Image
-            src="/icons/logo.jpg"
+            src="/icons/logo.png"
             alt="Puerta Abierta Admin"
             width={120}
             height={40}

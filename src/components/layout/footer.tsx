@@ -57,11 +57,11 @@ export function Footer() {
           {/* Brand */}
           <div>
             <Image
-              src="/icons/logo.jpg"
+              src="/icons/logo.png"
               alt="Puerta Abierta Inmobiliaria"
               width={160}
               height={50}
-              className="h-10 w-auto brightness-0 invert"
+              className="h-10 w-auto"
             />
             <p className="mt-4 text-sm leading-relaxed text-white/60">
               Desarrollamos proyectos inmobiliarios de alta calidad en Guatemala.

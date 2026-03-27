@@ -6,7 +6,7 @@ export function HomeStructuredData() {
     "@type": "RealEstateAgent",
     name: "Puerta Abierta Inmobiliaria",
     url: SITE_URL,
-    logo: `${SITE_URL}/icons/logo.jpg`,
+    logo: `${SITE_URL}/icons/logo.png`,
     description:
       "Desarrollamos proyectos inmobiliarios de alta calidad en Guatemala. Más de 22 años de experiencia.",
     address: {
