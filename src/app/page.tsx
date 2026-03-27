@@ -67,7 +67,7 @@ export default async function Home() {
       <main className="flex-1">
         {/* 1. Hero Video Section */}
         <HeroVideo
-          videoUrl={heroVideoUrl ?? "https://www.youtube.com/watch?v=rutCVOOj4KQ"}
+          videoUrl={heroVideoUrl || "https://www.youtube.com/watch?v=rutCVOOj4KQ"}
           title="Tu hogar ideal te espera"
           subtitle="Más de 22 años desarrollando proyectos inmobiliarios de alta calidad en Guatemala."
           ctaText="Conoce Nuestros Proyectos"
