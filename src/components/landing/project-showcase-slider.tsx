@@ -101,7 +101,7 @@ export function ProjectShowcaseSlider({ projects }: ProjectShowcaseSliderProps) 
                 href={`/proyectos/${project.slug}`}
                 className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
               >
-                <div className="relative overflow-hidden" style={{ height: "180px" }}>
+                <div className="relative overflow-hidden" style={{ height: "360px" }}>
                   {(project.hero_image_url || STATIC_HERO_IMAGES[project.slug]) ? (
                     <Image
                       src={project.hero_image_url || STATIC_HERO_IMAGES[project.slug]}
