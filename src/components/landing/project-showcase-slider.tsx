@@ -20,6 +20,18 @@ interface ShowcaseProject {
   total_units: number;
 }
 
+/**
+ * Static hero images for projects served from public/images/projects/.
+ * Used as fallback when Supabase hero_image_url is not set.
+ */
+const STATIC_HERO_IMAGES: Record<string, string> = {
+  "bosque-las-tapias": "/images/projects/bosque-las-tapias.jpg",
+  "casa-elisa": "/images/projects/casa-elisa.jpg",
+  "boulevard-5": "/images/projects/boulevard-5.jpg",
+  "benestare": "/images/projects/benestare.jpg",
+  "santa-elena": "/images/projects/santa-elena.jpg",
+};
+
 interface ProjectShowcaseSliderProps {
   projects: ShowcaseProject[];
 }
@@ -90,9 +102,9 @@ export function ProjectShowcaseSlider({ projects }: ProjectShowcaseSliderProps) 
                 className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
               >
                 <div className="relative overflow-hidden" style={{ height: "180px" }}>
-                  {project.hero_image_url ? (
+                  {(project.hero_image_url || STATIC_HERO_IMAGES[project.slug]) ? (
                     <Image
-                      src={project.hero_image_url}
+                      src={project.hero_image_url || STATIC_HERO_IMAGES[project.slug]}
                       alt={project.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.07]"
