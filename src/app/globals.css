@@ -1,0 +1,59 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+:root {
+  --color-navy: #0d1d41;
+  --color-gray: #5b6770;
+  --color-celeste: #04b0d6;
+  --color-white: #ffffff;
+  --color-off-white: #f8f9fa;
+  --color-dark: #0a0e1a;
+}
+
+@theme inline {
+  --color-navy: var(--color-navy);
+  --color-gray: var(--color-gray);
+  --color-celeste: var(--color-celeste);
+  --color-off-white: var(--color-off-white);
+  --color-dark: var(--color-dark);
+  --font-heading: var(--font-mangueira, var(--font-poppins));
+  --font-body: var(--font-poppins);
+}
+
+body {
+  background: var(--color-white);
+  color: var(--color-navy);
+  font-family: var(--font-body), system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading), var(--font-body), system-ui, sans-serif;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus ring utility */
+*:focus-visible {
+  outline: 2px solid var(--color-celeste);
+  outline-offset: 2px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
