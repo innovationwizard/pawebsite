@@ -83,20 +83,20 @@ export function ProjectShowcaseSlider({ projects }: ProjectShowcaseSliderProps) 
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="w-[320px] shrink-0 snap-start md:w-[400px]"
+              className="w-[340px] shrink-0 snap-start md:w-[480px]"
             >
               <Link
                 href={`/proyectos/${project.slug}`}
                 className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
               >
-                <div className="relative aspect-[4/3] overflow-hidden">
+                <div className="relative overflow-hidden" style={{ height: "180px" }}>
                   {project.hero_image_url ? (
                     <Image
                       src={project.hero_image_url}
                       alt={project.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.07]"
-                      sizes="(max-width: 768px) 320px, 400px"
+                      sizes="(max-width: 768px) 340px, 480px"
                     />
                   ) : (
                     <div className="flex h-full w-full items-center justify-center bg-navy/5">

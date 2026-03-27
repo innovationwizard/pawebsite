@@ -56,13 +56,23 @@ export function WhyHowSection({
     <section className="bg-off-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         {/* Why */}
-        <ScrollReveal variant="fade-up" className="mx-auto max-w-3xl text-center">
-          <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-            {whyTitle}
-          </h2>
-          <p className="mt-6 text-lg leading-relaxed text-gray">
-            {whyDescription}
-          </p>
+        <ScrollReveal variant="fade-up">
+          <div className="grid items-center gap-12 md:grid-cols-2">
+            <div>
+              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
+                {whyTitle}
+              </h2>
+              <p className="mt-6 text-justify text-lg leading-relaxed text-gray">
+                {whyDescription}
+              </p>
+            </div>
+            {/* Image placeholder — replace with actual image via admin */}
+            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-navy/5">
+              <span className="text-sm text-gray/40">
+                [ Imagen ]
+              </span>
+            </div>
+          </div>
         </ScrollReveal>
 
         {/* How — Process Steps */}

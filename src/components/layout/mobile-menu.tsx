@@ -39,11 +39,11 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </Link>
             ))}
             <Link
-              href="/proyectos"
+              href="/cotizador"
               onClick={onClose}
               className="mt-6 rounded-full bg-celeste px-6 py-3 text-center text-base font-medium text-white transition-all hover:bg-celeste/90"
             >
-              Ver Proyectos
+              Cotiza Ahora
             </Link>
           </nav>
         </motion.div>
