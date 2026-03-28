@@ -7,6 +7,7 @@ interface MarqueeProps {
   speed?: number;
   pauseOnHover?: boolean;
   className?: string;
+  direction?: "left" | "right";
 }
 
 export function Marquee({
@@ -14,8 +15,10 @@ export function Marquee({
   speed = 30,
   pauseOnHover = true,
   className = "",
+  direction = "left",
 }: MarqueeProps) {
   const duration = `${speed}s`;
+  const animationName = direction === "right" ? "marquee-reverse" : "marquee";
 
   return (
     <div
@@ -30,7 +33,7 @@ export function Marquee({
       <div
         className={`flex w-max gap-8 ${pauseOnHover ? "hover:[animation-play-state:paused]" : ""}`}
         style={{
-          animation: `marquee ${duration} linear infinite`,
+          animation: `${animationName} ${duration} linear infinite`,
         }}
       >
         {children}
@@ -41,6 +44,10 @@ export function Marquee({
         @keyframes marquee {
           0% { transform: translateX(0); }
           100% { transform: translateX(-50%); }
+        }
+        @keyframes marquee-reverse {
+          0% { transform: translateX(-50%); }
+          100% { transform: translateX(0); }
         }
       `}</style>
     </div>

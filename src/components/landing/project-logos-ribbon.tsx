@@ -38,7 +38,7 @@ export function ProjectLogosRibbon({ projects }: ProjectLogosRibbonProps) {
   if (allLogos.length === 0) return null;
 
   return (
-    <section className="border-b border-gray/10 bg-off-white py-6">
+    <section className="border-b border-gray/10 bg-off-white py-8">
       <Marquee speed={40} pauseOnHover className="mx-auto max-w-7xl">
         {allLogos.map((logo) => (
           <div
@@ -50,7 +50,7 @@ export function ProjectLogosRibbon({ projects }: ProjectLogosRibbonProps) {
               alt={logo.name}
               width={160}
               height={56}
-              className="h-10 w-auto object-contain grayscale md:h-12"
+              className="h-14 w-auto object-contain grayscale md:h-20"
             />
           </div>
         ))}

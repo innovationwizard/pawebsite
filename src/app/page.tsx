@@ -8,6 +8,8 @@ import { ProjectShowcaseSlider } from "@/components/landing/project-showcase-sli
 import { TertiaryBanner } from "@/components/landing/tertiary-banner";
 import { BrandHighlights } from "@/components/landing/brand-highlights";
 import { WhyHowSection } from "@/components/landing/why-how-section";
+import { ProjectBadges } from "@/components/landing/project-badges";
+import { TechSection } from "@/components/landing/tech-section";
 import { NewsCapsules } from "@/components/landing/news-capsules";
 import { TestimonialsSlider } from "@/components/landing/testimonials-slider";
 import { NewsletterForm } from "@/components/landing/newsletter-form";
@@ -116,7 +118,13 @@ export default async function Home() {
           steps={[]}
         />
 
-        {/* 7. News Capsules */}
+        {/* 7. Project Badges (Insignias) */}
+        <ProjectBadges />
+
+        {/* 8. Technology Section */}
+        <TechSection />
+
+        {/* 9. News Capsules */}
         <NewsCapsules
           articles={articles.map((a) => ({
             slug: a.slug,
@@ -128,7 +136,7 @@ export default async function Home() {
           }))}
         />
 
-        {/* 8. Testimonials Slider */}
+        {/* 10. Testimonials Slider */}
         <TestimonialsSlider
           testimonials={testimonials.map((t) => ({
             id: t.id,
@@ -139,7 +147,7 @@ export default async function Home() {
           }))}
         />
 
-        {/* 9. Newsletter / Contact Form */}
+        {/* 11. Newsletter / Contact Form */}
         <NewsletterForm
           projects={projects.map((p) => ({
             id: p.id,

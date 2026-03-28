@@ -28,6 +28,9 @@ export function BrandHighlights({ items }: BrandHighlightsProps) {
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal variant="fade-up">
+          <h2 className="mb-12 text-center font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
+            Puerta Abierta en números
+          </h2>
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
             {highlights.map((item, index) => (
               <div key={index} className="text-center">

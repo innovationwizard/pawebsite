@@ -1,6 +1,7 @@
 "use client";
 
-import { ScrollReveal, ScrollRevealChild } from "@/components/animations/scroll-reveal";
+import Image from "next/image";
+import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { motion } from "framer-motion";
 
 interface ProcessStep {
@@ -66,11 +67,14 @@ export function WhyHowSection({
                 {whyDescription}
               </p>
             </div>
-            {/* Image placeholder — replace with actual image via admin */}
-            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-navy/5">
-              <span className="text-sm text-gray/40">
-                [ Imagen ]
-              </span>
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+              <Image
+                src="/images/team/team-1.jpg"
+                alt="Equipo de Puerta Abierta"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+              />
             </div>
           </div>
         </ScrollReveal>
@@ -112,6 +116,70 @@ export function WhyHowSection({
               </ScrollReveal>
             ))}
           </div>
+        </div>
+
+        {/* How — Capsules */}
+        <div className="mt-20 space-y-16">
+          {/* Cápsula 1: texto izquierda, imagen derecha */}
+          <ScrollReveal variant="fade-up">
+            <div className="grid items-center gap-12 md:grid-cols-2">
+              <div>
+                <p className="text-lg leading-relaxed text-gray">
+                  Abrimos el camino y te acompañamos en cada paso. Nuestro
+                  enfoque combina asesoría personalizada, conocimiento del
+                  mercado y herramientas digitales para facilitar cada etapa del
+                  proceso.
+                </p>
+              </div>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image
+                  src="/images/capsulas/capsula-1.png"
+                  alt="Sketch arquitectónico Boulevard 5"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Cápsula 2: imagen izquierda, texto derecha */}
+          <ScrollReveal variant="fade-up">
+            <div className="grid items-center gap-12 md:grid-cols-2">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl md:order-1">
+                <Image
+                  src="/images/capsulas/capsula-2.png"
+                  alt="Puerta Abierta — proyectos inmobiliarios"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
+              </div>
+              <div className="md:order-2">
+                <p className="text-lg leading-relaxed text-gray">
+                  Desde el primer contacto hasta la entrega de tu propiedad, te
+                  acompañamos con un equipo experto que entiende tus necesidades
+                  y te guía hacia la mejor decisión.
+                </p>
+              </div>
+            </div>
+          </ScrollReveal>
+
+          {/* Cápsula 3: texto izquierda, imagen derecha (placeholder) */}
+          <ScrollReveal variant="fade-up">
+            <div className="grid items-center gap-12 md:grid-cols-2">
+              <div>
+                <p className="text-lg leading-relaxed text-gray">
+                  Trabajamos con opciones de financiamiento, programas como
+                  vivienda accesible y desarrollos con alto potencial de
+                  plusvalía.
+                </p>
+              </div>
+              <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-navy/5">
+                <span className="text-sm text-gray/40">[ Imagen pendiente ]</span>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
