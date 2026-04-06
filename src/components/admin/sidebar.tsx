@@ -17,6 +17,7 @@ import {
   Menu,
   X,
   Target,
+  DollarSign,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -28,6 +29,7 @@ const NAV_ITEMS = [
   { label: "Testimonios", href: "/admin/testimonios", icon: MessageSquareQuote },
   { label: "FAQ", href: "/admin/faq", icon: HelpCircle },
   { label: "Leads", href: "/admin/leads", icon: Target },
+  { label: "Precios", href: "/admin/precios", icon: DollarSign },
   { label: "Configuración", href: "/admin/configuracion", icon: Settings },
   { label: "Usuarios", href: "/admin/usuarios", icon: Users },
 ];

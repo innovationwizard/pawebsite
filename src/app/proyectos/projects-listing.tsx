@@ -27,7 +27,9 @@ export function ProjectsListing({ projects }: ProjectsListingProps) {
   const filteredProjects =
     activeFilter === "all"
       ? projects
-      : projects.filter((p) => p.status === activeFilter);
+      : activeFilter === "delivered"
+        ? projects.filter((p) => p.status === "delivered" || p.status === "sold_out")
+        : projects.filter((p) => p.status === activeFilter);
 
   return (
     <>

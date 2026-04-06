@@ -29,7 +29,7 @@ export function Badge({ children, variant = "default", className = "" }: BadgePr
 const statusVariantMap: Record<ProjectStatus, BadgeVariant> = {
   active: "success",
   nearly_sold_out: "warning",
-  sold_out: "error",
+  sold_out: "info",
   delivered: "info",
   under_construction: "info",
   frozen: "default",
@@ -38,7 +38,7 @@ const statusVariantMap: Record<ProjectStatus, BadgeVariant> = {
 const statusLabelMap: Record<ProjectStatus, string> = {
   active: "En Venta",
   nearly_sold_out: "Últimas Unidades",
-  sold_out: "Agotado",
+  sold_out: "Entregado",
   delivered: "Entregado",
   under_construction: "En Construcción",
   frozen: "Próximamente",
