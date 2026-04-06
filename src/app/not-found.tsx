@@ -5,7 +5,7 @@ import { Footer } from "@/components/layout/footer";
 export default function NotFound() {
   return (
     <>
-      <Navbar />
+      <Navbar solid />
       <main className="flex flex-1 items-center justify-center pt-24">
         <div className="mx-auto max-w-md px-6 py-32 text-center">
           <h1 className="font-heading text-6xl font-bold text-navy">404</h1>

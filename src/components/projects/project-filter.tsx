@@ -11,10 +11,7 @@ interface ProjectFilterProps {
 const FILTERS: { value: ProjectStatus | "all"; label: string }[] = [
   { value: "all", label: "Todos" },
   { value: "active", label: "En Venta" },
-  { value: "under_construction", label: "En Construcción" },
-  { value: "nearly_sold_out", label: "Últimas Unidades" },
   { value: "delivered", label: "Entregados" },
-  { value: "sold_out", label: "Agotados" },
 ];
 
 export function ProjectFilter({ onFilterChange, activeFilter }: ProjectFilterProps) {

@@ -46,7 +46,7 @@ export default async function ProjectProgressPage({ params }: ProgressPageProps)
 
   return (
     <>
-      <Navbar />
+      <Navbar solid />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-7xl px-6 py-16">
           <Link

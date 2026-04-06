@@ -20,7 +20,7 @@ export default async function AvanceDeObraPage() {
 
   return (
     <>
-      <Navbar />
+      <Navbar solid />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-7xl px-6 py-16">
           <h1 className="font-heading text-4xl font-bold text-navy md:text-5xl">

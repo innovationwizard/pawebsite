@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
@@ -32,15 +33,15 @@ export default async function PreguntasFrecuentesPage() {
 
   return (
     <>
-      <Navbar />
+      <Navbar solid />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-3xl px-6 py-16">
           <h1 className="font-heading text-4xl font-bold text-navy md:text-5xl">
             Preguntas Frecuentes
           </h1>
           <p className="mt-4 text-lg text-gray">
-            Encuentra respuestas a las preguntas más comunes sobre nuestros
-            proyectos y procesos.
+            Todo lo que necesitas saber para comprar tu apartamento en
+            Guatemala.
           </p>
 
           {faqCategories.length === 0 ? (
@@ -59,7 +60,19 @@ export default async function PreguntasFrecuentesPage() {
                       <Accordion
                         items={category.faqs.map((faq) => ({
                           question: faq.question,
-                          answer: faq.answer,
+                          answer: (
+                            <>
+                              <p>{faq.answer}</p>
+                              {faq.cta_text && faq.cta_url && (
+                                <Link
+                                  href={faq.cta_url}
+                                  className="mt-3 inline-flex items-center gap-2 rounded-full bg-celeste px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-celeste/90 hover:shadow-lg"
+                                >
+                                  {faq.cta_text}
+                                </Link>
+                              )}
+                            </>
+                          ),
                         }))}
                       />
                     </div>

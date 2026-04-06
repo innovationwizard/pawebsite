@@ -49,7 +49,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <>
-      <Navbar />
+      <Navbar solid />
       <main className="flex-1 pt-24">
         {/* Cover image */}
         {article.cover_image_url && (

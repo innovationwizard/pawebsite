@@ -124,7 +124,10 @@ export function WhyHowSection({
           <ScrollReveal variant="fade-up">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <p className="text-lg leading-relaxed text-gray">
+                <h4 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+                  Los mejores en lo que hacemos
+                </h4>
+                <p className="mt-4 text-lg leading-relaxed text-gray">
                   Abrimos el camino y te acompañamos en cada paso. Nuestro
                   enfoque combina asesoría personalizada, conocimiento del
                   mercado y herramientas digitales para facilitar cada etapa del
@@ -156,7 +159,10 @@ export function WhyHowSection({
                 />
               </div>
               <div className="md:order-2">
-                <p className="text-lg leading-relaxed text-gray">
+                <h4 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+                  Atención personalizada
+                </h4>
+                <p className="mt-4 text-lg leading-relaxed text-gray">
                   Desde el primer contacto hasta la entrega de tu propiedad, te
                   acompañamos con un equipo experto que entiende tus necesidades
                   y te guía hacia la mejor decisión.
@@ -169,7 +175,10 @@ export function WhyHowSection({
           <ScrollReveal variant="fade-up">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <p className="text-lg leading-relaxed text-gray">
+                <h4 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+                  Alianzas pensadas para ti
+                </h4>
+                <p className="mt-4 text-lg leading-relaxed text-gray">
                   Trabajamos con opciones de financiamiento, programas como
                   vivienda accesible y desarrollos con alto potencial de
                   plusvalía.

@@ -8,18 +8,18 @@ import { Menu, X } from "lucide-react";
 import { NAV_ITEMS } from "@/lib/constants/navigation";
 import { MobileMenu } from "./mobile-menu";
 
-export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
+export function Navbar({ solid = false }: { solid?: boolean }) {
+  const [isScrolled, setIsScrolled] = useState(solid);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 80);
+      setIsScrolled(solid || window.scrollY > 80);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [solid]);
 
   // Close mobile menu on route change
   useEffect(() => {

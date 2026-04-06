@@ -405,6 +405,8 @@ export interface Database {
           category_id: string | null;
           question: string;
           answer: string;
+          cta_text: string | null;
+          cta_url: string | null;
           is_published: boolean;
           sort_order: number;
           created_at: string;
@@ -415,6 +417,8 @@ export interface Database {
           category_id?: string | null;
           question: string;
           answer: string;
+          cta_text?: string | null;
+          cta_url?: string | null;
           is_published?: boolean;
           sort_order?: number;
         };
@@ -422,6 +426,8 @@ export interface Database {
           category_id?: string | null;
           question?: string;
           answer?: string;
+          cta_text?: string | null;
+          cta_url?: string | null;
           is_published?: boolean;
           sort_order?: number;
         };
