@@ -18,7 +18,7 @@ export function TertiaryBanner({
 }: TertiaryBannerProps) {
   return (
     <ParallaxSection
-      backgroundImage={imageUrl ?? "/images/banners/banner-secundario.jpeg"}
+      backgroundImage={imageUrl || "/images/banners/banner-secundario.jpeg"}
       speed={0.3}
       overlay
       className="min-h-[400px]"
