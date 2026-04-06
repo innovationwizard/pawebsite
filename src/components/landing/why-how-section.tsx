@@ -184,8 +184,14 @@ export function WhyHowSection({
                   plusvalía.
                 </p>
               </div>
-              <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-navy/5">
-                <span className="text-sm text-gray/40">[ Imagen pendiente ]</span>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
+                <Image
+                  src="/images/capsulas/capsula-3.jpeg"
+                  alt="Puerta Abierta — alianzas y financiamiento"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                />
               </div>
             </div>
           </ScrollReveal>

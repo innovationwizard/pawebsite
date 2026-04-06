@@ -2,6 +2,22 @@ import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import type { Database } from "@/lib/types/database";
 
+type CategoryRow = Database["public"]["Tables"]["news_categories"]["Row"];
+
+export async function getNewsCategories(): Promise<CategoryRow[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("news_categories")
+    .select("*")
+    .order("name", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching news categories:", error.message);
+    return [];
+  }
+  return (data ?? []) as CategoryRow[];
+}
+
 type ArticleRow = Database["public"]["Tables"]["news_articles"]["Row"];
 
 export interface ArticleWithCategory extends ArticleRow {
