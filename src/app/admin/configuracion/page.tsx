@@ -323,7 +323,7 @@ export default function AdminConfiguracionPage() {
           </div>
           <div className="grid gap-4">
             <ImageUploader
-              bucket="site"
+              bucket="site-assets"
               currentUrl={bannerImage}
               onUpload={setBannerImage}
               onRemove={() => setBannerImage(null)}

@@ -3,9 +3,11 @@ import type { Database } from "@/lib/types/database";
 
 type ProgressRow = Database["public"]["Tables"]["construction_progress"]["Row"];
 type ProgressPhotoRow = Database["public"]["Tables"]["construction_progress_photos"]["Row"];
+type ProgressItemRow = Database["public"]["Tables"]["progress_items"]["Row"];
 
 export interface ProgressWithPhotos extends ProgressRow {
   construction_progress_photos: ProgressPhotoRow[];
+  progress_items: ProgressItemRow[];
 }
 
 export async function getProgressByProject(projectId: string): Promise<ProgressWithPhotos[]> {
@@ -15,7 +17,8 @@ export async function getProgressByProject(projectId: string): Promise<ProgressW
     .select(
       `
       *,
-      construction_progress_photos ( * )
+      construction_progress_photos ( * ),
+      progress_items ( * )
     `
     )
     .eq("project_id", projectId)
@@ -65,7 +68,8 @@ export async function getLatestProgressPerProject(): Promise<ProjectWithLatestPr
         .select(
           `
           *,
-          construction_progress_photos ( * )
+          construction_progress_photos ( * ),
+          progress_items ( * )
         `
         )
         .eq("project_id", project.id)

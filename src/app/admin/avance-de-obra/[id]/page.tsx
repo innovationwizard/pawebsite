@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowLeft, Trash2, X } from "lucide-react";
+import { ArrowLeft, Trash2, X, Plus, GripVertical } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import {
   createProgressEntry,
@@ -22,6 +22,7 @@ import type { Database } from "@/lib/types/database";
 
 type ProgressEntry = Database["public"]["Tables"]["construction_progress"]["Row"];
 type ProgressPhoto = Database["public"]["Tables"]["construction_progress_photos"]["Row"];
+type ProgressItem = Database["public"]["Tables"]["progress_items"]["Row"];
 type Project = Database["public"]["Tables"]["projects"]["Row"];
 
 export default function EditarAvancePage() {
@@ -37,6 +38,7 @@ export default function EditarAvancePage() {
 
   const [projects, setProjects] = useState<Pick<Project, "id" | "name">[]>([]);
   const [photos, setPhotos] = useState<ProgressPhoto[]>([]);
+  const [items, setItems] = useState<ProgressItem[]>([]);
 
   const [projectId, setProjectId] = useState("");
   const [title, setTitle] = useState("");
@@ -56,10 +58,15 @@ export default function EditarAvancePage() {
       setProjects((projectsData as Pick<Project, "id" | "name">[]) ?? []);
 
       if (!isNew) {
-        const [entryRes, photosRes] = await Promise.all([
+        const [entryRes, photosRes, itemsRes] = await Promise.all([
           supabase.from("construction_progress").select("*").eq("id", id).single(),
           supabase
             .from("construction_progress_photos")
+            .select("*")
+            .eq("progress_id", id)
+            .order("sort_order"),
+          supabase
+            .from("progress_items")
             .select("*")
             .eq("progress_id", id)
             .order("sort_order"),
@@ -81,6 +88,8 @@ export default function EditarAvancePage() {
         setIsPublished(entry.is_published);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setPhotos(((photosRes as any).data as ProgressPhoto[]) ?? []);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setItems(((itemsRes as any).data as ProgressItem[]) ?? []);
         setIsFetching(false);
       }
     }
@@ -169,6 +178,51 @@ export default function EditarAvancePage() {
     }
 
     setPhotos((prev) => prev.filter((p) => p.id !== photoId));
+  }
+
+  // --- Progress Items CRUD ---
+  async function handleAddItem() {
+    const supabase = createClient();
+    const { data, error: err } = await (supabase as any)
+      .from("progress_items")
+      .insert({
+        progress_id: id,
+        label: "Nuevo procedimiento",
+        percent: 0,
+        sort_order: items.length,
+      })
+      .select()
+      .single();
+    if (err) { setError("Error al crear item: " + err.message); return; }
+    setItems((prev) => [...prev, data as ProgressItem]);
+  }
+
+  async function handleUpdateItem(itemId: string, field: "label" | "percent", value: string | number) {
+    setItems((prev) =>
+      prev.map((it) => (it.id === itemId ? { ...it, [field]: value } : it))
+    );
+  }
+
+  async function handleSaveItem(itemId: string) {
+    const item = items.find((it) => it.id === itemId);
+    if (!item) return;
+    const supabase = createClient();
+    const { error: err } = await (supabase as any)
+      .from("progress_items")
+      .update({ label: item.label, percent: item.percent })
+      .eq("id", itemId);
+    if (err) setError("Error al guardar: " + err.message);
+  }
+
+  async function handleDeleteItem(itemId: string) {
+    if (!confirm("¿Eliminar este procedimiento?")) return;
+    const supabase = createClient();
+    const { error: err } = await (supabase as any)
+      .from("progress_items")
+      .delete()
+      .eq("id", itemId);
+    if (err) { setError("Error al eliminar: " + err.message); return; }
+    setItems((prev) => prev.filter((it) => it.id !== itemId));
   }
 
   const projectOptions = projects.map((p) => ({
@@ -318,6 +372,73 @@ export default function EditarAvancePage() {
               onRemove={() => {}}
               label="Agregar foto"
             />
+          </section>
+        )}
+
+        {/* Procedimientos detallados - solo para edición */}
+        {!isNew && (
+          <section className="rounded-2xl border border-gray/10 bg-white p-6">
+            <div className="mb-4 flex items-center justify-between">
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Procedimientos Detallados
+              </h2>
+              <button
+                type="button"
+                onClick={handleAddItem}
+                className="inline-flex items-center gap-1.5 rounded-full bg-celeste px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-celeste/90"
+              >
+                <Plus className="h-4 w-4" />
+                Agregar
+              </button>
+            </div>
+
+            {items.length === 0 ? (
+              <p className="py-8 text-center text-sm text-gray/40">
+                No hay procedimientos. Agrega el primero.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {items
+                  .sort((a, b) => a.sort_order - b.sort_order)
+                  .map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex items-center gap-3 rounded-xl border border-gray/10 px-4 py-3"
+                  >
+                    <GripVertical className="h-4 w-4 shrink-0 text-gray/30" />
+                    <input
+                      type="text"
+                      value={item.label}
+                      onChange={(e) => handleUpdateItem(item.id, "label", e.target.value)}
+                      onBlur={() => handleSaveItem(item.id)}
+                      className="min-w-0 flex-1 rounded-lg border border-transparent px-2 py-1.5 text-sm font-medium text-navy hover:border-gray/20 focus:border-celeste focus:outline-none"
+                    />
+                    <div className="flex w-36 items-center gap-2">
+                      <input
+                        type="range"
+                        min="0"
+                        max="100"
+                        value={item.percent}
+                        onChange={(e) => handleUpdateItem(item.id, "percent", parseInt(e.target.value))}
+                        onMouseUp={() => handleSaveItem(item.id)}
+                        onTouchEnd={() => handleSaveItem(item.id)}
+                        className="w-full accent-celeste"
+                      />
+                      <span className="w-10 text-right text-sm font-semibold text-navy">
+                        {item.percent}%
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteItem(item.id)}
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-gray hover:bg-red-50 hover:text-red-600"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
           </section>
         )}
 

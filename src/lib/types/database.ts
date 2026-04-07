@@ -353,6 +353,28 @@ export interface Database {
           sort_order?: number;
         };
       };
+      progress_items: {
+        Row: {
+          id: string;
+          progress_id: string;
+          label: string;
+          percent: number;
+          sort_order: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          progress_id: string;
+          label: string;
+          percent?: number;
+          sort_order?: number;
+        };
+        Update: {
+          label?: string;
+          percent?: number;
+          sort_order?: number;
+        };
+      };
       testimonials: {
         Row: {
           id: string;

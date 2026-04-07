@@ -92,6 +92,27 @@ export default async function ProjectProgressPage({ params }: ProgressPageProps)
                       </p>
                     )}
 
+                    {entry.progress_items.length > 0 && (
+                      <div className="mt-6 space-y-3">
+                        {entry.progress_items
+                          .sort((a, b) => a.sort_order - b.sort_order)
+                          .map((item) => (
+                          <div key={item.id}>
+                            <div className="flex items-center justify-between text-sm">
+                              <span className="font-medium text-navy">{item.label}</span>
+                              <span className="font-semibold text-navy">{item.percent}%</span>
+                            </div>
+                            <div className="mt-1.5 h-2.5 w-full overflow-hidden rounded-full bg-gray/10">
+                              <div
+                                className="h-full rounded-full bg-celeste transition-all duration-500"
+                                style={{ width: `${item.percent}%` }}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
                     {entry.construction_progress_photos.length > 0 && (
                       <div className="mt-6">
                         <ProgressGallery
