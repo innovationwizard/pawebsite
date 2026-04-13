@@ -235,7 +235,7 @@ export default function EditarTestimonioPage() {
             Avatar del Cliente
           </h2>
           <ImageUploader
-            bucket="testimonials"
+            bucket="testimonial-avatars"
             currentUrl={avatarUrl}
             onUpload={setAvatarUrl}
             onRemove={() => setAvatarUrl(null)}

@@ -176,7 +176,7 @@ export default function NuevoArticuloPage() {
             Imagen de Portada
           </h2>
           <ImageUploader
-            bucket="news"
+            bucket="article-images"
             currentUrl={coverImageUrl}
             onUpload={setCoverImageUrl}
             onRemove={() => setCoverImageUrl(null)}

@@ -366,7 +366,7 @@ export default function EditarAvancePage() {
             )}
 
             <ImageUploader
-              bucket="construction-progress"
+              bucket="progress-photos"
               currentUrl={null}
               onUpload={handlePhotoUpload}
               onRemove={() => {}}

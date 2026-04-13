@@ -359,14 +359,14 @@ export default function EditarProyectoPage() {
           </h2>
           <div className="grid gap-6 sm:grid-cols-2">
             <ImageUploader
-              bucket="projects"
+              bucket="project-images"
               currentUrl={heroImageUrl}
               onUpload={setHeroImageUrl}
               onRemove={() => setHeroImageUrl(null)}
               label="Imagen Hero"
             />
             <ImageUploader
-              bucket="projects"
+              bucket="project-logos"
               currentUrl={logoUrl}
               onUpload={setLogoUrl}
               onRemove={() => setLogoUrl(null)}
