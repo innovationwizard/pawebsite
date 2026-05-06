@@ -54,6 +54,11 @@ export default function RootLayout({
       </head>
       <body className="min-h-full flex flex-col font-body text-navy">
         {children}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){var s=document.createElement('script');s.src='https://cdn.dev.runwayml.com/prod/widget.js';s.setAttribute('data-pub-key','pub_959a8bd741cec086605875fed16b95a538f3a769880ab81497f09a9c4f3456b3');Object.defineProperty(document,'currentScript',{get:function(){return s;},configurable:true});s.addEventListener('load',function(){Object.defineProperty(document,'currentScript',{get:function(){return null;},configurable:true});},{once:true});document.body.appendChild(s);})();`,
+          }}
+        />
       </body>
     </html>
   );
