@@ -1,5 +1,6 @@
 "use client";
 
+import Script from "next/script";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 
 export function TechSection() {
@@ -31,12 +32,14 @@ export function TechSection() {
             </div>
           </ScrollReveal>
 
-          {/* Image placeholder — space reserved for future images */}
+          {/* Runway ML widget */}
           <ScrollReveal variant="fade-up" delay={0.2}>
-            <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-navy/5">
-              <span className="text-sm text-gray/40">
-                [ Imágenes pendientes ]
-              </span>
+            <div className="overflow-hidden rounded-2xl">
+              <Script
+                src="https://cdn.dev.runwayml.com/prod/widget.js"
+                data-pub-key="pub_959a8bd741cec086605875fed16b95a538f3a769880ab81497f09a9c4f3456b3"
+                strategy="lazyOnload"
+              />
             </div>
           </ScrollReveal>
         </div>
