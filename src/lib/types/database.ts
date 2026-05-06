@@ -375,6 +375,28 @@ export interface Database {
           sort_order?: number;
         };
       };
+      project_images: {
+        Row: {
+          id: string;
+          project_id: string;
+          image_url: string;
+          caption: string | null;
+          sort_order: number;
+          created_at: string;
+        };
+        Insert: {
+          id?: string;
+          project_id: string;
+          image_url: string;
+          caption?: string | null;
+          sort_order?: number;
+        };
+        Update: {
+          image_url?: string;
+          caption?: string | null;
+          sort_order?: number;
+        };
+      };
       testimonials: {
         Row: {
           id: string;

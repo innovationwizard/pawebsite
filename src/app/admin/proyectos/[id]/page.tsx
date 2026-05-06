@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Trash2 } from "lucide-react";
+import Image from "next/image";
+import { ArrowLeft, Trash2, X } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { updateProject, deleteProject } from "@/lib/actions/projects";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import { ImageUploader } from "@/components/admin/image-uploader";
 import type { Database, ProjectType, ProjectStatus, Currency } from "@/lib/types/database";
 
 type Project = Database["public"]["Tables"]["projects"]["Row"];
+type ProjectImage = Database["public"]["Tables"]["project_images"]["Row"];
 
 const projectTypeOptions = [
   { value: "vertical", label: "Vertical" },
@@ -44,6 +46,7 @@ export default function EditarProyectoPage() {
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [galleryImages, setGalleryImages] = useState<ProjectImage[]>([]);
 
   const [name, setName] = useState("");
   const [abbreviation, setAbbreviation] = useState("");
@@ -81,18 +84,25 @@ export default function EditarProyectoPage() {
   useEffect(() => {
     async function fetchProject() {
       const supabase = createClient();
-      const { data } = await supabase
+      const { data: projectData } = await supabase
         .from("projects")
         .select("*")
         .eq("id", id)
         .single();
 
-      if (!data) {
+      if (!projectData) {
         router.push("/admin/proyectos");
         return;
       }
 
-      const p = data as Project;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: imagesData } = await (supabase as any)
+        .from("project_images")
+        .select("*")
+        .eq("project_id", id)
+        .order("sort_order");
+
+      const p = projectData as Project;
       setName(p.name);
       setAbbreviation(p.abbreviation);
       setSlug(p.slug);
@@ -125,6 +135,7 @@ export default function EditarProyectoPage() {
       setMetaTitle(p.meta_title ?? "");
       setMetaDescription(p.meta_description ?? "");
       setOgImageUrl(p.og_image_url ?? "");
+      setGalleryImages((imagesData as ProjectImage[]) ?? []);
       setIsFetching(false);
     }
     fetchProject();
@@ -181,6 +192,28 @@ export default function EditarProyectoPage() {
 
     setSuccess("Proyecto actualizado correctamente.");
     setIsLoading(false);
+  }
+
+  async function handleGalleryUpload(url: string) {
+    const supabase = createClient();
+    const { data, error: err } = await (supabase as any)
+      .from("project_images")
+      .insert({ project_id: id, image_url: url, sort_order: galleryImages.length })
+      .select()
+      .single();
+    if (err) { setError("Error al agregar imagen: " + err.message); return; }
+    setGalleryImages((prev) => [...prev, data as ProjectImage]);
+  }
+
+  async function handleGalleryDelete(imageId: string) {
+    if (!confirm("¿Eliminar esta imagen de la galería?")) return;
+    const supabase = createClient();
+    const { error: err } = await (supabase as any)
+      .from("project_images")
+      .delete()
+      .eq("id", imageId);
+    if (err) { setError("Error al eliminar imagen: " + err.message); return; }
+    setGalleryImages((prev) => prev.filter((img) => img.id !== imageId));
   }
 
   async function handleDelete() {
@@ -382,6 +415,45 @@ export default function EditarProyectoPage() {
               placeholder="https://..."
             />
           </div>
+        </section>
+
+        {/* Galería */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <h2 className="mb-4 font-heading text-lg font-semibold text-navy">
+            Galería de Imágenes
+          </h2>
+
+          {galleryImages.length > 0 && (
+            <div className="mb-6 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+              {galleryImages.map((img) => (
+                <div key={img.id} className="relative group">
+                  <Image
+                    src={img.image_url}
+                    alt={img.caption ?? "Imagen de galería"}
+                    width={200}
+                    height={150}
+                    className="h-32 w-full rounded-xl object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleGalleryDelete(img.id)}
+                    className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-white shadow-md opacity-0 transition-opacity group-hover:opacity-100 hover:bg-red-600"
+                    aria-label="Eliminar imagen"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <ImageUploader
+            bucket="project-images"
+            currentUrl={null}
+            onUpload={handleGalleryUpload}
+            onRemove={() => {}}
+            label="Agregar imagen a la galería"
+          />
         </section>
 
         {/* Precios y financiamiento */}

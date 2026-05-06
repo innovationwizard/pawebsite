@@ -10,7 +10,7 @@ import { ProjectGallery } from "@/components/projects/project-gallery";
 import { FinancialSummary } from "@/components/projects/financial-summary";
 import { ProjectLocationMap } from "@/components/projects/project-location-map";
 import { ProjectCTA } from "@/components/projects/project-cta";
-import { getPublishedProjectSlugs, getProjectBySlug, getProjectUnitTypes } from "@/lib/queries/projects";
+import { getPublishedProjectSlugs, getProjectBySlug, getProjectUnitTypes, getProjectGalleryImages } from "@/lib/queries/projects";
 
 interface ProjectPageProps {
   params: Promise<{ slug: string }>;
@@ -51,10 +51,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
     notFound();
   }
 
-  const unitTypes = await getProjectUnitTypes(project.id);
+  const [unitTypes, galleryRows] = await Promise.all([
+    getProjectUnitTypes(project.id),
+    getProjectGalleryImages(project.id),
+  ]);
 
-  // Gallery images are from Supabase Storage — placeholder until images are uploaded
-  const galleryImages: { url: string; alt: string }[] = [];
+  const galleryImages = galleryRows.map((img) => ({
+    url: img.image_url,
+    alt: img.caption ?? project.name,
+  }));
 
   return (
     <>

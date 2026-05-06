@@ -4,6 +4,7 @@ import type { Database } from "@/lib/types/database";
 
 type ProjectRow = Database["public"]["Tables"]["projects"]["Row"];
 type UnitTypeRow = Database["public"]["Tables"]["unit_types"]["Row"];
+type ProjectImageRow = Database["public"]["Tables"]["project_images"]["Row"];
 
 export async function getPublishedProjects(): Promise<ProjectRow[]> {
   const supabase = await createClient();
@@ -71,4 +72,20 @@ export async function getProjectUnitTypes(projectId: string): Promise<UnitTypeRo
   }
 
   return (data ?? []) as UnitTypeRow[];
+}
+
+export async function getProjectGalleryImages(projectId: string): Promise<ProjectImageRow[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("project_images")
+    .select("*")
+    .eq("project_id", projectId)
+    .order("sort_order", { ascending: true });
+
+  if (error) {
+    console.error("Error fetching project gallery:", error.message);
+    return [];
+  }
+
+  return (data ?? []) as ProjectImageRow[];
 }
