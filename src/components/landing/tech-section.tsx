@@ -1,27 +1,14 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { AvatarCall } from "@runwayml/avatars-react";
+import "@runwayml/avatars-react/styles.css";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 
 export function TechSection() {
-  const widgetRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!widgetRef.current) return;
-    const script = document.createElement("script");
-    script.src = "https://cdn.dev.runwayml.com/prod/widget.js";
-    script.setAttribute(
-      "data-pub-key",
-      "pub_959a8bd741cec086605875fed16b95a538f3a769880ab81497f09a9c4f3456b3"
-    );
-    widgetRef.current.appendChild(script);
-  }, []);
-
   return (
     <section className="bg-off-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-12 md:grid-cols-2">
-          {/* Text content */}
           <ScrollReveal variant="fade-up">
             <div>
               <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
@@ -45,9 +32,14 @@ export function TechSection() {
             </div>
           </ScrollReveal>
 
-          {/* Runway ML widget — script injected directly into container so the widget mounts here */}
           <ScrollReveal variant="fade-up" delay={0.2}>
-            <div ref={widgetRef} className="overflow-hidden rounded-2xl" />
+            <div className="overflow-hidden rounded-2xl">
+              <AvatarCall
+                avatarId="55798887-ab64-47ac-ace3-93801f623427"
+                connectUrl="/api/avatar/session"
+                video={false}
+              />
+            </div>
           </ScrollReveal>
         </div>
       </div>
