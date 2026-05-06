@@ -92,7 +92,7 @@ export default function AdminConfiguracionPage() {
 
       // Tertiary banner
       const banner = asObj(map.tertiary_banner);
-      setBannerImage(asObjString(banner, "image") || null);
+      setBannerImage(asObjString(banner, "image_url") || null);
       setBannerTitle(asObjString(banner, "title"));
       setBannerCtaText(asObjString(banner, "cta_text"));
       setBannerCtaLink(asObjString(banner, "cta_link"));
@@ -357,7 +357,7 @@ export default function AdminConfiguracionPage() {
               isLoading={savingSection === "tertiary_banner"}
               onClick={() =>
                 saveSection("tertiary_banner", "tertiary_banner", {
-                  image: bannerImage ?? "",
+                  image_url: bannerImage ?? "",
                   title: bannerTitle,
                   cta_text: bannerCtaText,
                   cta_link: bannerCtaLink,
