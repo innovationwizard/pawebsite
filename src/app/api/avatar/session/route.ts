@@ -1,5 +1,7 @@
 import RunwayML from "@runwayml/sdk";
 
+export const maxDuration = 30;
+
 const AVATAR_ID = "55798887-ab64-47ac-ace3-93801f623427";
 const POLL_INTERVAL_MS = 1000;
 const POLL_MAX_ATTEMPTS = 30;
