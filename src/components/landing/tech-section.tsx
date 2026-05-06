@@ -1,9 +1,22 @@
 "use client";
 
-import Script from "next/script";
+import { useEffect, useRef } from "react";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 
 export function TechSection() {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!widgetRef.current) return;
+    const script = document.createElement("script");
+    script.src = "https://cdn.dev.runwayml.com/prod/widget.js";
+    script.setAttribute(
+      "data-pub-key",
+      "pub_959a8bd741cec086605875fed16b95a538f3a769880ab81497f09a9c4f3456b3"
+    );
+    widgetRef.current.appendChild(script);
+  }, []);
+
   return (
     <section className="bg-off-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
@@ -32,15 +45,9 @@ export function TechSection() {
             </div>
           </ScrollReveal>
 
-          {/* Runway ML widget */}
+          {/* Runway ML widget — script injected directly into container so the widget mounts here */}
           <ScrollReveal variant="fade-up" delay={0.2}>
-            <div className="overflow-hidden rounded-2xl">
-              <Script
-                src="https://cdn.dev.runwayml.com/prod/widget.js"
-                data-pub-key="pub_959a8bd741cec086605875fed16b95a538f3a769880ab81497f09a9c4f3456b3"
-                strategy="lazyOnload"
-              />
-            </div>
+            <div ref={widgetRef} className="overflow-hidden rounded-2xl" />
           </ScrollReveal>
         </div>
       </div>
