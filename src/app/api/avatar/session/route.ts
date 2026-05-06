@@ -41,7 +41,7 @@ export async function POST() {
   }
 
   const consumeRes = await fetch(
-    `https://api.dev.runwayml.com/v1/realtime-sessions/${sessionId}/consume`,
+    `https://api.dev.runwayml.com/v1/realtime_sessions/${sessionId}/consume`,
     {
       method: "POST",
       headers: {
