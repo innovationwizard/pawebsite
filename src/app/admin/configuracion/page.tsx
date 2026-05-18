@@ -68,8 +68,8 @@ export default function AdminConfiguracionPage() {
 
       setSettings(map);
 
-      // Hero video
-      setHeroVideoUrl(asString(map.hero_video_url));
+      // Hero video — stored as { url: "..." } per schema
+      setHeroVideoUrl(asObjString(asObj(map.hero_video_url), "url"));
 
       // Brand highlights
       const highlights = asArray(map.brand_highlights);
@@ -210,7 +210,7 @@ export default function AdminConfiguracionPage() {
             <Button
               size="sm"
               isLoading={savingSection === "hero_video"}
-              onClick={() => saveSection("hero_video", "hero_video_url", heroVideoUrl)}
+              onClick={() => saveSection("hero_video", "hero_video_url", { url: heroVideoUrl })}
             >
               Guardar
             </Button>
