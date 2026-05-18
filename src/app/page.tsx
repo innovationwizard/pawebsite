@@ -20,11 +20,13 @@ import {
   getHeroVideoUrl,
   getBrandHighlights,
   getTertiaryBanner,
+  getLicPuertasSettings,
+  getHomepageSectionImages,
 } from "@/lib/queries/settings";
 
 export default async function Home() {
   // Fetch all landing page data in parallel
-  const [projects, articles, testimonials, heroVideoUrl, highlights, banner] =
+  const [projects, articles, testimonials, heroVideoUrl, highlights, banner, licPuertas, sectionImages] =
     await Promise.all([
       getPublishedProjects(),
       getPublishedArticles(3),
@@ -32,6 +34,8 @@ export default async function Home() {
       getHeroVideoUrl(),
       getBrandHighlights(),
       getTertiaryBanner(),
+      getLicPuertasSettings(),
+      getHomepageSectionImages(),
     ]);
 
   const highlightItems = highlights
@@ -116,13 +120,21 @@ export default async function Home() {
           whyDescription="Creemos que todos merecen un hogar de calidad. Nuestra pasión por la excelencia impulsa cada proyecto, creando comunidades donde las familias guatemaltecas pueden crecer y prosperar."
           howTitle="¿Cómo lo hacemos?"
           steps={[]}
+          teamImageUrl={sectionImages?.team_image_url ?? null}
+          capsula1Url={sectionImages?.capsula_1_url ?? null}
+          capsula2Url={sectionImages?.capsula_2_url ?? null}
+          capsula3Url={sectionImages?.capsula_3_url ?? null}
         />
 
         {/* 7. Project Badges (Insignias) */}
         <ProjectBadges />
 
         {/* 8. Technology Section */}
-        <TechSection />
+        <TechSection
+          licPuertasPhotoUrl={licPuertas?.photo_url ?? null}
+          licPuertasName={licPuertas?.name ?? "Lic. Puertas"}
+          licPuertasTitle={licPuertas?.title ?? "Asesor Senior"}
+        />
 
         {/* 9. News Capsules */}
         <NewsCapsules

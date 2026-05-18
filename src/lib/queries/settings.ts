@@ -57,3 +57,36 @@ export async function getBrandHighlights(): Promise<BrandHighlights | null> {
 export async function getTertiaryBanner(): Promise<TertiaryBannerSettings | null> {
   return getSiteSetting<TertiaryBannerSettings>("tertiary_banner");
 }
+
+export interface LicPuertasSettings {
+  photo_url: string;
+  name: string;
+  title: string;
+}
+
+export async function getLicPuertasSettings(): Promise<LicPuertasSettings | null> {
+  return getSiteSetting<LicPuertasSettings>("lic_puertas");
+}
+
+export interface HomepageSectionImages {
+  team_image_url: string;
+  capsula_1_url: string;
+  capsula_2_url: string;
+  capsula_3_url: string;
+}
+
+export async function getHomepageSectionImages(): Promise<HomepageSectionImages | null> {
+  return getSiteSetting<HomepageSectionImages>("homepage_section_images");
+}
+
+export interface TeamMember {
+  name: string;
+  title: string;
+  photo_url: string;
+  bio: string;
+}
+
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  const data = await getSiteSetting<TeamMember[]>("team_members");
+  return data ?? [];
+}

@@ -33,9 +33,16 @@ export type LeadSource =
   | "activacion"
   | "evento"
   | "friends_and_family"
+  | "terrenos"
   | "other";
 
-export type ProjectType = "vertical" | "horizontal" | "mixed-use";
+export type ProjectType =
+  | "vertical"
+  | "horizontal"
+  | "mixed-use"
+  | "casas"
+  | "apartamentos"
+  | "terrenos";
 
 export type ProjectStatus =
   | "active"
@@ -82,6 +89,7 @@ export interface Database {
           special_features: string[] | null;
           bedroom_range: string | null;
           area_range_m2: string | null;
+          zone: string | null;
           sort_order: number;
           is_published: boolean;
           meta_title: string | null;
@@ -119,6 +127,7 @@ export interface Database {
           special_features?: string[] | null;
           bedroom_range?: string | null;
           area_range_m2?: string | null;
+          zone?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;
@@ -156,6 +165,7 @@ export interface Database {
           special_features?: string[] | null;
           bedroom_range?: string | null;
           area_range_m2?: string | null;
+          zone?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;

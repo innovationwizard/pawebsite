@@ -15,6 +15,10 @@ interface WhyHowSectionProps {
   whyDescription: string;
   howTitle: string;
   steps: ProcessStep[];
+  teamImageUrl?: string | null;
+  capsula1Url?: string | null;
+  capsula2Url?: string | null;
+  capsula3Url?: string | null;
 }
 
 const DEFAULT_STEPS: ProcessStep[] = [
@@ -50,8 +54,16 @@ export function WhyHowSection({
   whyDescription,
   howTitle,
   steps,
+  teamImageUrl,
+  capsula1Url,
+  capsula2Url,
+  capsula3Url,
 }: WhyHowSectionProps) {
   const processSteps = steps.length > 0 ? steps : DEFAULT_STEPS;
+  const resolvedTeamImage = teamImageUrl || "/images/team/team-1.jpg";
+  const resolvedCapsula1 = capsula1Url || "/images/capsulas/capsula-1.png";
+  const resolvedCapsula2 = capsula2Url || "/images/capsulas/capsula-2.png";
+  const resolvedCapsula3 = capsula3Url || "/images/capsulas/capsula-3.jpeg";
 
   return (
     <section className="bg-off-white py-20 md:py-28">
@@ -69,7 +81,7 @@ export function WhyHowSection({
             </div>
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
-                src="/images/team/team-1.jpg"
+                src={resolvedTeamImage}
                 alt="Equipo de Puerta Abierta"
                 fill
                 className="object-cover"
@@ -136,7 +148,7 @@ export function WhyHowSection({
               </div>
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
                 <Image
-                  src="/images/capsulas/capsula-1.png"
+                  src={resolvedCapsula1}
                   alt="Sketch arquitectónico Boulevard 5"
                   fill
                   className="object-cover"
@@ -151,7 +163,7 @@ export function WhyHowSection({
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl md:order-1">
                 <Image
-                  src="/images/capsulas/capsula-2.png"
+                  src={resolvedCapsula2}
                   alt="Puerta Abierta — proyectos inmobiliarios"
                   fill
                   className="object-cover"
@@ -186,7 +198,7 @@ export function WhyHowSection({
               </div>
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
                 <Image
-                  src="/images/capsulas/capsula-3.jpeg"
+                  src={resolvedCapsula3}
                   alt="Puerta Abierta — alianzas y financiamiento"
                   fill
                   className="object-cover"

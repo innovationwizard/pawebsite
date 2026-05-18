@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { contactFormSchema } from "@/lib/utils/validators";
 import { checkRateLimit, getClientIp } from "@/lib/utils/rate-limit";
-import type { Database } from "@/lib/types/database";
+import type { Database, LeadSource } from "@/lib/types/database";
 
 export async function POST(request: Request) {
   try {
@@ -39,12 +39,22 @@ export async function POST(request: Request) {
     const supabase = createAdminClient();
 
     // Create lead
+    const validSources: LeadSource[] = [
+      "facebook","meta","tiktok","linkedin","pagina_web","inbox","mailing","wati",
+      "referido","visita_inedita","senaletica","valla","pbx","prospeccion",
+      "activacion","evento","friends_and_family","terrenos","other",
+    ];
+    const source: LeadSource =
+      data.source && validSources.includes(data.source as LeadSource)
+        ? (data.source as LeadSource)
+        : "pagina_web";
+
     const leadInsert: Database["public"]["Tables"]["leads"]["Insert"] = {
       first_name: data.first_name,
       last_name: data.last_name ?? null,
       email: data.email,
       phone: data.phone ?? null,
-      source: "pagina_web",
+      source,
       stage: "new",
       project_interest_id: data.project_interest_id ?? null,
       message: data.message ?? null,

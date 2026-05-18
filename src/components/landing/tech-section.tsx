@@ -1,10 +1,17 @@
-"use client";
-
-import { AvatarCall } from "@runwayml/avatars-react";
-import "@runwayml/avatars-react/styles.css";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { AvatarCallCard } from "@/components/landing/avatar-call-card";
 
-export function TechSection() {
+interface TechSectionProps {
+  licPuertasPhotoUrl: string | null;
+  licPuertasName: string;
+  licPuertasTitle: string;
+}
+
+export function TechSection({
+  licPuertasPhotoUrl,
+  licPuertasName,
+  licPuertasTitle,
+}: TechSectionProps) {
   return (
     <section className="bg-off-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
@@ -33,13 +40,11 @@ export function TechSection() {
           </ScrollReveal>
 
           <ScrollReveal variant="fade-up" delay={0.2}>
-            <div className="overflow-hidden rounded-2xl">
-              <AvatarCall
-                avatarId="55798887-ab64-47ac-ace3-93801f623427"
-                connectUrl="/api/avatar/session"
-                video={false}
-              />
-            </div>
+            <AvatarCallCard
+              photoUrl={licPuertasPhotoUrl}
+              name={licPuertasName}
+              title={licPuertasTitle}
+            />
           </ScrollReveal>
         </div>
       </div>

@@ -1,0 +1,15 @@
+1. Que el nombre de la página "Proyectos" cambie a "Proyectos y Propiedades".
+2. Hacer filtros y buscador por palabra clave en la página "Proyectos y Propiedades"  
+- Tipo de proyecto: Casas, Apartamentos, Terrenos
+- Ubicación: zonas del departamento de Guatemala
+- Cantidad de Habitaciones
+- Precio
+3. Lic. Puertas no debe de iniciar la llamada automáticamente porque consume muchos créditos en Runway. Lic. Puertas deberá iniciar llamada solo si el cliente lo solicita. El recuadro de la llamada debe de aparecer con una imagen de Lic. Puertas y al darle click en el botón "LLAMAR" iniciar la llamada con él.
+4. Necesito que en el admin de la página se puedan modificar o reemplazar todas las imágenes del sitio web. Actualmente no deja reemplazar la imagen del equipo, y las demás fotografías secundarias.
+5. El logo de Puerta Abierta del footer de la página web debe 2x más grande
+6. Al momento de completar un formulario debe redirigir a una thank you page. Esto con el objetivo de marcar los eventos de conversión de manera correcta en las plataformas de pauta digital. puertaabierta.com.gt/graciasportucontacto
+6. Hacer landing page informativa, enfocada a generación de leads con formulario para la obtención de clientes interesados en vender terrenos. Esta landing page no es necesario que aparezca en la página principal. Sin embargo, deberá tener el sub-dominio: puertaabierta.com.gt/terrenos. Esta landing page debe tener el mismo look and feel de la página web, 100% enfocada en la generación de leads y en la compra de terrenos. Tomar en cuenta que esta landing page debe contar con información de Puerta Abierta, buenos hooks, calls to action, botones, formulario, thank you page.
+
+Próximos pasos
+8. Instalación de Pixel de META a través de Google Tag Manager o por medio de Script
+9. Configuración de Google Analytics

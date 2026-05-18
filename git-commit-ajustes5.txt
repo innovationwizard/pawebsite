@@ -1,0 +1,86 @@
+feat: implement ajustes5 — 7 product updates across navigation, filters, avatar, admin, and lead gen
+
+Items implemented from ajustes5.txt:
+
+1. RENAME — "Proyectos" → "Proyectos y Propiedades"
+   - Updated label in navbar (navigation.ts), footer nav, page <h1>,
+     and metadata title/description.
+   - Route /proyectos unchanged; no redirect required.
+
+2. FILTERS + SEARCH — Proyectos y Propiedades
+   - DB migration 00017: adds TEXT column `zone` to `projects` table.
+     project_type and lead_source are plain TEXT in this DB — new values
+     (casas, apartamentos, terrenos) accepted without enum changes.
+   - TypeScript types updated: ProjectType union extended with casas,
+     apartamentos, terrenos; LeadSource union extended with terrenos;
+     `zone` added to projects Row/Insert/Update.
+   - Admin project edit form: new "Zona / Área" input (location section)
+     and three new project_type options (Casas, Apartamentos, Terrenos)
+     added to the dropdown.
+   - New getProjectZones() query fetches distinct zone values from
+     published projects for dynamic filter population.
+   - ProjectFilter component fully redesigned: keyword search input,
+     project type select, zone select (DB-driven), bedroom chip buttons,
+     price-max select; live result count; "Limpiar filtros" button;
+     desktop always-visible, mobile collapsible panel with active-filter
+     count badge.
+   - ProjectsListing updated: accepts zones prop; client-side filter
+     logic applies all five dimensions simultaneously (AND logic).
+   - ProyectosPage fetches zones in parallel with projects.
+
+3. LIC. PUERTAS — no auto-start
+   - New AvatarCallCard client component: idle state shows photo, name,
+     title, and "LLAMAR" button; clicking mounts <AvatarCall> (Runway
+     session created only on user intent); "Colgar" button unmounts it.
+     Fallback renders initials avatar when photo is not yet configured.
+   - TechSection converted to server component, accepts lic_puertas
+     settings as props; removes the "use client" directive.
+   - Admin Configuración: new "Lic. Puertas — Avatar IA" section with
+     ImageUploader (bucket: site-assets), name, and title inputs; stored
+     under site_settings key `lic_puertas`.
+   - Homepage fetches getLicPuertasSettings() in the parallel data load.
+
+4. ADMIN IMAGE MANAGEMENT
+   - Admin Configuración: new "Imágenes de Secciones" section with four
+     ImageUploaders for the team photo and three capsule images that were
+     previously hardcoded in why-how-section.tsx.
+   - why-how-section.tsx: four image src values now resolved from props
+     with fallback to local /images/* paths (no visual regression if
+     settings are not configured).
+   - Admin Configuración: new "Equipo" section with dynamic add/remove
+     team members (photo, name, title, bio); stored as JSON array under
+     site_settings key `team_members`.
+   - quienes-somos/page.tsx: fetches team members; renders "Nuestro
+     Equipo" section only when at least one member is configured.
+
+5. FOOTER LOGO 2× LARGER
+   - Intrinsic dimensions updated 320×100 → 640×200; display class
+     h-20 → h-40 (80 px → 160 px rendered height).
+
+6. THANK YOU PAGE + FORM REDIRECT
+   - New page /graciasportucontacto: branded confirmation, specific 24h
+     response timeline, "Ver Proyectos" secondary CTA; metadata set to
+     noindex/nofollow to preserve conversion data integrity.
+   - New DataLayerPush client component fires
+     window.dataLayer.push({ event: 'lead_form_submitted' }) on mount;
+     GTM-ready for META Pixel and GA4 conversion events once GTM is
+     installed (items 8–9).
+   - cotizador-contact-form.tsx: on success, router.push to
+     /graciasportucontacto instead of rendering inline success state.
+
+7. TERRENOS LANDING PAGE (/terrenos)
+   - New public route /terrenos: hero, trust strip (stats), 3-column
+     benefits, how-it-works steps, lead capture form, FAQ section.
+   - TerrenosHero server component; TerrenosForm client component.
+   - Form fields: name, phone, email, terrain location (zone/municipality),
+     terrain area (m²), optional message. Terrain fields are concatenated
+     into the message payload; no DB schema change required.
+   - Submits to /api/contact with source: "terrenos" — leads are tagged
+     separately in the CRM.
+   - /api/contact updated to accept an optional `source` field from the
+     request body; validates against the full LeadSource allowlist before
+     persisting; defaults to "pagina_web" if absent or invalid.
+   - contactFormSchema extended with optional `source: string` field.
+   - On success, redirects to /graciasportucontacto.
+   - Added to sitemap.ts at priority 0.8; not added to main navigation.
+   - Supabase migration 00017 applied to production.

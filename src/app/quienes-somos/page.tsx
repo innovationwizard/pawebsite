@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
-import { getBrandHighlights } from "@/lib/queries/settings";
+import { getBrandHighlights, getTeamMembers } from "@/lib/queries/settings";
 import { CounterAnimation } from "@/components/animations/counter-animation";
 
 export const metadata: Metadata = {
@@ -13,7 +14,10 @@ export const metadata: Metadata = {
 };
 
 export default async function QuienesSomosPage() {
-  const highlights = await getBrandHighlights();
+  const [highlights, teamMembers] = await Promise.all([
+    getBrandHighlights(),
+    getTeamMembers(),
+  ]);
 
   return (
     <>
@@ -159,6 +163,55 @@ export default async function QuienesSomosPage() {
                         />
                       </p>
                       <p className="mt-2 text-sm text-white/60">{item.label}</p>
+                    </div>
+                  </ScrollReveal>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Team Members */}
+        {teamMembers.length > 0 && (
+          <section className="py-20 md:py-28">
+            <div className="mx-auto max-w-7xl px-6">
+              <ScrollReveal variant="fade-up" className="text-center">
+                <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
+                  Nuestro Equipo
+                </h2>
+              </ScrollReveal>
+
+              <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {teamMembers.map((member, index) => (
+                  <ScrollReveal key={index} variant="fade-up" delay={index * 0.1}>
+                    <div className="flex flex-col items-center rounded-2xl bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-lg">
+                      {member.photo_url ? (
+                        <Image
+                          src={member.photo_url}
+                          alt={member.name}
+                          width={120}
+                          height={120}
+                          className="h-28 w-28 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="flex h-28 w-28 items-center justify-center rounded-full bg-celeste/10">
+                          <span className="font-heading text-3xl font-bold text-celeste">
+                            {member.name
+                              .split(" ")
+                              .slice(0, 2)
+                              .map((w: string) => w[0])
+                              .join("")
+                              .toUpperCase()}
+                          </span>
+                        </div>
+                      )}
+                      <h3 className="mt-4 font-heading text-lg font-bold text-navy">
+                        {member.name}
+                      </h3>
+                      <p className="mt-1 text-sm font-medium text-celeste">{member.title}</p>
+                      {member.bio && (
+                        <p className="mt-3 text-sm leading-relaxed text-gray">{member.bio}</p>
+                      )}
                     </div>
                   </ScrollReveal>
                 ))}

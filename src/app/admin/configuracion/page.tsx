@@ -51,6 +51,20 @@ export default function AdminConfiguracionPage() {
   const [linkedin, setLinkedin] = useState("");
   const [youtube, setYoutube] = useState("");
 
+  // Homepage section images
+  const [teamImageUrl, setTeamImageUrl] = useState<string | null>(null);
+  const [capsula1Url, setCapsula1Url] = useState<string | null>(null);
+  const [capsula2Url, setCapsula2Url] = useState<string | null>(null);
+  const [capsula3Url, setCapsula3Url] = useState<string | null>(null);
+
+  // Team members (Quiénes Somos)
+  const [teamMembers, setTeamMembers] = useState<Array<{ name: string; title: string; photo_url: string; bio: string }>>([]);
+
+  // Lic. Puertas avatar
+  const [licPuertasPhoto, setLicPuertasPhoto] = useState<string | null>(null);
+  const [licPuertasName, setLicPuertasName] = useState("");
+  const [licPuertasTitle, setLicPuertasTitle] = useState("");
+
   // Legal
   const [privacyPolicy, setPrivacyPolicy] = useState("");
   const [termsConditions, setTermsConditions] = useState("");
@@ -110,6 +124,30 @@ export default function AdminConfiguracionPage() {
       setInstagram(asObjString(social, "instagram"));
       setLinkedin(asObjString(social, "linkedin"));
       setYoutube(asObjString(social, "youtube"));
+
+      // Homepage section images
+      const sectionImgs = asObj(map.homepage_section_images);
+      setTeamImageUrl(asObjString(sectionImgs, "team_image_url") || null);
+      setCapsula1Url(asObjString(sectionImgs, "capsula_1_url") || null);
+      setCapsula2Url(asObjString(sectionImgs, "capsula_2_url") || null);
+      setCapsula3Url(asObjString(sectionImgs, "capsula_3_url") || null);
+
+      // Team members
+      const members = asArray(map.team_members);
+      setTeamMembers(
+        members.map((m) => ({
+          name: asObjString(m, "name"),
+          title: asObjString(m, "title"),
+          photo_url: asObjString(m, "photo_url"),
+          bio: asObjString(m, "bio"),
+        }))
+      );
+
+      // Lic. Puertas
+      const licPuertas = asObj(map.lic_puertas);
+      setLicPuertasPhoto(asObjString(licPuertas, "photo_url") || null);
+      setLicPuertasName(asObjString(licPuertas, "name"));
+      setLicPuertasTitle(asObjString(licPuertas, "title"));
 
       // Legal
       setPrivacyPolicy(asString(map.privacy_policy));
@@ -477,6 +515,238 @@ export default function AdminConfiguracionPage() {
                   instagram,
                   linkedin,
                   youtube,
+                })
+              }
+            >
+              Guardar
+            </Button>
+          </div>
+        </section>
+
+        {/* Homepage Section Images */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Imágenes de Secciones (Página Principal)
+              </h2>
+              <p className="mt-1 text-xs text-gray">
+                Imágenes del equipo y cápsulas informativas en la sección ¿Por qué Puerta Abierta?
+              </p>
+            </div>
+            {successSection === "homepage_section_images" && (
+              <span className="text-sm text-green-600">Guardado</span>
+            )}
+          </div>
+          <div className="grid gap-6 sm:grid-cols-2">
+            <ImageUploader
+              bucket="site-assets"
+              currentUrl={teamImageUrl}
+              onUpload={setTeamImageUrl}
+              onRemove={() => setTeamImageUrl(null)}
+              label="Imagen del equipo (sección ¿Por qué?)"
+            />
+            <ImageUploader
+              bucket="site-assets"
+              currentUrl={capsula1Url}
+              onUpload={setCapsula1Url}
+              onRemove={() => setCapsula1Url(null)}
+              label="Cápsula 1 — Los mejores en lo que hacemos"
+            />
+            <ImageUploader
+              bucket="site-assets"
+              currentUrl={capsula2Url}
+              onUpload={setCapsula2Url}
+              onRemove={() => setCapsula2Url(null)}
+              label="Cápsula 2 — Atención personalizada"
+            />
+            <ImageUploader
+              bucket="site-assets"
+              currentUrl={capsula3Url}
+              onUpload={setCapsula3Url}
+              onRemove={() => setCapsula3Url(null)}
+              label="Cápsula 3 — Alianzas pensadas para ti"
+            />
+          </div>
+          <div className="mt-4">
+            <Button
+              size="sm"
+              isLoading={savingSection === "homepage_section_images"}
+              onClick={() =>
+                saveSection("homepage_section_images", "homepage_section_images", {
+                  team_image_url: teamImageUrl ?? "",
+                  capsula_1_url: capsula1Url ?? "",
+                  capsula_2_url: capsula2Url ?? "",
+                  capsula_3_url: capsula3Url ?? "",
+                })
+              }
+            >
+              Guardar
+            </Button>
+          </div>
+        </section>
+
+        {/* Team Members */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Equipo (Quiénes Somos)
+              </h2>
+              <p className="mt-1 text-xs text-gray">
+                Miembros del equipo que aparecen en la página Quiénes Somos.
+              </p>
+            </div>
+            {successSection === "team_members" && (
+              <span className="text-sm text-green-600">Guardado</span>
+            )}
+          </div>
+
+          <div className="space-y-6">
+            {teamMembers.map((member, idx) => (
+              <div key={idx} className="rounded-xl border border-gray/10 bg-off-white p-4">
+                <div className="flex items-start justify-between mb-4">
+                  <p className="text-sm font-semibold text-navy">
+                    Miembro {idx + 1}
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setTeamMembers((prev) => prev.filter((_, i) => i !== idx))}
+                    className="text-xs text-red-500 hover:text-red-700"
+                  >
+                    Eliminar
+                  </button>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  <ImageUploader
+                    bucket="site-assets"
+                    currentUrl={member.photo_url || null}
+                    onUpload={(url) =>
+                      setTeamMembers((prev) =>
+                        prev.map((m, i) => (i === idx ? { ...m, photo_url: url } : m))
+                      )
+                    }
+                    onRemove={() =>
+                      setTeamMembers((prev) =>
+                        prev.map((m, i) => (i === idx ? { ...m, photo_url: "" } : m))
+                      )
+                    }
+                    label="Foto"
+                  />
+                  <div className="space-y-3">
+                    <Input
+                      id={`member_name_${idx}`}
+                      label="Nombre"
+                      value={member.name}
+                      onChange={(e) =>
+                        setTeamMembers((prev) =>
+                          prev.map((m, i) => (i === idx ? { ...m, name: e.target.value } : m))
+                        )
+                      }
+                      placeholder="Lic. María García"
+                    />
+                    <Input
+                      id={`member_title_${idx}`}
+                      label="Cargo"
+                      value={member.title}
+                      onChange={(e) =>
+                        setTeamMembers((prev) =>
+                          prev.map((m, i) => (i === idx ? { ...m, title: e.target.value } : m))
+                        )
+                      }
+                      placeholder="Directora Comercial"
+                    />
+                  </div>
+                  <div className="sm:col-span-2">
+                    <Textarea
+                      id={`member_bio_${idx}`}
+                      label="Bio (opcional)"
+                      value={member.bio}
+                      onChange={(e) =>
+                        setTeamMembers((prev) =>
+                          prev.map((m, i) => (i === idx ? { ...m, bio: e.target.value } : m))
+                        )
+                      }
+                      rows={2}
+                      placeholder="Breve descripción del miembro del equipo..."
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={() =>
+                setTeamMembers((prev) => [
+                  ...prev,
+                  { name: "", title: "", photo_url: "", bio: "" },
+                ])
+              }
+              className="w-full rounded-xl border-2 border-dashed border-gray/20 py-3 text-sm font-medium text-gray transition-colors hover:border-celeste hover:text-celeste"
+            >
+              + Agregar miembro del equipo
+            </button>
+          </div>
+
+          <div className="mt-4">
+            <Button
+              size="sm"
+              isLoading={savingSection === "team_members"}
+              onClick={() => saveSection("team_members", "team_members", teamMembers)}
+            >
+              Guardar equipo
+            </Button>
+          </div>
+        </section>
+
+        {/* Lic. Puertas Avatar */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Lic. Puertas — Avatar IA
+              </h2>
+              <p className="mt-1 text-xs text-gray">
+                Foto y datos que aparecen en la tarjeta de llamada en la página principal.
+              </p>
+            </div>
+            {successSection === "lic_puertas" && (
+              <span className="text-sm text-green-600">Guardado</span>
+            )}
+          </div>
+          <div className="grid gap-4">
+            <ImageUploader
+              bucket="site-assets"
+              currentUrl={licPuertasPhoto}
+              onUpload={setLicPuertasPhoto}
+              onRemove={() => setLicPuertasPhoto(null)}
+              label="Foto de Lic. Puertas"
+            />
+            <Input
+              id="lic_puertas_name"
+              label="Nombre completo"
+              value={licPuertasName}
+              onChange={(e) => setLicPuertasName(e.target.value)}
+              placeholder="Lic. Carlos Puertas"
+            />
+            <Input
+              id="lic_puertas_title"
+              label="Cargo / Título"
+              value={licPuertasTitle}
+              onChange={(e) => setLicPuertasTitle(e.target.value)}
+              placeholder="Asesor Senior"
+            />
+          </div>
+          <div className="mt-4">
+            <Button
+              size="sm"
+              isLoading={savingSection === "lic_puertas"}
+              onClick={() =>
+                saveSection("lic_puertas", "lic_puertas", {
+                  photo_url: licPuertasPhoto ?? "",
+                  name: licPuertasName,
+                  title: licPuertasTitle,
                 })
               }
             >

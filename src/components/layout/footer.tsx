@@ -45,7 +45,7 @@ function TiktokIcon({ className }: { className?: string }) {
 const FOOTER_NAV = [
   { label: "Inicio", href: "/" },
   { label: "Quiénes Somos", href: "/quienes-somos" },
-  { label: "Proyectos", href: "/proyectos" },
+  { label: "Proyectos y Propiedades", href: "/proyectos" },
   { label: "Avances de Obra", href: "/avance-de-obra" },
   { label: "Blog y Noticias", href: "/noticias" },
   { label: "Preguntas Frecuentes", href: "/preguntas-frecuentes" },
@@ -69,9 +69,9 @@ export function Footer() {
             <Image
               src="/icons/logo.png"
               alt="Puerta Abierta Inmobiliaria"
-              width={320}
-              height={100}
-              className="h-20 w-auto"
+              width={640}
+              height={200}
+              className="h-40 w-auto"
             />
             <p className="mt-4 text-sm leading-relaxed text-white/60">
               Desarrollamos proyectos inmobiliarios de alta calidad en Guatemala.

@@ -74,6 +74,23 @@ export async function getProjectUnitTypes(projectId: string): Promise<UnitTypeRo
   return (data ?? []) as UnitTypeRow[];
 }
 
+export async function getProjectZones(): Promise<string[]> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("projects")
+    .select("*")
+    .eq("is_published", true);
+
+  if (error) {
+    console.error("Error fetching project zones:", error.message);
+    return [];
+  }
+
+  const rows = (data ?? []) as Array<{ zone?: string | null }>;
+  const zones = [...new Set(rows.map((p) => p.zone).filter(Boolean))] as string[];
+  return zones.sort((a, b) => a.localeCompare(b));
+}
+
 export async function getProjectGalleryImages(projectId: string): Promise<ProjectImageRow[]> {
   const supabase = await createClient();
   const { data, error } = await supabase

@@ -18,6 +18,9 @@ type Project = Database["public"]["Tables"]["projects"]["Row"];
 type ProjectImage = Database["public"]["Tables"]["project_images"]["Row"];
 
 const projectTypeOptions = [
+  { value: "casas", label: "Casas" },
+  { value: "apartamentos", label: "Apartamentos" },
+  { value: "terrenos", label: "Terrenos" },
   { value: "vertical", label: "Vertical" },
   { value: "horizontal", label: "Horizontal" },
   { value: "mixed-use", label: "Uso Mixto" },
@@ -75,6 +78,7 @@ export default function EditarProyectoPage() {
   const [specialFeatures, setSpecialFeatures] = useState("");
   const [bedroomRange, setBedroomRange] = useState("");
   const [areaRangeM2, setAreaRangeM2] = useState("");
+  const [zone, setZone] = useState("");
   const [sortOrder, setSortOrder] = useState("0");
   const [isPublished, setIsPublished] = useState(false);
   const [metaTitle, setMetaTitle] = useState("");
@@ -130,6 +134,7 @@ export default function EditarProyectoPage() {
       setSpecialFeatures(p.special_features?.join(", ") ?? "");
       setBedroomRange(p.bedroom_range ?? "");
       setAreaRangeM2(p.area_range_m2 ?? "");
+      setZone((p as typeof p & { zone?: string | null }).zone ?? "");
       setSortOrder(p.sort_order.toString());
       setIsPublished(p.is_published);
       setMetaTitle(p.meta_title ?? "");
@@ -177,6 +182,7 @@ export default function EditarProyectoPage() {
         : null,
       bedroom_range: bedroomRange || null,
       area_range_m2: areaRangeM2 || null,
+      zone: zone || null,
       sort_order: parseInt(sortOrder) || 0,
       is_published: isPublished,
       meta_title: metaTitle || null,
@@ -366,6 +372,13 @@ export default function EditarProyectoPage() {
                 onChange={(e) => setLocationDescription(e.target.value)}
               />
             </div>
+            <Input
+              id="zone"
+              label="Zona / Área (para filtros)"
+              value={zone}
+              onChange={(e) => setZone(e.target.value)}
+              placeholder="Zona 16, Guatemala"
+            />
             <Input
               id="latitude"
               label="Latitud"

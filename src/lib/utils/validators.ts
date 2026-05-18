@@ -25,6 +25,7 @@ export const contactFormSchema = z.object({
   utm_source: z.string().optional(),
   utm_medium: z.string().optional(),
   utm_campaign: z.string().optional(),
+  source: z.string().max(50).optional(),
   honeypot: z.string().max(0, "Invalid submission").optional(),
 });
 
