@@ -10,6 +10,7 @@ import { ProjectGallery } from "@/components/projects/project-gallery";
 import { FinancialSummary } from "@/components/projects/financial-summary";
 import { ProjectLocationMap } from "@/components/projects/project-location-map";
 import { ProjectCTA } from "@/components/projects/project-cta";
+import { ProjectContactForm } from "@/components/projects/project-contact-form";
 import { getPublishedProjectSlugs, getProjectBySlug, getProjectUnitTypes, getProjectGalleryImages } from "@/lib/queries/projects";
 
 interface ProjectPageProps {
@@ -87,6 +88,8 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           name={project.name}
           location_description={project.location_description}
         />
+
+        <ProjectContactForm projectId={project.id} projectName={project.name} />
 
         <ProjectCTA projectName={project.name} />
       </main>

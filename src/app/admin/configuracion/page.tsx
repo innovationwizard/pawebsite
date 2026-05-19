@@ -65,6 +65,26 @@ export default function AdminConfiguracionPage() {
   const [licPuertasName, setLicPuertasName] = useState("");
   const [licPuertasTitle, setLicPuertasTitle] = useState("");
 
+  // Quiénes Somos — Hero
+  const [qsHeroType, setQsHeroType] = useState<"image" | "video">("image");
+  const [qsHeroImageUrl, setQsHeroImageUrl] = useState<string | null>(null);
+  const [qsHeroVideoUrl, setQsHeroVideoUrl] = useState("");
+
+  // Quiénes Somos — Content
+  const [qsHeroH1, setQsHeroH1] = useState("");
+  const [qsHeroSubtext, setQsHeroSubtext] = useState("");
+  const [qsMission, setQsMission] = useState("");
+  const [qsVision, setQsVision] = useState("");
+  const [qsValue1Title, setQsValue1Title] = useState("");
+  const [qsValue1Desc, setQsValue1Desc] = useState("");
+  const [qsValue2Title, setQsValue2Title] = useState("");
+  const [qsValue2Desc, setQsValue2Desc] = useState("");
+  const [qsValue3Title, setQsValue3Title] = useState("");
+  const [qsValue3Desc, setQsValue3Desc] = useState("");
+  const [qsValue4Title, setQsValue4Title] = useState("");
+  const [qsValue4Desc, setQsValue4Desc] = useState("");
+  const [qsTrayectoria, setQsTrayectoria] = useState("");
+
   // Legal
   const [privacyPolicy, setPrivacyPolicy] = useState("");
   const [termsConditions, setTermsConditions] = useState("");
@@ -148,6 +168,30 @@ export default function AdminConfiguracionPage() {
       setLicPuertasPhoto(asObjString(licPuertas, "photo_url") || null);
       setLicPuertasName(asObjString(licPuertas, "name"));
       setLicPuertasTitle(asObjString(licPuertas, "title"));
+
+      // Quiénes Somos hero
+      const qsHero = asObj(map.quienes_somos_hero);
+      const qsHeroTypeVal = asObjString(qsHero, "type") as "image" | "video" || "image";
+      const qsHeroUrlVal = asObjString(qsHero, "url");
+      setQsHeroType(qsHeroTypeVal);
+      if (qsHeroTypeVal === "image") setQsHeroImageUrl(qsHeroUrlVal || null);
+      else setQsHeroVideoUrl(qsHeroUrlVal);
+
+      // Quiénes Somos content
+      const qsContent = asObj(map.quienes_somos_content);
+      setQsHeroH1(asObjString(qsContent, "hero_h1"));
+      setQsHeroSubtext(asObjString(qsContent, "hero_subtext"));
+      setQsMission(asObjString(qsContent, "mission"));
+      setQsVision(asObjString(qsContent, "vision"));
+      setQsValue1Title(asObjString(qsContent, "value_1_title"));
+      setQsValue1Desc(asObjString(qsContent, "value_1_desc"));
+      setQsValue2Title(asObjString(qsContent, "value_2_title"));
+      setQsValue2Desc(asObjString(qsContent, "value_2_desc"));
+      setQsValue3Title(asObjString(qsContent, "value_3_title"));
+      setQsValue3Desc(asObjString(qsContent, "value_3_desc"));
+      setQsValue4Title(asObjString(qsContent, "value_4_title"));
+      setQsValue4Desc(asObjString(qsContent, "value_4_desc"));
+      setQsTrayectoria(asObjString(qsContent, "trayectoria"));
 
       // Legal
       setPrivacyPolicy(asString(map.privacy_policy));
@@ -751,6 +795,224 @@ export default function AdminConfiguracionPage() {
               }
             >
               Guardar
+            </Button>
+          </div>
+        </section>
+
+        {/* Quiénes Somos — Hero */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Quiénes Somos — Hero
+              </h2>
+              <p className="mt-1 text-xs text-gray">
+                Imagen o video de fondo en el hero de la página Quiénes Somos.
+              </p>
+            </div>
+            {successSection === "qs_hero" && (
+              <span className="text-sm text-green-600">Guardado</span>
+            )}
+          </div>
+
+          {/* Type toggle */}
+          <div className="mb-4 flex gap-4">
+            <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-navy">
+              <input
+                type="radio"
+                name="qs_hero_type"
+                value="image"
+                checked={qsHeroType === "image"}
+                onChange={() => setQsHeroType("image")}
+                className="accent-celeste"
+              />
+              Imagen
+            </label>
+            <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-navy">
+              <input
+                type="radio"
+                name="qs_hero_type"
+                value="video"
+                checked={qsHeroType === "video"}
+                onChange={() => setQsHeroType("video")}
+                className="accent-celeste"
+              />
+              Video
+            </label>
+          </div>
+
+          {qsHeroType === "image" ? (
+            <ImageUploader
+              bucket="site-assets"
+              currentUrl={qsHeroImageUrl}
+              onUpload={setQsHeroImageUrl}
+              onRemove={() => setQsHeroImageUrl(null)}
+              label="Imagen de fondo del hero"
+            />
+          ) : (
+            <Input
+              id="qs_hero_video_url"
+              label="URL del video (mp4 directo o desde Supabase Storage)"
+              value={qsHeroVideoUrl}
+              onChange={(e) => setQsHeroVideoUrl(e.target.value)}
+              placeholder="https://..."
+            />
+          )}
+
+          <div className="mt-4">
+            <Button
+              size="sm"
+              isLoading={savingSection === "qs_hero"}
+              onClick={() =>
+                saveSection("qs_hero", "quienes_somos_hero", {
+                  type: qsHeroType,
+                  url: qsHeroType === "image" ? (qsHeroImageUrl ?? "") : qsHeroVideoUrl,
+                })
+              }
+            >
+              Guardar
+            </Button>
+          </div>
+        </section>
+
+        {/* Quiénes Somos — Contenido */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Quiénes Somos — Contenido
+              </h2>
+              <p className="mt-1 text-xs text-gray">
+                Textos editables de la página Quiénes Somos.
+              </p>
+            </div>
+            {successSection === "qs_content" && (
+              <span className="text-sm text-green-600">Guardado</span>
+            )}
+          </div>
+          <div className="space-y-4">
+            <Input
+              id="qs_hero_h1"
+              label="Título principal del hero (H1)"
+              value={qsHeroH1}
+              onChange={(e) => setQsHeroH1(e.target.value)}
+              placeholder="Quiénes Somos"
+            />
+            <Textarea
+              id="qs_hero_subtext"
+              label="Subtexto del hero"
+              value={qsHeroSubtext}
+              onChange={(e) => setQsHeroSubtext(e.target.value)}
+              rows={3}
+              placeholder="Somos una empresa guatemalteca..."
+            />
+            <Textarea
+              id="qs_mission"
+              label="Nuestra Misión"
+              value={qsMission}
+              onChange={(e) => setQsMission(e.target.value)}
+              rows={4}
+              placeholder="Desarrollar proyectos inmobiliarios..."
+            />
+            <Textarea
+              id="qs_vision"
+              label="Nuestra Visión"
+              value={qsVision}
+              onChange={(e) => setQsVision(e.target.value)}
+              rows={4}
+              placeholder="Ser la inmobiliaria líder..."
+            />
+            <p className="text-sm font-semibold text-navy pt-2">Nuestros Valores</p>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Input
+                id="qs_v1_title"
+                label="Valor 1 — Título"
+                value={qsValue1Title}
+                onChange={(e) => setQsValue1Title(e.target.value)}
+                placeholder="Calidad"
+              />
+              <Textarea
+                id="qs_v1_desc"
+                label="Valor 1 — Descripción"
+                value={qsValue1Desc}
+                onChange={(e) => setQsValue1Desc(e.target.value)}
+                rows={2}
+              />
+              <Input
+                id="qs_v2_title"
+                label="Valor 2 — Título"
+                value={qsValue2Title}
+                onChange={(e) => setQsValue2Title(e.target.value)}
+                placeholder="Transparencia"
+              />
+              <Textarea
+                id="qs_v2_desc"
+                label="Valor 2 — Descripción"
+                value={qsValue2Desc}
+                onChange={(e) => setQsValue2Desc(e.target.value)}
+                rows={2}
+              />
+              <Input
+                id="qs_v3_title"
+                label="Valor 3 — Título"
+                value={qsValue3Title}
+                onChange={(e) => setQsValue3Title(e.target.value)}
+                placeholder="Innovación"
+              />
+              <Textarea
+                id="qs_v3_desc"
+                label="Valor 3 — Descripción"
+                value={qsValue3Desc}
+                onChange={(e) => setQsValue3Desc(e.target.value)}
+                rows={2}
+              />
+              <Input
+                id="qs_v4_title"
+                label="Valor 4 — Título"
+                value={qsValue4Title}
+                onChange={(e) => setQsValue4Title(e.target.value)}
+                placeholder="Compromiso"
+              />
+              <Textarea
+                id="qs_v4_desc"
+                label="Valor 4 — Descripción"
+                value={qsValue4Desc}
+                onChange={(e) => setQsValue4Desc(e.target.value)}
+                rows={2}
+              />
+            </div>
+            <Textarea
+              id="qs_trayectoria"
+              label="Nuestra Trayectoria — Párrafo"
+              value={qsTrayectoria}
+              onChange={(e) => setQsTrayectoria(e.target.value)}
+              rows={4}
+              placeholder="Con más de dos décadas de experiencia..."
+            />
+          </div>
+          <div className="mt-4">
+            <Button
+              size="sm"
+              isLoading={savingSection === "qs_content"}
+              onClick={() =>
+                saveSection("qs_content", "quienes_somos_content", {
+                  hero_h1: qsHeroH1,
+                  hero_subtext: qsHeroSubtext,
+                  mission: qsMission,
+                  vision: qsVision,
+                  value_1_title: qsValue1Title,
+                  value_1_desc: qsValue1Desc,
+                  value_2_title: qsValue2Title,
+                  value_2_desc: qsValue2Desc,
+                  value_3_title: qsValue3Title,
+                  value_3_desc: qsValue3Desc,
+                  value_4_title: qsValue4Title,
+                  value_4_desc: qsValue4Desc,
+                  trayectoria: qsTrayectoria,
+                })
+              }
+            >
+              Guardar contenido
             </Button>
           </div>
         </section>

@@ -90,3 +90,32 @@ export async function getTeamMembers(): Promise<TeamMember[]> {
   const data = await getSiteSetting<TeamMember[]>("team_members");
   return data ?? [];
 }
+
+export interface QuienesSomosHero {
+  type: "image" | "video";
+  url: string;
+}
+
+export async function getQuienesSomosHero(): Promise<QuienesSomosHero | null> {
+  return getSiteSetting<QuienesSomosHero>("quienes_somos_hero");
+}
+
+export interface QuienesSomosContent {
+  hero_h1: string;
+  hero_subtext: string;
+  mission: string;
+  vision: string;
+  value_1_title: string;
+  value_1_desc: string;
+  value_2_title: string;
+  value_2_desc: string;
+  value_3_title: string;
+  value_3_desc: string;
+  value_4_title: string;
+  value_4_desc: string;
+  trayectoria: string;
+}
+
+export async function getQuienesSomosContent(): Promise<QuienesSomosContent | null> {
+  return getSiteSetting<QuienesSomosContent>("quienes_somos_content");
+}

@@ -1,0 +1,33 @@
+ajustes5 items A–D: navbar breakpoint, project contact form, Quiénes Somos hero & editable content
+
+A — Navbar single line
+- Changed desktop nav breakpoint from lg (1024px) to xl (1280px) in navbar.tsx
+  and mobile-menu.tsx so all nav items and the CTA button fit on one line at
+  the widths Puerta Abierta's layout actually needs.
+
+D — Project-specific contact form
+- New component src/components/projects/project-contact-form.tsx: client form
+  with name, phone, email, message fields; pre-fills project_interest_id;
+  posts to /api/contact with source "pagina_web"; redirects to
+  /graciasportucontacto on success; honeypot spam protection.
+- src/app/proyectos/[slug]/page.tsx: renders <ProjectContactForm> between
+  <ProjectLocationMap> and <ProjectCTA> on every project detail page.
+
+B — Quiénes Somos hero media (admin-configurable)
+- New site_settings key quienes_somos_hero: { type: "image" | "video", url }
+- quienes-somos/page.tsx: hero section now conditionally renders a full-bleed
+  <Image> or <video> background with a bg-navy/70 overlay; zero visual
+  regression when the setting is empty.
+- Admin Configuración: new "Quiénes Somos — Hero" section with image/video
+  type radio, ImageUploader (image path), or URL input (video path).
+
+C — Quiénes Somos texts editable from admin
+- New site_settings key quienes_somos_content: 13 fields covering hero H1,
+  hero subtext, mission, vision, 4 values (title + description each),
+  trayectoria paragraph.
+- quienes-somos/page.tsx: all hardcoded strings replaced with fetched values
+  plus the original text as fallback — no visible change until admin edits.
+- New query functions getQuienesSomosHero() and getQuienesSomosContent() in
+  src/lib/queries/settings.ts.
+- Admin Configuración: new "Quiénes Somos — Contenido" section with labeled
+  inputs and textareas for all 13 fields.

@@ -13,3 +13,10 @@
 Próximos pasos
 8. Instalación de Pixel de META a través de Google Tag Manager o por medio de Script
 9. Configuración de Google Analytics
+
+---
+
+• El cintillo principal de la página debe quedar a una línea no en dos líneas
+• Quiero colocar una imagen o video hero en la página de "Quienes somos"
+• Los textos de la página "Quienes somos" deben ser editables
+• Dentro de cada página de los proyectos, por ejemplo: Boulevard 5 | hay que colocar un formulario de contacto específico para ese proyecto. Al llenar el formulario, redirige a la thank you page. Esto para cada uno de los proyectos. Cada lead que entre debe registrarse en la base de datos. 

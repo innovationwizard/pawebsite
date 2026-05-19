@@ -21,7 +21,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 top-[72px] z-40 bg-navy lg:hidden"
+          className="fixed inset-0 top-[72px] z-40 bg-navy xl:hidden"
         >
           <nav className="flex flex-col px-6 py-8">
             {NAV_ITEMS.map((item) => (

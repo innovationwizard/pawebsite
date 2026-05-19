@@ -4,7 +4,12 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
-import { getBrandHighlights, getTeamMembers } from "@/lib/queries/settings";
+import {
+  getBrandHighlights,
+  getTeamMembers,
+  getQuienesSomosHero,
+  getQuienesSomosContent,
+} from "@/lib/queries/settings";
 import { CounterAnimation } from "@/components/animations/counter-animation";
 
 export const metadata: Metadata = {
@@ -13,28 +18,117 @@ export const metadata: Metadata = {
     "Conoce a Puerta Abierta Inmobiliaria. Más de 22 años desarrollando proyectos inmobiliarios de alta calidad en Guatemala, creando comunidades donde las familias pueden crecer y prosperar.",
 };
 
+const DEFAULT_VALUES = [
+  {
+    key: "value_1",
+    title: "Calidad",
+    description:
+      "Cada detalle importa. Desde los materiales hasta el diseño, buscamos la excelencia en todo lo que hacemos.",
+  },
+  {
+    key: "value_2",
+    title: "Transparencia",
+    description:
+      "Operamos con honestidad y claridad en cada paso del proceso, construyendo relaciones de confianza con nuestros clientes.",
+  },
+  {
+    key: "value_3",
+    title: "Innovación",
+    description:
+      "Incorporamos las últimas tendencias en diseño y construcción para ofrecer espacios modernos y funcionales.",
+  },
+  {
+    key: "value_4",
+    title: "Compromiso",
+    description:
+      "Acompañamos a nuestros clientes desde la primera consulta hasta la entrega de su hogar y más allá.",
+  },
+];
+
 export default async function QuienesSomosPage() {
-  const [highlights, teamMembers] = await Promise.all([
+  const [highlights, teamMembers, heroMedia, content] = await Promise.all([
     getBrandHighlights(),
     getTeamMembers(),
+    getQuienesSomosHero(),
+    getQuienesSomosContent(),
   ]);
+
+  const heroH1 = content?.hero_h1 || "Quiénes Somos";
+  const heroSubtext =
+    content?.hero_subtext ||
+    "Somos una empresa guatemalteca dedicada al desarrollo de proyectos inmobiliarios de alta calidad. Nuestra misión es transformar la vida de las familias guatemaltecas a través de hogares y comunidades excepcionales.";
+  const mission =
+    content?.mission ||
+    "Desarrollar proyectos inmobiliarios que superen las expectativas de nuestros clientes, generando valor sostenible para las comunidades y contribuyendo al desarrollo urbano de Guatemala con los más altos estándares de calidad.";
+  const vision =
+    content?.vision ||
+    "Ser la inmobiliaria líder en Guatemala, reconocida por la excelencia en cada proyecto, la innovación en nuestros diseños y el compromiso genuino con el bienestar de las familias que confían en nosotros.";
+  const trayectoria =
+    content?.trayectoria ||
+    "Con más de dos décadas de experiencia en el mercado inmobiliario guatemalteco, hemos desarrollado proyectos que han transformado comunidades y brindado hogares de calidad a miles de familias. Cada proyecto refleja nuestro compromiso con la excelencia y la innovación.";
+
+  const values = [
+    {
+      key: "value_1",
+      title: content?.value_1_title || DEFAULT_VALUES[0].title,
+      description: content?.value_1_desc || DEFAULT_VALUES[0].description,
+    },
+    {
+      key: "value_2",
+      title: content?.value_2_title || DEFAULT_VALUES[1].title,
+      description: content?.value_2_desc || DEFAULT_VALUES[1].description,
+    },
+    {
+      key: "value_3",
+      title: content?.value_3_title || DEFAULT_VALUES[2].title,
+      description: content?.value_3_desc || DEFAULT_VALUES[2].description,
+    },
+    {
+      key: "value_4",
+      title: content?.value_4_title || DEFAULT_VALUES[3].title,
+      description: content?.value_4_desc || DEFAULT_VALUES[3].description,
+    },
+  ];
+
+  const hasHeroMedia = heroMedia?.url && heroMedia.url.trim() !== "";
 
   return (
     <>
       <Navbar />
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative bg-navy pb-20 pt-40 md:pb-28 md:pt-48">
-          <div className="mx-auto max-w-7xl px-6">
+        <section className="relative overflow-hidden bg-navy pb-20 pt-40 md:pb-28 md:pt-48">
+          {/* Hero background media */}
+          {hasHeroMedia && heroMedia!.type === "image" && (
+            <Image
+              src={heroMedia!.url}
+              alt=""
+              fill
+              className="object-cover"
+              priority
+            />
+          )}
+          {hasHeroMedia && heroMedia!.type === "video" && (
+            <video
+              src={heroMedia!.url}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          )}
+          {hasHeroMedia && (
+            <div className="absolute inset-0 bg-navy/70" />
+          )}
+
+          <div className="relative mx-auto max-w-7xl px-6">
             <ScrollReveal variant="fade-up">
               <h1 className="font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-                Quiénes Somos
+                {heroH1}
               </h1>
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
-                Somos una empresa guatemalteca dedicada al desarrollo de
-                proyectos inmobiliarios de alta calidad. Nuestra misión es
-                transformar la vida de las familias guatemaltecas a través de
-                hogares y comunidades excepcionales.
+                {heroSubtext}
               </p>
             </ScrollReveal>
           </div>
@@ -49,10 +143,7 @@ export default async function QuienesSomosPage() {
                   Nuestra Misión
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-gray">
-                  Desarrollar proyectos inmobiliarios que superen las
-                  expectativas de nuestros clientes, generando valor sostenible
-                  para las comunidades y contribuyendo al desarrollo urbano de
-                  Guatemala con los más altos estándares de calidad.
+                  {mission}
                 </p>
               </ScrollReveal>
 
@@ -61,10 +152,7 @@ export default async function QuienesSomosPage() {
                   Nuestra Visión
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-gray">
-                  Ser la inmobiliaria líder en Guatemala, reconocida por la
-                  excelencia en cada proyecto, la innovación en nuestros
-                  diseños y el compromiso genuino con el bienestar de las
-                  familias que confían en nosotros.
+                  {vision}
                 </p>
               </ScrollReveal>
             </div>
@@ -81,30 +169,9 @@ export default async function QuienesSomosPage() {
             </ScrollReveal>
 
             <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {[
-                {
-                  title: "Calidad",
-                  description:
-                    "Cada detalle importa. Desde los materiales hasta el diseño, buscamos la excelencia en todo lo que hacemos.",
-                },
-                {
-                  title: "Transparencia",
-                  description:
-                    "Operamos con honestidad y claridad en cada paso del proceso, construyendo relaciones de confianza con nuestros clientes.",
-                },
-                {
-                  title: "Innovación",
-                  description:
-                    "Incorporamos las últimas tendencias en diseño y construcción para ofrecer espacios modernos y funcionales.",
-                },
-                {
-                  title: "Compromiso",
-                  description:
-                    "Acompañamos a nuestros clientes desde la primera consulta hasta la entrega de su hogar y más allá.",
-                },
-              ].map((value, index) => (
+              {values.map((value, index) => (
                 <ScrollReveal
-                  key={value.title}
+                  key={value.key}
                   variant="fade-up"
                   delay={index * 0.1}
                 >
@@ -138,19 +205,19 @@ export default async function QuienesSomosPage() {
                     value: highlights.sqm_developed,
                     prefix: "",
                     suffix: "",
-                    label: "Mil m\u00b2 Desarrollados",
+                    label: "Mil m² Desarrollados",
                   },
                   {
                     value: highlights.years_experience,
                     prefix: "+",
                     suffix: "",
-                    label: "A\u00f1os de Experiencia",
+                    label: "Años de Experiencia",
                   },
                   {
                     value: highlights.historical_sales_millions,
                     prefix: "$",
                     suffix: "M",
-                    label: "Millones Hist\u00f3ricos",
+                    label: "Millones Históricos",
                   },
                 ].map((item) => (
                   <ScrollReveal key={item.label} variant="fade-up">
@@ -228,11 +295,7 @@ export default async function QuienesSomosPage() {
                 Nuestra Trayectoria
               </h2>
               <p className="mt-6 text-lg leading-relaxed text-gray">
-                Con m&aacute;s de dos d&eacute;cadas de experiencia en el mercado
-                inmobiliario guatemalteco, hemos desarrollado proyectos que han
-                transformado comunidades y brindado hogares de calidad a miles
-                de familias. Cada proyecto refleja nuestro compromiso con la
-                excelencia y la innovaci&oacute;n.
+                {trayectoria}
               </p>
             </ScrollReveal>
           </div>

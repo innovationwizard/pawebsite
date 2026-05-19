@@ -49,7 +49,7 @@ export function Navbar({ solid = false }: { solid?: boolean }) {
           </Link>
 
           {/* Desktop nav */}
-          <div className="hidden items-center gap-1 lg:flex">
+          <div className="hidden items-center gap-1 xl:flex">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
@@ -69,14 +69,14 @@ export function Navbar({ solid = false }: { solid?: boolean }) {
           <div className="flex items-center gap-4">
             <Link
               href="/cotizador"
-              className="hidden rounded-full bg-celeste px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-celeste/90 hover:shadow-lg sm:inline-flex"
+              className="hidden rounded-full bg-celeste px-5 py-2.5 text-sm font-medium text-white transition-all duration-300 hover:bg-celeste/90 hover:shadow-lg xl:inline-flex"
             >
               Cotiza Ahora
             </Link>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center text-white lg:hidden"
+              className="inline-flex items-center justify-center text-white xl:hidden"
               aria-label={isMobileMenuOpen ? "Cerrar menú" : "Abrir menú"}
             >
               {isMobileMenuOpen ? (
