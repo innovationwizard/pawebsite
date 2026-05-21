@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { ImageUploader } from "@/components/admin/image-uploader";
+import { LocationPicker } from "@/components/admin/location-picker";
 import type { Database, ProjectType, ProjectStatus, Currency } from "@/lib/types/database";
 
 type Project = Database["public"]["Tables"]["projects"]["Row"];
@@ -78,6 +79,7 @@ export default function EditarProyectoPage() {
   const [specialFeatures, setSpecialFeatures] = useState("");
   const [bedroomRange, setBedroomRange] = useState("");
   const [areaRangeM2, setAreaRangeM2] = useState("");
+  const [zonaId, setZonaId] = useState<string | null>(null);
   const [sortOrder, setSortOrder] = useState("0");
   const [isPublished, setIsPublished] = useState(false);
   const [metaTitle, setMetaTitle] = useState("");
@@ -133,6 +135,7 @@ export default function EditarProyectoPage() {
       setSpecialFeatures(p.special_features?.join(", ") ?? "");
       setBedroomRange(p.bedroom_range ?? "");
       setAreaRangeM2(p.area_range_m2 ?? "");
+      setZonaId(p.zona_id ?? null);
       setSortOrder(p.sort_order.toString());
       setIsPublished(p.is_published);
       setMetaTitle(p.meta_title ?? "");
@@ -180,6 +183,7 @@ export default function EditarProyectoPage() {
         : null,
       bedroom_range: bedroomRange || null,
       area_range_m2: areaRangeM2 || null,
+      zona_id: zonaId,
       sort_order: parseInt(sortOrder) || 0,
       is_published: isPublished,
       meta_title: metaTitle || null,
@@ -361,6 +365,7 @@ export default function EditarProyectoPage() {
             Ubicación
           </h2>
           <div className="grid gap-4 sm:grid-cols-2">
+            <LocationPicker value={zonaId} onChange={setZonaId} />
             <div className="sm:col-span-2">
               <Input
                 id="location_description"
