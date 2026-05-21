@@ -108,7 +108,7 @@ export function ProjectFilter({
             onChange={(e) => update("zone", e.target.value)}
             className="w-full appearance-none rounded-lg border border-gray/20 bg-white px-4 py-2.5 pr-9 text-sm text-navy outline-none transition-colors focus:border-celeste focus:ring-2 focus:ring-celeste/20"
           >
-            <option value="">Todas las zonas</option>
+            <option value="">Todas las ubicaciones</option>
             {zones.map((zone) => (
               <option key={zone} value={zone}>
                 {zone}
