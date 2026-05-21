@@ -70,7 +70,7 @@ export async function getYouTubeVideos(maxResults = 12): Promise<YouTubeVideo[]>
       }) => ({
         id: item.id,
         title: item.snippet.title,
-        thumbnail: item.snippet.thumbnails.high.url,
+        thumbnail: `https://img.youtube.com/vi/${item.id}/hqdefault.jpg`,
         publishedAt: item.snippet.publishedAt,
         duration: parseDuration(item.contentDetails.duration),
       })
