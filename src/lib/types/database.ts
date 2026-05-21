@@ -89,7 +89,7 @@ export interface Database {
           special_features: string[] | null;
           bedroom_range: string | null;
           area_range_m2: string | null;
-          zone: string | null;
+          zona_id: string | null;
           sort_order: number;
           is_published: boolean;
           meta_title: string | null;
@@ -127,7 +127,7 @@ export interface Database {
           special_features?: string[] | null;
           bedroom_range?: string | null;
           area_range_m2?: string | null;
-          zone?: string | null;
+          zona_id?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;
@@ -165,12 +165,96 @@ export interface Database {
           special_features?: string[] | null;
           bedroom_range?: string | null;
           area_range_m2?: string | null;
-          zone?: string | null;
+          zona_id?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;
           meta_description?: string | null;
           og_image_url?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      departamentos: {
+        Row: {
+          id: string;
+          name: string;
+          slug: string;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          slug: string;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          slug?: string;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      municipios: {
+        Row: {
+          id: string;
+          departamento_id: string;
+          name: string;
+          slug: string;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          departamento_id: string;
+          name: string;
+          slug: string;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          departamento_id?: string;
+          name?: string;
+          slug?: string;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+      };
+      zonas: {
+        Row: {
+          id: string;
+          municipio_id: string;
+          name: string;
+          slug: string;
+          sort_order: number;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          id?: string;
+          municipio_id: string;
+          name: string;
+          slug: string;
+          sort_order?: number;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          id?: string;
+          municipio_id?: string;
+          name?: string;
+          slug?: string;
+          sort_order?: number;
           created_at?: string;
           updated_at?: string;
         };

@@ -38,7 +38,7 @@ export default async function ProyectosPage() {
               starting_price_display: p.starting_price_display,
               starting_price: p.starting_price,
               location_description: p.location_description,
-              zone: p.zone ?? null,
+              zone: p.zona?.name ?? null,
               status: p.status,
               bedroom_range: p.bedroom_range,
               total_units: p.total_units,

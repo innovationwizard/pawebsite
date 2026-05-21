@@ -6,11 +6,16 @@ type ProjectRow = Database["public"]["Tables"]["projects"]["Row"];
 type UnitTypeRow = Database["public"]["Tables"]["unit_types"]["Row"];
 type ProjectImageRow = Database["public"]["Tables"]["project_images"]["Row"];
 
-export async function getPublishedProjects(): Promise<ProjectRow[]> {
+export type ProjectRowWithZona = ProjectRow & {
+  zona: { name: string; slug: string } | null;
+};
+
+export async function getPublishedProjects(): Promise<ProjectRowWithZona[]> {
   const supabase = await createClient();
-  const { data, error } = await supabase
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data, error } = await (supabase as any)
     .from("projects")
-    .select("*")
+    .select("*, zona:zonas(name, slug)")
     .eq("is_published", true)
     .order("sort_order", { ascending: true });
 
@@ -19,7 +24,7 @@ export async function getPublishedProjects(): Promise<ProjectRow[]> {
     return [];
   }
 
-  return (data ?? []) as ProjectRow[];
+  return (data ?? []) as ProjectRowWithZona[];
 }
 
 /**
@@ -76,19 +81,18 @@ export async function getProjectUnitTypes(projectId: string): Promise<UnitTypeRo
 
 export async function getProjectZones(): Promise<string[]> {
   const supabase = await createClient();
-  const { data, error } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("is_published", true);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { data, error } = await (supabase as any)
+    .from("zonas")
+    .select("name")
+    .order("sort_order", { ascending: true });
 
   if (error) {
-    console.error("Error fetching project zones:", error.message);
+    console.error("Error fetching zonas:", error.message);
     return [];
   }
 
-  const rows = (data ?? []) as Array<{ zone?: string | null }>;
-  const zones = [...new Set(rows.map((p) => p.zone).filter(Boolean))] as string[];
-  return zones.sort((a, b) => a.localeCompare(b));
+  return ((data ?? []) as Array<{ name: string }>).map((z) => z.name);
 }
 
 export async function getProjectGalleryImages(projectId: string): Promise<ProjectImageRow[]> {
