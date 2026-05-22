@@ -1,12 +1,25 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import {
+  Shuffle,
+  Lightbulb,
+  Leaf,
+  ShieldCheck,
+  Award,
+  Handshake,
+  Route,
+  Eye,
+  Wallet,
+  Brain,
+  Building2,
+  Zap,
+} from "lucide-react";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import {
   getBrandHighlights,
-  getTeamMembers,
   getQuienesSomosHero,
   getQuienesSomosContent,
   parseHighlightValue,
@@ -19,37 +32,99 @@ export const metadata: Metadata = {
     "Conoce a Puerta Abierta Inmobiliaria. Más de 22 años desarrollando proyectos inmobiliarios de alta calidad en Guatemala, creando comunidades donde las familias pueden crecer y prosperar.",
 };
 
-const DEFAULT_VALUES = [
+const VALUES = [
   {
-    key: "value_1",
-    title: "Calidad",
+    key: "adaptabilidad",
+    icon: Shuffle,
+    title: "Adaptabilidad",
     description:
-      "Cada detalle importa. Desde los materiales hasta el diseño, buscamos la excelencia en todo lo que hacemos.",
+      "Evolucionamos con cada desafío y nos ajustamos a un mercado en constante cambio sin perder de vista lo que importa: las familias que confían en nosotros.",
   },
   {
-    key: "value_2",
-    title: "Transparencia",
-    description:
-      "Operamos con honestidad y claridad en cada paso del proceso, construyendo relaciones de confianza con nuestros clientes.",
-  },
-  {
-    key: "value_3",
+    key: "innovacion",
+    icon: Lightbulb,
     title: "Innovación",
     description:
-      "Incorporamos las últimas tendencias en diseño y construcción para ofrecer espacios modernos y funcionales.",
+      "Buscamos siempre mejores formas de construir, vender y acompañar. La curiosidad es el motor que nos lleva a transformar el sector inmobiliario en Guatemala.",
   },
   {
-    key: "value_4",
-    title: "Compromiso",
+    key: "sostenibilidad",
+    icon: Leaf,
+    title: "Sostenibilidad",
     description:
-      "Acompañamos a nuestros clientes desde la primera consulta hasta la entrega de su hogar y más allá.",
+      "Construimos pensando en las generaciones que vienen, integrando prácticas responsables que cuidan el entorno y fortalecen las comunidades donde trabajamos.",
+  },
+  {
+    key: "integridad",
+    icon: ShieldCheck,
+    title: "Integridad",
+    description:
+      "Hacemos lo correcto, incluso cuando nadie nos observa. Honestidad y transparencia son la base de cada decisión y cada relación que construimos.",
+  },
+  {
+    key: "excelencia",
+    icon: Award,
+    title: "Excelencia",
+    description:
+      "No nos conformamos con lo suficiente. Elevamos el estándar en cada detalle, desde la primera conversación hasta la entrega de llaves.",
+  },
+  {
+    key: "responsabilidad",
+    icon: Handshake,
+    title: "Responsabilidad",
+    description:
+      "Asumimos cada compromiso con seriedad. Nuestra palabra es nuestro contrato y respondemos por cada promesa hecha a clientes, equipos y socios.",
+  },
+];
+
+const DIFERENCIADORES = [
+  {
+    key: "acompanamiento",
+    icon: Route,
+    title: "Acompañamiento de Principio a Fin",
+    description:
+      "Desde la primera conversación hasta el día que recibes tus llaves, tienes un equipo dedicado que responde tus dudas, gestiona los trámites y te mantiene informado del avance de tu proyecto. No te dejamos solo en ningún paso — porque sabemos que comprar tu apartamento es una de las decisiones más importantes de tu vida.",
+  },
+  {
+    key: "transparencia",
+    icon: Eye,
+    title: "Transparencia Total",
+    description:
+      "Sin costos ocultos, sin sorpresas, sin letra pequeña. Te explicamos cada número, cada plazo y cada condición antes de que tomes una decisión. Creemos que un cliente bien informado es un cliente que compra con confianza — y eso nos conviene a todos.",
+  },
+  {
+    key: "financiamiento",
+    icon: Wallet,
+    title: "Financiamiento a Tu Medida",
+    description:
+      "Trabajamos con múltiples opciones de crédito, programas de vivienda accesible y esquemas de enganche flexibles para encontrar el plan que se adapta a tu realidad financiera — no al revés. Tu asesor te guía entre las opciones hasta encontrar la que te funciona.",
+  },
+  {
+    key: "datos-ia",
+    icon: Brain,
+    title: "Decisiones Respaldadas por Datos e IA",
+    description:
+      "Usamos inteligencia artificial y análisis de datos para entender el mercado en tiempo real, identificar las mejores oportunidades y darte recomendaciones precisas según tu perfil. No vendemos por intuición — vendemos con evidencia.",
+  },
+  {
+    key: "respaldo",
+    icon: Building2,
+    title: "+5 Años y 12 Proyectos de Respaldo",
+    description:
+      "No somos nuevos en esto. Más de dos décadas entregando hogares en Guatemala nos dieron algo que no se puede comprar: experiencia real, relaciones sólidas con desarrolladores de primer nivel y la reputación de cumplir lo que prometemos.",
+  },
+  {
+    key: "respuesta",
+    icon: Zap,
+    title: "Respuesta Inmediata, Siempre",
+    description:
+      "Tu tiempo vale. Por eso respondemos rápido — con asesores disponibles por WhatsApp, teléfono y chat, respaldados por herramientas digitales que agilizan cotizaciones, comparaciones y trámites. Nada de \"te llamo la próxima semana\".",
   },
 ];
 
 export default async function QuienesSomosPage() {
-  const [highlights, teamMembers, heroMedia, content] = await Promise.all([
+  const [highlights, heroMedia, content] = await Promise.all([
     getBrandHighlights(),
-    getTeamMembers(),
     getQuienesSomosHero(),
     getQuienesSomosContent(),
   ]);
@@ -67,29 +142,6 @@ export default async function QuienesSomosPage() {
   const trayectoria =
     content?.trayectoria ||
     "Con más de dos décadas de experiencia en el mercado inmobiliario guatemalteco, hemos desarrollado proyectos que han transformado comunidades y brindado hogares de calidad a miles de familias. Cada proyecto refleja nuestro compromiso con la excelencia y la innovación.";
-
-  const values = [
-    {
-      key: "value_1",
-      title: content?.value_1_title || DEFAULT_VALUES[0].title,
-      description: content?.value_1_desc || DEFAULT_VALUES[0].description,
-    },
-    {
-      key: "value_2",
-      title: content?.value_2_title || DEFAULT_VALUES[1].title,
-      description: content?.value_2_desc || DEFAULT_VALUES[1].description,
-    },
-    {
-      key: "value_3",
-      title: content?.value_3_title || DEFAULT_VALUES[2].title,
-      description: content?.value_3_desc || DEFAULT_VALUES[2].description,
-    },
-    {
-      key: "value_4",
-      title: content?.value_4_title || DEFAULT_VALUES[3].title,
-      description: content?.value_4_desc || DEFAULT_VALUES[3].description,
-    },
-  ];
 
   const hasHeroMedia = heroMedia?.url && heroMedia.url.trim() !== "";
 
@@ -169,23 +221,65 @@ export default async function QuienesSomosPage() {
               </h2>
             </ScrollReveal>
 
-            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {values.map((value, index) => (
-                <ScrollReveal
-                  key={value.key}
-                  variant="fade-up"
-                  delay={index * 0.1}
-                >
-                  <div className="rounded-2xl bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg">
-                    <h3 className="font-heading text-xl font-bold text-navy">
-                      {value.title}
-                    </h3>
-                    <p className="mt-3 text-sm leading-relaxed text-gray">
-                      {value.description}
-                    </p>
-                  </div>
-                </ScrollReveal>
-              ))}
+            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {VALUES.map((value, index) => {
+                const Icon = value.icon;
+                return (
+                  <ScrollReveal
+                    key={value.key}
+                    variant="fade-up"
+                    delay={index * 0.1}
+                  >
+                    <div className="h-full rounded-2xl bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg">
+                      <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-celeste/10 text-celeste">
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <h3 className="font-heading text-xl font-bold text-navy">
+                        {value.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-gray">
+                        {value.description}
+                      </p>
+                    </div>
+                  </ScrollReveal>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Diferenciadores */}
+        <section className="py-20 md:py-28">
+          <div className="mx-auto max-w-7xl px-6">
+            <ScrollReveal variant="fade-up" className="text-center">
+              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
+                Nuestros Diferenciadores
+              </h2>
+            </ScrollReveal>
+
+            <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {DIFERENCIADORES.map((item, index) => {
+                const Icon = item.icon;
+                return (
+                  <ScrollReveal
+                    key={item.key}
+                    variant="fade-up"
+                    delay={index * 0.1}
+                  >
+                    <div className="h-full rounded-2xl border border-gray/10 bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg">
+                      <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-navy/5 text-navy">
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <h3 className="font-heading text-xl font-bold text-navy">
+                        {item.title}
+                      </h3>
+                      <p className="mt-3 text-sm leading-relaxed text-gray">
+                        {item.description}
+                      </p>
+                    </div>
+                  </ScrollReveal>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -211,55 +305,6 @@ export default async function QuienesSomosPage() {
                         />
                       </p>
                       <p className="mt-2 text-sm text-white/60">{item.label}</p>
-                    </div>
-                  </ScrollReveal>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
-
-        {/* Team Members */}
-        {teamMembers.length > 0 && (
-          <section className="py-20 md:py-28">
-            <div className="mx-auto max-w-7xl px-6">
-              <ScrollReveal variant="fade-up" className="text-center">
-                <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-                  Nuestro Equipo
-                </h2>
-              </ScrollReveal>
-
-              <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {teamMembers.map((member, index) => (
-                  <ScrollReveal key={index} variant="fade-up" delay={index * 0.1}>
-                    <div className="flex flex-col items-center rounded-2xl bg-white p-6 text-center shadow-sm transition-shadow duration-300 hover:shadow-lg">
-                      {member.photo_url ? (
-                        <Image
-                          src={member.photo_url}
-                          alt={member.name}
-                          width={120}
-                          height={120}
-                          className="h-28 w-28 rounded-full object-cover"
-                        />
-                      ) : (
-                        <div className="flex h-28 w-28 items-center justify-center rounded-full bg-celeste/10">
-                          <span className="font-heading text-3xl font-bold text-celeste">
-                            {member.name
-                              .split(" ")
-                              .slice(0, 2)
-                              .map((w: string) => w[0])
-                              .join("")
-                              .toUpperCase()}
-                          </span>
-                        </div>
-                      )}
-                      <h3 className="mt-4 font-heading text-lg font-bold text-navy">
-                        {member.name}
-                      </h3>
-                      <p className="mt-1 text-sm font-medium text-celeste">{member.title}</p>
-                      {member.bio && (
-                        <p className="mt-3 text-sm leading-relaxed text-gray">{member.bio}</p>
-                      )}
                     </div>
                   </ScrollReveal>
                 ))}
