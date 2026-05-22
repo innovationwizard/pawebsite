@@ -75,7 +75,7 @@ export default async function Home() {
         <HeroVideo
           videoUrl={heroVideoUrl || "https://www.youtube.com/watch?v=rutCVOOj4KQ"}
           title="Tu hogar ideal te espera"
-          subtitle="Más de 22 años desarrollando proyectos inmobiliarios de alta calidad en Guatemala."
+          subtitle="Más de 22 años comercializando proyectos inmobiliarios de alta calidad en Guatemala."
           ctaText="Conoce Nuestros Proyectos"
           ctaHref="/proyectos"
         />
