@@ -47,6 +47,11 @@ function bedroomsMatch(bedroomRange: string | null, filter: string): boolean {
 export function ProjectsListing({ projects, zones }: ProjectsListingProps) {
   const [filters, setFilters] = useState<ProjectFilters>(EMPTY_FILTERS);
 
+  const availableTypes = useMemo(
+    () => Array.from(new Set(projects.map((p) => p.project_type))),
+    [projects],
+  );
+
   const filtered = useMemo(() => {
     return projects.filter((p) => {
       if (filters.keyword) {
@@ -70,6 +75,7 @@ export function ProjectsListing({ projects, zones }: ProjectsListingProps) {
       <div className="mt-8">
         <ProjectFilter
           zones={zones}
+          availableTypes={availableTypes}
           filters={filters}
           onFiltersChange={setFilters}
           totalResults={filtered.length}

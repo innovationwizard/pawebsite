@@ -37,9 +37,6 @@ export type LeadSource =
   | "other";
 
 export type ProjectType =
-  | "vertical"
-  | "horizontal"
-  | "mixed-use"
   | "casas"
   | "apartamentos"
   | "terrenos";

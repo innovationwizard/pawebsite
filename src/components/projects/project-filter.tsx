@@ -20,12 +20,9 @@ const EMPTY_FILTERS: ProjectFilters = {
 };
 
 const PROJECT_TYPE_OPTIONS = [
-  { value: "casas", label: "Casas" },
   { value: "apartamentos", label: "Apartamentos" },
+  { value: "casas", label: "Casas" },
   { value: "terrenos", label: "Terrenos" },
-  { value: "vertical", label: "Vertical" },
-  { value: "horizontal", label: "Horizontal" },
-  { value: "mixed-use", label: "Uso mixto" },
 ];
 
 const BEDROOM_OPTIONS = [
@@ -44,6 +41,7 @@ const PRICE_MAX_OPTIONS = [
 
 interface ProjectFilterProps {
   zones: string[];
+  availableTypes: string[];
   filters: ProjectFilters;
   onFiltersChange: (filters: ProjectFilters) => void;
   totalResults: number;
@@ -55,10 +53,14 @@ function activeFilterCount(filters: ProjectFilters): number {
 
 export function ProjectFilter({
   zones,
+  availableTypes,
   filters,
   onFiltersChange,
   totalResults,
 }: ProjectFilterProps) {
+  const visibleTypeOptions = PROJECT_TYPE_OPTIONS.filter((opt) =>
+    availableTypes.includes(opt.value),
+  );
   const [mobileOpen, setMobileOpen] = useState(false);
   const activeCount = activeFilterCount(filters);
 
@@ -87,7 +89,7 @@ export function ProjectFilter({
             className="w-full appearance-none rounded-lg border border-gray/20 bg-white px-4 py-2.5 pr-9 text-sm text-navy outline-none transition-colors focus:border-celeste focus:ring-2 focus:ring-celeste/20"
           >
             <option value="">Todos</option>
-            {PROJECT_TYPE_OPTIONS.map((opt) => (
+            {visibleTypeOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
                 {opt.label}
               </option>

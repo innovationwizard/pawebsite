@@ -19,12 +19,9 @@ type Project = Database["public"]["Tables"]["projects"]["Row"];
 type ProjectImage = Database["public"]["Tables"]["project_images"]["Row"];
 
 const projectTypeOptions = [
-  { value: "casas", label: "Casas" },
   { value: "apartamentos", label: "Apartamentos" },
+  { value: "casas", label: "Casas" },
   { value: "terrenos", label: "Terrenos" },
-  { value: "vertical", label: "Vertical" },
-  { value: "horizontal", label: "Horizontal" },
-  { value: "mixed-use", label: "Uso Mixto" },
 ];
 
 const statusOptions = [
@@ -55,7 +52,7 @@ export default function EditarProyectoPage() {
   const [name, setName] = useState("");
   const [abbreviation, setAbbreviation] = useState("");
   const [slug, setSlug] = useState("");
-  const [projectType, setProjectType] = useState<ProjectType>("vertical");
+  const [projectType, setProjectType] = useState<ProjectType>("apartamentos");
   const [currency, setCurrency] = useState<Currency>("GTQ");
   const [description, setDescription] = useState("");
   const [locationDescription, setLocationDescription] = useState("");
