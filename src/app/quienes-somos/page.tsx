@@ -9,6 +9,7 @@ import {
   getTeamMembers,
   getQuienesSomosHero,
   getQuienesSomosContent,
+  parseHighlightValue,
 } from "@/lib/queries/settings";
 import { CounterAnimation } from "@/components/animations/counter-animation";
 
@@ -190,36 +191,16 @@ export default async function QuienesSomosPage() {
         </section>
 
         {/* Highlights / Stats */}
-        {highlights && (
+        {highlights.length > 0 && (
           <section className="bg-navy py-20 md:py-28">
             <div className="mx-auto max-w-7xl px-6">
               <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                {[
-                  {
-                    value: highlights.projects_count,
-                    prefix: "+",
-                    suffix: "",
-                    label: "Proyectos Desarrollados",
-                  },
-                  {
-                    value: highlights.sqm_developed,
-                    prefix: "",
-                    suffix: "",
-                    label: "Mil m² Desarrollados",
-                  },
-                  {
-                    value: highlights.years_experience,
-                    prefix: "+",
-                    suffix: "",
-                    label: "Años de Experiencia",
-                  },
-                  {
-                    value: highlights.historical_sales_millions,
-                    prefix: "$",
-                    suffix: "M",
-                    label: "Millones Históricos",
-                  },
-                ].map((item) => (
+                {highlights
+                  .map((h) => {
+                    const { prefix, end, suffix } = parseHighlightValue(h.value);
+                    return { value: end, prefix, suffix, label: h.label };
+                  })
+                  .map((item) => (
                   <ScrollReveal key={item.label} variant="fade-up">
                     <div className="text-center">
                       <p className="font-heading text-4xl font-bold text-white md:text-5xl">

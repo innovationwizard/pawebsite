@@ -17,11 +17,22 @@ export async function getSiteSetting<T = Json>(key: string): Promise<T | null> {
   return (data as any).value as T;
 }
 
-export interface BrandHighlights {
-  projects_count: number;
-  sqm_developed: number;
-  years_experience: number;
-  historical_sales_millions: number;
+export interface BrandHighlightItem {
+  label: string;
+  value: string;
+}
+
+export function parseHighlightValue(raw: string): {
+  prefix: string;
+  end: number;
+  suffix: string;
+} {
+  const match = String(raw ?? "").match(/^(\D*)([\d,.]*)(\D*)$/);
+  const prefix = match?.[1] ?? "";
+  const digits = (match?.[2] ?? "").replace(/,/g, "");
+  const suffix = match?.[3] ?? "";
+  const end = Number(digits);
+  return { prefix, end: Number.isFinite(end) ? end : 0, suffix };
 }
 
 export interface TertiaryBannerSettings {
@@ -50,8 +61,9 @@ export async function getHeroVideoUrl(): Promise<string | null> {
   return setting?.url ?? null;
 }
 
-export async function getBrandHighlights(): Promise<BrandHighlights | null> {
-  return getSiteSetting<BrandHighlights>("brand_highlights");
+export async function getBrandHighlights(): Promise<BrandHighlightItem[]> {
+  const data = await getSiteSetting<BrandHighlightItem[]>("brand_highlights");
+  return Array.isArray(data) ? data : [];
 }
 
 export async function getTertiaryBanner(): Promise<TertiaryBannerSettings | null> {

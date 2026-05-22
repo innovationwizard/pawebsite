@@ -22,6 +22,7 @@ import {
   getTertiaryBanner,
   getLicPuertasSettings,
   getHomepageSectionImages,
+  parseHighlightValue,
 } from "@/lib/queries/settings";
 
 export default async function Home() {
@@ -38,34 +39,10 @@ export default async function Home() {
       getHomepageSectionImages(),
     ]);
 
-  const highlightItems = highlights
-    ? [
-        {
-          value: highlights.projects_count,
-          prefix: "+",
-          suffix: "",
-          label: "Proyectos Desarrollados",
-        },
-        {
-          value: highlights.sqm_developed,
-          prefix: "",
-          suffix: "",
-          label: "Mil m² Desarrollados",
-        },
-        {
-          value: highlights.years_experience,
-          prefix: "+",
-          suffix: "",
-          label: "Años de Experiencia",
-        },
-        {
-          value: highlights.historical_sales_millions,
-          prefix: "$",
-          suffix: "M",
-          label: "Millones Históricos",
-        },
-      ]
-    : [];
+  const highlightItems = highlights.map((h) => {
+    const { prefix, end, suffix } = parseHighlightValue(h.value);
+    return { value: end, prefix, suffix, label: h.label };
+  });
 
   return (
     <>
