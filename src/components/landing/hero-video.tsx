@@ -51,7 +51,7 @@ export function HeroVideo({
       )}
 
       {/* Content overlay — always visible */}
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 py-32 md:py-40">
+      <div className="relative z-10 mx-auto w-full max-w-7xl -translate-y-12 px-6 py-32 md:-translate-y-20 md:py-40">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
