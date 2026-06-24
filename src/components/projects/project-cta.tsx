@@ -3,12 +3,20 @@ import { Button } from "@/components/ui/button";
 
 interface ProjectCTAProps {
   projectName: string;
+  /**
+   * The project's own WhatsApp/phone line (digits only, full international
+   * format, e.g. "50242403164"). Drives both the WhatsApp and call buttons
+   * so leads are attributed to the right project in the CRM. Falls back to
+   * the global company number only if the project has none set yet.
+   */
+  whatsappNumber: string | null;
 }
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50242403164";
+const FALLBACK_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50242403164";
 
-export function ProjectCTA({ projectName }: ProjectCTAProps) {
-  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+export function ProjectCTA({ projectName, whatsappNumber }: ProjectCTAProps) {
+  const number = whatsappNumber || FALLBACK_NUMBER;
+  const whatsappUrl = `https://wa.me/${number}?text=${encodeURIComponent(
     `Hola, me interesa obtener más información sobre el proyecto ${projectName}.`
   )}`;
 
@@ -30,7 +38,7 @@ export function ProjectCTA({ projectName }: ProjectCTAProps) {
               WhatsApp
             </Button>
           </a>
-          <a href="tel:+50242403164">
+          <a href={`tel:+${number}`}>
             <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-navy">
               <Phone className="mr-2 h-5 w-5" />
               Llamar

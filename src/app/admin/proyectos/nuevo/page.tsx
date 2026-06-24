@@ -68,6 +68,7 @@ export default function NuevoProyectoPage() {
   const [bedroomRange, setBedroomRange] = useState("");
   const [areaRangeM2, setAreaRangeM2] = useState("");
   const [zonaId, setZonaId] = useState<string | null>(null);
+  const [whatsappNumber, setWhatsappNumber] = useState("");
   const [sortOrder, setSortOrder] = useState("0");
   const [isPublished, setIsPublished] = useState(false);
   const [metaTitle, setMetaTitle] = useState("");
@@ -124,6 +125,7 @@ export default function NuevoProyectoPage() {
       bedroom_range: bedroomRange || null,
       area_range_m2: areaRangeM2 || null,
       zona_id: zonaId,
+      whatsapp_number: whatsappNumber.replace(/\D/g, "") || null,
       sort_order: parseInt(sortOrder) || 0,
       is_published: isPublished,
       meta_title: metaTitle || null,
@@ -279,6 +281,26 @@ export default function NuevoProyectoPage() {
               onChange={(e) => setLongitude(e.target.value)}
             />
           </div>
+        </section>
+
+        {/* Contacto / CRM */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <h2 className="mb-1 font-heading text-lg font-semibold text-navy">
+            Contacto / CRM
+          </h2>
+          <p className="mb-4 text-sm text-gray">
+            Número de WhatsApp propio del proyecto. Los botones de WhatsApp y
+            de llamada en la página del proyecto usan este número para que los
+            leads se contabilicen en el CRM correcto. Incluye el código de país
+            (502).
+          </p>
+          <Input
+            id="whatsapp_number"
+            label="Número de WhatsApp del proyecto"
+            value={whatsappNumber}
+            onChange={(e) => setWhatsappNumber(e.target.value)}
+            placeholder="502 4240 3164"
+          />
         </section>
 
         {/* Imágenes */}

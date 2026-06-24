@@ -91,10 +91,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
         <ProjectContactForm projectId={project.id} projectName={project.name} />
 
-        <ProjectCTA projectName={project.name} />
+        <ProjectCTA projectName={project.name} whatsappNumber={project.whatsapp_number} />
       </main>
       <Footer />
-      <WhatsAppButton />
+      <WhatsAppButton phoneNumber={project.whatsapp_number} />
     </>
   );
 }

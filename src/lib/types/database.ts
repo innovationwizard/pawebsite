@@ -87,6 +87,7 @@ export interface Database {
           bedroom_range: string | null;
           area_range_m2: string | null;
           zona_id: string | null;
+          whatsapp_number: string | null;
           sort_order: number;
           is_published: boolean;
           meta_title: string | null;
@@ -125,6 +126,7 @@ export interface Database {
           bedroom_range?: string | null;
           area_range_m2?: string | null;
           zona_id?: string | null;
+          whatsapp_number?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;
@@ -163,6 +165,7 @@ export interface Database {
           bedroom_range?: string | null;
           area_range_m2?: string | null;
           zona_id?: string | null;
+          whatsapp_number?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;

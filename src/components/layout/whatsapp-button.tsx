@@ -2,10 +2,21 @@
 
 import { MessageCircle } from "lucide-react";
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50242403164";
+const FALLBACK_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50242403164";
 
-export function WhatsAppButton() {
-  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+interface WhatsAppButtonProps {
+  /**
+   * Per-project WhatsApp line (digits only, full international format). On a
+   * project page this routes the floating button to that project's number so
+   * the lead lands in the right CRM bucket. Omit elsewhere to use the global
+   * company number.
+   */
+  phoneNumber?: string | null;
+}
+
+export function WhatsAppButton({ phoneNumber }: WhatsAppButtonProps = {}) {
+  const number = phoneNumber || FALLBACK_NUMBER;
+  const href = `https://wa.me/${number}?text=${encodeURIComponent(
     "Hola, me gustaría obtener más información sobre sus proyectos."
   )}`;
 

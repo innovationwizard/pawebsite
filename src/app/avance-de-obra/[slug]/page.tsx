@@ -133,7 +133,7 @@ export default async function ProjectProgressPage({ params }: ProgressPageProps)
         </div>
       </main>
       <Footer />
-      <WhatsAppButton />
+      <WhatsAppButton phoneNumber={project.whatsapp_number} />
     </>
   );
 }
