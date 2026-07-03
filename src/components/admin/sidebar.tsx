@@ -19,6 +19,7 @@ import {
   Target,
   DollarSign,
   Tag,
+  Link2,
 } from "lucide-react";
 import { useState } from "react";
 
@@ -32,6 +33,7 @@ const NAV_ITEMS = [
   { label: "FAQ", href: "/admin/faq", icon: HelpCircle },
   { label: "Leads", href: "/admin/leads", icon: Target },
   { label: "Precios", href: "/admin/precios", icon: DollarSign },
+  { label: "UTM", href: "/admin/utm", icon: Link2 },
   { label: "Configuración", href: "/admin/configuracion", icon: Settings },
   { label: "Usuarios", href: "/admin/usuarios", icon: Users },
 ];
