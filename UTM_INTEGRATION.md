@@ -6,7 +6,11 @@ records, and decommission the separate Supabase project + Vercel deployment to
 cut cost. This is the shared status doc + decision log — read it before working
 on the UTM feature.
 
-_Created 2026-07-01. Status: **migration authored + verified locally; ready to load. Code port not started.**_
+_Created 2026-07-01. Status: **COMPLETE (2026-07-02)** — migration in prod, code
+ported + deployed (pawebsite `6ae69e9`), mktutmgen shows the "moved" page
+(`bbbe648`), source Supabase project `exsnvlzhpgrkiqvoonlh` **deleted**. Only
+open item: app-level smoke-test of the deployed `/admin/utm` (data safety was
+already guaranteed by the pre-deletion diff).**_
 
 ---
 

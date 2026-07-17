@@ -2,7 +2,7 @@
 
 import { MessageCircle } from "lucide-react";
 
-const FALLBACK_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50242403164";
+const FALLBACK_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50224249388";
 
 interface WhatsAppButtonProps {
   /**

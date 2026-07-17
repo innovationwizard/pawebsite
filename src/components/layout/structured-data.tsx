@@ -16,7 +16,7 @@ export function HomeStructuredData() {
       addressRegion: "Guatemala",
       addressCountry: "GT",
     },
-    telephone: "+50242403164",
+    telephone: "+50224249388",
     email: "ventas@puertaabierta.com.gt",
     foundingDate: "2004",
     numberOfEmployees: {

@@ -31,7 +31,7 @@ export function TerrenosHero() {
                 Quiero que evalúen mi terreno
               </Link>
               <Link
-                href="tel:+50242403164"
+                href="tel:+50224249388"
                 className="rounded-full border border-white/20 px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
               >
                 Llamar ahora

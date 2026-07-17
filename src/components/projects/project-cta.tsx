@@ -12,7 +12,7 @@ interface ProjectCTAProps {
   whatsappNumber: string | null;
 }
 
-const FALLBACK_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50242403164";
+const FALLBACK_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50224249388";
 
 export function ProjectCTA({ projectName, whatsappNumber }: ProjectCTAProps) {
   const number = whatsappNumber || FALLBACK_NUMBER;
