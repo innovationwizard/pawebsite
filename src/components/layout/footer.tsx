@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Newspaper } from "lucide-react";
+import { FOOTER_NAV, LEGAL_NAV, BLOG_NAV } from "@/lib/constants/navigation";
+import { ButtonLink } from "@/components/ui/button-link";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -42,21 +44,6 @@ function TiktokIcon({ className }: { className?: string }) {
   );
 }
 
-const FOOTER_NAV = [
-  { label: "Inicio", href: "/" },
-  { label: "Quiénes Somos", href: "/quienes-somos" },
-  { label: "Proyectos", href: "/proyectos" },
-  { label: "Avances de Obra", href: "/avance-de-obra" },
-  { label: "Blog y Noticias", href: "/noticias" },
-  { label: "FAQ", href: "/preguntas-frecuentes" },
-  { label: "Cotizador", href: "/cotizador" },
-];
-
-const LEGAL_NAV = [
-  { label: "Política de Privacidad", href: "/politica-de-privacidad" },
-  { label: "Términos y Condiciones", href: "/terminos-y-condiciones" },
-];
-
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -71,17 +58,26 @@ export function Footer() {
               alt="Puerta Abierta Inmobiliaria"
               width={640}
               height={200}
-              className="h-40 w-auto"
+              className="h-28 w-auto"
             />
-            <p className="mt-4 text-sm leading-relaxed text-white/60">
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
               Desarrollamos proyectos inmobiliarios de alta calidad en Guatemala.
               Más de 22 años de experiencia construyendo hogares y comunidades.
             </p>
+            <ButtonLink
+              href={BLOG_NAV.href}
+              variant="outline-light"
+              size="sm"
+              className="mt-6"
+            >
+              <Newspaper className="h-4 w-4" aria-hidden="true" />
+              {BLOG_NAV.label}
+            </ButtonLink>
           </div>
 
           {/* Navigation */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/40">
+            <h3 className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-celeste">
               Navegación
             </h3>
             <ul className="space-y-3">
@@ -100,7 +96,7 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/40">
+            <h3 className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-celeste">
               Contacto
             </h3>
             <ul className="space-y-3">
@@ -132,9 +128,9 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Social + Legal */}
+          {/* Social */}
           <div>
-            <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-white/40">
+            <h3 className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-celeste">
               Síguenos
             </h3>
             <div className="flex flex-wrap gap-3">
@@ -184,24 +180,25 @@ export function Footer() {
                 <LinkedinIcon className="h-5 w-5" />
               </a>
             </div>
-
-            <ul className="mt-6 space-y-2">
-              {LEGAL_NAV.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className="text-xs text-white/40 transition-colors hover:text-white/60"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
           </div>
         </div>
 
-        <div className="mt-12 border-t border-white/10 pt-8 text-center text-xs text-white/30">
-          &copy; {currentYear} Puerta Abierta Inmobiliaria. Todos los derechos reservados.
+        <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-8 text-xs text-white/40 md:flex-row md:items-center md:justify-between">
+          <p>&copy; {currentYear} Puerta Abierta Inmobiliaria. Guatemala. Todos los derechos reservados.</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            {LEGAL_NAV.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="transition-colors hover:text-white">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <Link href="/#contacto" className="transition-colors hover:text-white">
+                Contacto
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>

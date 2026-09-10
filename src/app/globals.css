@@ -1,17 +1,23 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* Brand palette — values approved from "Puerta Abierta — Website Look and Feel" (ajustes6) */
 :root {
-  --color-navy: #0d1d41;
+  --color-navy: #030328;
+  --color-navy-deep: #020107;
+  --color-primary: #0573b0;
   --color-gray: #5b6770;
-  --color-celeste: #04b0d6;
+  --color-celeste: #1ec8f0;
   --color-white: #ffffff;
-  --color-off-white: #f8f9fa;
+  --color-off-white: #f9fafb;
   --color-dark: #0a0e1a;
+  --gradient-hero: linear-gradient(135deg, var(--color-navy-deep) 0%, #030328 45%, #056ca8 100%);
 }
 
 @theme inline {
   --color-navy: var(--color-navy);
+  --color-navy-deep: var(--color-navy-deep);
+  --color-primary: var(--color-primary);
   --color-gray: var(--color-gray);
   --color-celeste: var(--color-celeste);
   --color-off-white: var(--color-off-white);
@@ -44,6 +50,76 @@ html {
 *:focus-visible {
   outline: 2px solid var(--color-celeste);
   outline-offset: 2px;
+}
+
+/* Hero / dark-section gradient */
+@utility bg-hero-gradient {
+  background-image: var(--gradient-hero);
+}
+
+/* Outlined italic accent word used inside headings (mockup: "ideal", "espera", "tecnología") */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 0.04em var(--color-celeste);
+  paint-order: stroke fill;
+}
+@supports not (-webkit-text-stroke: 1px #000) {
+  .text-outline {
+    color: var(--color-celeste);
+  }
+}
+
+/*
+ * Button hover: a border line draws itself once around the button perimeter.
+ * A conic-gradient ring (width --sweep-width) is masked onto the element's
+ * edge; --sweep-angle grows from 0 to 360deg on hover, so the stroke starts
+ * at 12 o'clock and runs clockwise until it closes. Leaving the button
+ * reverses the draw. Colour defaults to currentColor; set --sweep-color to
+ * override per variant.
+ */
+@property --sweep-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@utility btn-sweep {
+  position: relative;
+  isolation: isolate;
+  --sweep-angle: 0deg;
+  --sweep-width: 2px;
+  --sweep-color: currentColor;
+  transition-property: --sweep-angle, background-color, color, box-shadow, transform, opacity;
+  transition-duration: 0.55s, 0.3s, 0.3s, 0.3s, 0.3s, 0.3s;
+  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease, ease, ease, ease, ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    padding: var(--sweep-width);
+    background: conic-gradient(
+      from 0deg,
+      var(--sweep-color) var(--sweep-angle),
+      transparent var(--sweep-angle)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  &:hover,
+  &:focus-visible {
+    --sweep-angle: 360deg;
+  }
 }
 
 /* Reduced motion preference */

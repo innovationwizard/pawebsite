@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { NAV_ITEMS } from "@/lib/constants/navigation";
+import { NAV_ITEMS, NAV_CTA, BLOG_NAV } from "@/lib/constants/navigation";
+import { ButtonLink } from "@/components/ui/button-link";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -21,9 +22,9 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 top-[72px] z-40 bg-navy xl:hidden"
+          className="fixed inset-0 top-[89px] z-40 overflow-y-auto bg-navy xl:hidden"
         >
-          <nav className="flex flex-col px-6 py-8">
+          <nav className="flex flex-col px-6 py-6">
             {NAV_ITEMS.map((item) => (
               <Link
                 key={item.href}
@@ -39,12 +40,25 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               </Link>
             ))}
             <Link
-              href="/cotizador"
+              href={BLOG_NAV.href}
               onClick={onClose}
-              className="mt-6 rounded-full bg-celeste px-6 py-3 text-center text-base font-medium text-white transition-all hover:bg-celeste/90"
+              className={`border-b border-white/10 py-4 text-base font-medium transition-colors ${
+                pathname.startsWith(BLOG_NAV.href)
+                  ? "text-celeste"
+                  : "text-white/60 hover:text-white"
+              }`}
             >
-              Cotiza Ahora
+              {BLOG_NAV.label}
             </Link>
+            <ButtonLink
+              href={NAV_CTA.href}
+              variant="primary"
+              onClick={onClose}
+              className="mt-6 w-full"
+            >
+              {NAV_CTA.label}
+              <span aria-hidden="true">→</span>
+            </ButtonLink>
           </nav>
         </motion.div>
       )}

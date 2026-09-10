@@ -1,30 +1,15 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
-
-type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
-type ButtonSize = "sm" | "md" | "lg";
+import {
+  buttonClassName,
+  type ButtonSize,
+  type ButtonVariant,
+} from "./button-styles";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   isLoading?: boolean;
 }
-
-const variantClasses: Record<ButtonVariant, string> = {
-  primary:
-    "bg-celeste text-white hover:bg-celeste/90 focus-visible:ring-celeste/50",
-  secondary:
-    "bg-navy text-white hover:bg-navy/90 focus-visible:ring-navy/50",
-  outline:
-    "border-2 border-navy text-navy hover:bg-navy hover:text-white focus-visible:ring-navy/50",
-  ghost:
-    "text-navy hover:bg-navy/5 focus-visible:ring-navy/50",
-};
-
-const sizeClasses: Record<ButtonSize, string> = {
-  sm: "px-4 py-2 text-sm",
-  md: "px-6 py-3 text-base",
-  lg: "px-8 py-4 text-lg",
-};
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
@@ -42,7 +27,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`inline-flex items-center justify-center font-medium rounded-full transition-all duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+        className={buttonClassName({ variant, size, className })}
         disabled={disabled || isLoading}
         {...props}
       >
@@ -76,4 +61,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = "Button";
 
-export { Button, type ButtonProps };
+export { Button, type ButtonProps, type ButtonVariant, type ButtonSize };
