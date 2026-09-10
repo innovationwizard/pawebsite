@@ -2,7 +2,7 @@
 **Date:** 2026-09-10
 **Branch:** main
 **Sources:** `ajustes6/Optimizaciones Website PAI.pdf` (3 pp.) + `ajustes6/Puerta Abierta — Website Look and Feel.pdf` (10 pp., home-page mockup)
-**Status:** APPROVED 2026-09-10 — all 19 clarifying questions answered (see §10). Ready to implement in the order of §7. Nothing is implemented yet.
+**Status:** IMPLEMENTED 2026-09-10 on `main` (commits `dc58471` → restyle). **Pending on the client:** run the SQL in §4 in the Supabase SQL editor *before* deploying — until then the Terrenos and Servicios forms fail on insert (missing enum values / columns), exactly as Terrenos did before.
 
 ---
 
