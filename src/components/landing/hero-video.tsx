@@ -81,6 +81,10 @@ export function HeroVideo({
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const playerRef = useRef<YTPlayer | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  // If the IFrame API script cannot load (blocked network/extension), the
+  // player state is unknowable — reveal the video rather than hide it forever.
+  const [apiFailed, setApiFailed] = useState(false);
+  const showVideo = isPlaying || apiFailed;
   // The embed URL carries the page origin (required by the IFrame API), which
   // is only known in the browser — "" during SSR/hydration, so the iframe
   // mounts once the client has rendered.
@@ -149,14 +153,19 @@ export function HeroVideo({
           <div
             aria-hidden="true"
             className={`absolute inset-0 bg-hero-gradient transition-opacity duration-1000 ease-out ${
-              isPlaying ? "opacity-0" : "opacity-100"
+              showVideo ? "opacity-0" : "opacity-100"
             }`}
           />
         </div>
       )}
 
       {videoId && (
-        <Script src="https://www.youtube.com/iframe_api" strategy="lazyOnload" onLoad={attachPlayer} />
+        <Script
+          src="https://www.youtube.com/iframe_api"
+          strategy="lazyOnload"
+          onLoad={attachPlayer}
+          onError={() => setApiFailed(true)}
+        />
       )}
 
       {/* Content overlay — always visible */}
