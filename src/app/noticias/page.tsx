@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 import { BlogListing } from "@/components/news/blog-listing";
 import { getPublishedArticles, getNewsCategories } from "@/lib/queries/articles";
 import { getYouTubeVideos } from "@/lib/queries/youtube";
@@ -24,12 +26,17 @@ export default async function NoticiasPage() {
       <Navbar solid />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-7xl px-6 py-16">
-          <h1 className="font-heading text-4xl font-bold text-navy md:text-5xl">
-            Blog y Noticias
-          </h1>
-          <p className="mt-4 text-lg text-gray">
-            Guías, artículos y videos sobre inversión inmobiliaria en Guatemala.
-          </p>
+          <SectionHeading
+            as="h1"
+            size="lg"
+            eyebrow="Blog y noticias"
+            title={
+              <>
+                Guías, artículos y <OutlineText>novedades</OutlineText>.
+              </>
+            }
+            lead="Guías, artículos y videos sobre inversión inmobiliaria en Guatemala."
+          />
 
           <BlogListing
             articles={articles.map((a) => ({

@@ -2,6 +2,7 @@
 
 import { ParallaxSection } from "@/components/animations/parallax-section";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { ButtonLink } from "@/components/ui/button-link";
 
 interface TertiaryBannerProps {
   imageUrl: string | null;
@@ -26,16 +27,14 @@ export function TertiaryBanner({
       <div className="mx-auto flex max-w-7xl items-center px-6 py-24 md:py-32">
         <ScrollReveal variant="fade-up">
           <div className="max-w-2xl">
-            <h2 className="font-heading text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+            <h2 className="font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-5xl lg:text-6xl">
               {title}
             </h2>
             <div className="mt-8">
-              <a
-                href={ctaLink}
-                className="inline-flex rounded-full bg-celeste px-8 py-4 text-lg font-medium text-white transition-all duration-300 hover:bg-celeste/90 hover:shadow-xl hover:shadow-celeste/20"
-              >
+              <ButtonLink href={ctaLink} variant="primary" size="lg">
                 {ctaText}
-              </a>
+                <span aria-hidden="true">→</span>
+              </ButtonLink>
             </div>
           </div>
         </ScrollReveal>

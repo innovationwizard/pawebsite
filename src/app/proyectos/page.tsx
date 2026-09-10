@@ -3,6 +3,8 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { ProjectsListing } from "./projects-listing";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 import {
   getPublishedProjects,
   getProjectLocationLabel,
@@ -24,12 +26,17 @@ export default async function ProyectosPage() {
       <Navbar solid />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-7xl px-6 py-16">
-          <h1 className="font-heading text-4xl font-bold text-navy md:text-5xl">
-            Proyectos y Propiedades
-          </h1>
-          <p className="mt-4 text-lg text-gray">
-            Descubre las mejores opciones de inversión inmobiliaria en Guatemala.
-          </p>
+          <SectionHeading
+            as="h1"
+            size="lg"
+            eyebrow="Portafolio"
+            title={
+              <>
+                Proyectos y <OutlineText>propiedades</OutlineText>.
+              </>
+            }
+            lead="Descubre las mejores opciones de inversión inmobiliaria en Guatemala."
+          />
 
           <ProjectsListing
             zones={zones}
@@ -45,6 +52,7 @@ export default async function ProyectosPage() {
               bedroom_range: p.bedroom_range,
               total_units: p.total_units,
               project_type: p.project_type,
+              category_tag: p.category_tag ?? null,
             }))}
           />
         </div>

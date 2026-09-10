@@ -88,7 +88,7 @@ export function BlogListing({ articles, categories, videos }: BlogListingProps) 
                     onClick={() => setActiveCategory(null)}
                     className={`w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                       activeCategory === null
-                        ? "bg-celeste/10 text-celeste"
+                        ? "bg-primary/10 text-primary"
                         : "text-gray hover:bg-gray/5 hover:text-navy"
                     }`}
                   >
@@ -101,7 +101,7 @@ export function BlogListing({ articles, categories, videos }: BlogListingProps) 
                       onClick={() => setActiveCategory(cat.id)}
                       className={`w-full rounded-lg px-3 py-2 text-left text-sm font-medium transition-colors ${
                         activeCategory === cat.id
-                          ? "bg-celeste/10 text-celeste"
+                          ? "bg-primary/10 text-primary"
                           : "text-gray hover:bg-gray/5 hover:text-navy"
                       }`}
                     >
@@ -197,13 +197,13 @@ function ArticleCard({
         {published_at && (
           <p className="text-xs text-gray">{formatDate(published_at)}</p>
         )}
-        <h3 className="mt-2 font-heading text-lg font-bold text-navy line-clamp-2 transition-colors group-hover:text-celeste">
+        <h3 className="mt-2 font-heading text-lg font-bold text-navy line-clamp-2 transition-colors group-hover:text-primary">
           {title}
         </h3>
         {excerpt && (
           <p className="mt-2 text-sm text-gray line-clamp-3">{excerpt}</p>
         )}
-        <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-celeste">
+        <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
           Leer más
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </span>
@@ -246,7 +246,7 @@ function VideoCard({ id, title, thumbnail, publishedAt, duration }: YouTubeVideo
       </div>
       <div className="p-5">
         <p className="text-xs text-gray">{formatDate(publishedAt)}</p>
-        <h3 className="mt-2 font-heading text-base font-bold text-navy line-clamp-2 transition-colors group-hover:text-celeste">
+        <h3 className="mt-2 font-heading text-base font-bold text-navy line-clamp-2 transition-colors group-hover:text-primary">
           {title}
         </h3>
       </div>

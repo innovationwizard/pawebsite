@@ -102,6 +102,7 @@ export default async function Home() {
             status: p.status,
             bedroom_range: p.bedroom_range,
             total_units: p.total_units,
+            category_tag: p.category_tag ?? null,
           }))}
         />
 

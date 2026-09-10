@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, BedDouble, Building2 } from "lucide-react";
-import { ProjectStatusBadge } from "@/components/ui/badge";
+import { ArrowRight, Building2 } from "lucide-react";
+import { ProjectStatusBadge, CategoryTag } from "@/components/ui/badge";
 import type { ProjectStatus } from "@/lib/types/database";
 
 interface ProjectCardProps {
@@ -16,6 +16,7 @@ interface ProjectCardProps {
   bedroom_range: string | null;
   total_units: number;
   project_type: string;
+  category_tag?: string | null;
 }
 
 export function ProjectCard({
@@ -27,12 +28,16 @@ export function ProjectCard({
   status,
   bedroom_range,
   total_units,
-  project_type,
+  category_tag,
 }: ProjectCardProps) {
+  const meta = [location_description, bedroom_range ? `${bedroom_range} hab.` : null]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
     <Link
       href={`/proyectos/${slug}`}
-      className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
+      className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-navy/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/10"
     >
       <div className="relative aspect-[16/10] overflow-hidden">
         {hero_image_url ? (
@@ -40,7 +45,7 @@ export function ProjectCard({
             src={hero_image_url}
             alt={name}
             fill
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.07]"
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
         ) : (
@@ -48,48 +53,29 @@ export function ProjectCard({
             <Building2 className="h-12 w-12 text-gray/20" />
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-        <div className="absolute left-4 top-4">
-          <ProjectStatusBadge status={status} />
+        <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
+          <CategoryTag label={category_tag} />
+          <ProjectStatusBadge status={status} className="ml-auto bg-white/90 backdrop-blur" />
         </div>
       </div>
 
-      <div className="p-5">
-        <h3 className="font-heading text-xl font-bold text-navy transition-colors group-hover:text-celeste">
-          {name}
-        </h3>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="font-heading text-xl font-bold leading-tight text-navy">{name}</h3>
+        {meta && <p className="mt-1.5 text-sm text-gray">{meta}</p>}
 
-        {location_description && (
-          <p className="mt-1.5 flex items-center gap-1.5 text-sm text-gray">
-            <MapPin className="h-3.5 w-3.5 shrink-0" />
-            {location_description}
-          </p>
-        )}
-
-        <div className="mt-4 flex items-center justify-between border-t border-gray/10 pt-4">
-          <div>
-            {starting_price_display && (
-              <p className="text-sm text-gray">
-                Desde{" "}
-                <span className="font-semibold text-navy">
-                  {starting_price_display}
-                </span>
-              </p>
-            )}
-          </div>
-
-          <div className="flex items-center gap-3 text-xs text-gray">
-            {bedroom_range && (
-              <span className="flex items-center gap-1">
-                <BedDouble className="h-3.5 w-3.5" />
-                {bedroom_range} hab.
-              </span>
-            )}
-            <span className="flex items-center gap-1">
-              <Building2 className="h-3.5 w-3.5" />
-              {total_units} uds.
-            </span>
-          </div>
+        <div className="mt-auto flex items-center justify-between border-t border-navy/10 pt-4">
+          {starting_price_display ? (
+            <p className="text-sm font-semibold text-primary">Desde {starting_price_display}</p>
+          ) : (
+            <p className="text-sm font-semibold text-primary">Consultar disponibilidad</p>
+          )}
+          <span className="flex items-center gap-2 text-xs text-gray">
+            <span className="hidden sm:inline">{total_units} uds.</span>
+            <ArrowRight
+              className="h-4 w-4 text-navy transition-transform duration-300 group-hover:translate-x-1"
+              aria-hidden="true"
+            />
+          </span>
         </div>
       </div>
     </Link>

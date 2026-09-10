@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 import { formatDate } from "@/lib/utils/format-date";
 
 interface NewsArticle {
@@ -27,18 +29,18 @@ export function NewsCapsules({ articles }: NewsCapsuleProps) {
     <section className="py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal variant="fade-up">
-          <div className="flex items-end justify-between">
-            <div>
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-                Noticias
-              </h2>
-              <p className="mt-3 text-lg text-gray">
-                Entérate de nuestros últimos lanzamientos y novedades.
-              </p>
-            </div>
+          <div className="flex items-end justify-between gap-6">
+            <SectionHeading
+              eyebrow="Blog y noticias"
+              title={
+                <>
+                  Últimos lanzamientos y <OutlineText>novedades</OutlineText>.
+                </>
+              }
+            />
             <Link
               href="/noticias"
-              className="hidden items-center gap-2 text-sm font-medium text-celeste transition-colors hover:text-celeste/80 md:inline-flex"
+              className="hidden shrink-0 items-center gap-2 text-sm font-semibold text-primary transition-colors hover:text-navy md:inline-flex"
             >
               Ver todas
               <ArrowRight className="h-4 w-4" />
@@ -55,7 +57,7 @@ export function NewsCapsules({ articles }: NewsCapsuleProps) {
             >
               <Link
                 href={`/noticias/${article.slug}`}
-                className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
+                className="group block overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-navy/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/10"
               >
                 <div className="relative aspect-[3/2] overflow-hidden">
                   {article.cover_image_url ? (
@@ -88,7 +90,7 @@ export function NewsCapsules({ articles }: NewsCapsuleProps) {
                       {formatDate(article.published_at)}
                     </p>
                   )}
-                  <h3 className="mt-2 font-heading text-lg font-bold text-navy line-clamp-2 transition-colors group-hover:text-celeste">
+                  <h3 className="mt-2 font-heading text-lg font-bold text-navy line-clamp-2 transition-colors group-hover:text-primary">
                     {article.title}
                   </h3>
                   {article.excerpt && (
@@ -97,7 +99,7 @@ export function NewsCapsules({ articles }: NewsCapsuleProps) {
                     </p>
                   )}
                   <motion.span
-                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-celeste"
+                    className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary"
                     whileHover={{ x: 4 }}
                   >
                     Leer más
@@ -112,7 +114,7 @@ export function NewsCapsules({ articles }: NewsCapsuleProps) {
         <div className="mt-8 text-center md:hidden">
           <Link
             href="/noticias"
-            className="inline-flex items-center gap-2 text-sm font-medium text-celeste"
+            className="inline-flex items-center gap-2 text-sm font-medium text-primary"
           >
             Ver todas las noticias
             <ArrowRight className="h-4 w-4" />

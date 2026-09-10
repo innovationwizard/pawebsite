@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { getPublishedProjects } from "@/lib/queries/projects";
 import { FinancialCalculator } from "@/components/cotizador/financial-calculator";
@@ -30,16 +32,21 @@ export default async function CotizadorPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative bg-navy pb-12 pt-40 md:pb-16 md:pt-48">
+        <section className="relative bg-hero-gradient pb-12 pt-40 md:pb-16 md:pt-48">
           <div className="mx-auto max-w-7xl px-6">
             <ScrollReveal variant="fade-up">
-              <h1 className="font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl">
-                Cotizador Financiero
-              </h1>
-              <p className="mt-4 max-w-2xl text-lg text-white/70">
-                Calcula tu cuota mensual estimada y planifica la compra de tu
-                nuevo hogar.
-              </p>
+              <SectionHeading
+                as="h1"
+                size="lg"
+                tone="dark"
+                eyebrow="Cotiza ahora"
+                title={
+                  <>
+                    Cotizador <OutlineText>financiero</OutlineText>.
+                  </>
+                }
+                lead="Calcula tu cuota mensual estimada y planifica la compra de tu nuevo hogar."
+              />
             </ScrollReveal>
           </div>
         </section>

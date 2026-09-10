@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 import { Send, CheckCircle } from "lucide-react";
 import { getUtmParams } from "@/lib/utils/utm-params";
 
@@ -77,12 +79,15 @@ export function NewsletterForm({ projects }: NewsletterFormProps) {
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Form */}
           <ScrollReveal variant="fade-up">
-            <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
-              Contáctanos
-            </h2>
-            <p className="mt-3 text-gray">
-              Déjanos tus datos y un asesor se pondrá en contacto contigo.
-            </p>
+            <SectionHeading
+              eyebrow="Contáctanos"
+              title={
+                <>
+                  Hablemos de tu <OutlineText>próximo hogar</OutlineText>.
+                </>
+              }
+              lead="Déjanos tus datos y un asesor se pondrá en contacto contigo."
+            />
 
             {isSuccess ? (
               <div className="mt-8 flex flex-col items-center rounded-2xl bg-green-50 p-8 text-center">
@@ -189,8 +194,8 @@ export function NewsletterForm({ projects }: NewsletterFormProps) {
                   isLoading={isSubmitting}
                   className="w-full sm:w-auto"
                 >
-                  <Send className="mr-2 h-4 w-4" />
-                  Enviar Mensaje
+                  <Send className="h-4 w-4" />
+                  Enviar mensaje
                 </Button>
               </form>
             )}

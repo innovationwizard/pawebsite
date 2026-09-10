@@ -44,7 +44,7 @@ export function FinancialSummary({ project }: FinancialSummaryProps) {
   return (
     <section className="py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+        <h2 className="font-heading text-2xl font-extrabold tracking-tight text-navy md:text-3xl">
           Condiciones Financieras
         </h2>
         <p className="mt-2 text-gray">

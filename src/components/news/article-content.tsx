@@ -39,7 +39,7 @@ export function ArticleContent({ content }: ArticleContentProps) {
 
   return (
     <div
-      className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-navy prose-p:text-gray prose-a:text-celeste prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-strong:text-navy"
+      className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-navy prose-p:text-gray prose-a:text-primary prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl prose-strong:text-navy"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

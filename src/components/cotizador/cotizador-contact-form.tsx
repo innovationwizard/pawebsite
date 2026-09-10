@@ -173,7 +173,7 @@ export function CotizadorContactForm({ projectOptions }: CotizadorContactFormPro
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-full bg-navy px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-navy/90 hover:shadow-lg disabled:opacity-50"
+          className="btn-sweep w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-lg disabled:opacity-50 [--sweep-color:var(--color-celeste)]"
         >
           {isSubmitting ? "Enviando..." : "Solicitar Cotizaci\u00f3n"}
         </button>

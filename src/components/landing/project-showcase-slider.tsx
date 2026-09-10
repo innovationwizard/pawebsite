@@ -4,9 +4,11 @@ import { useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { ProjectStatusBadge } from "@/components/ui/badge";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { ProjectStatusBadge, CategoryTag } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 import type { ProjectStatus } from "@/lib/types/database";
 
 interface ShowcaseProject {
@@ -18,6 +20,7 @@ interface ShowcaseProject {
   status: ProjectStatus;
   bedroom_range: string | null;
   total_units: number;
+  category_tag: string | null;
 }
 
 /**
@@ -30,6 +33,18 @@ const STATIC_HERO_IMAGES: Record<string, string> = {
   "boulevard-5": "/images/projects/boulevard-5.jpg",
   "benestare": "/images/projects/benestare.jpg",
   "santa-elena": "/images/projects/santa-elena.jpg",
+};
+
+const NUMBER_WORDS: Record<number, string> = {
+  1: "Un",
+  2: "Dos",
+  3: "Tres",
+  4: "Cuatro",
+  5: "Cinco",
+  6: "Seis",
+  7: "Siete",
+  8: "Ocho",
+  9: "Nueve",
 };
 
 interface ProjectShowcaseSliderProps {
@@ -51,30 +66,39 @@ export function ProjectShowcaseSlider({ projects }: ProjectShowcaseSliderProps) 
 
   if (projects.length === 0) return null;
 
+  const count = projects.length;
+  const countWord = NUMBER_WORDS[count] ?? String(count);
+  const isSingular = count === 1;
+
   return (
-    <section className="py-20 md:py-28">
+    <section className="bg-off-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal>
-          <div className="flex items-end justify-between">
-            <div>
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-                Nuestros Proyectos
-              </h2>
-              <p className="mt-3 text-lg text-gray">
-                Descubre las mejores opciones de inversión inmobiliaria en Guatemala.
-              </p>
-            </div>
-            <div className="hidden gap-2 md:flex">
+          <div className="flex items-end justify-between gap-6">
+            <SectionHeading
+              eyebrow="Nuestros proyectos"
+              title={
+                <>
+                  {countWord} {isSingular ? "proyecto" : "proyectos"}.{" "}
+                  <OutlineText>
+                    {countWord} {isSingular ? "estilo" : "estilos"} de vida
+                  </OutlineText>
+                  .
+                </>
+              }
+              lead="Descubre las mejores opciones de inversión inmobiliaria en Guatemala, desde hogares accesibles hasta exclusividad colonial."
+            />
+            <div className="hidden shrink-0 gap-2 md:flex">
               <button
                 onClick={() => scroll("left")}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray/20 text-navy transition-colors hover:bg-navy hover:text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-navy/15 text-navy transition-colors hover:bg-navy hover:text-white"
                 aria-label="Anterior"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button
                 onClick={() => scroll("right")}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray/20 text-navy transition-colors hover:bg-navy hover:text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-navy/15 text-navy transition-colors hover:bg-navy hover:text-white"
                 aria-label="Siguiente"
               >
                 <ChevronRight className="h-5 w-5" />
@@ -85,82 +109,79 @@ export function ProjectShowcaseSlider({ projects }: ProjectShowcaseSliderProps) 
 
         <div
           ref={scrollRef}
-          className="mt-10 flex gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory"
+          className="mt-12 flex gap-6 overflow-x-auto pb-4 scrollbar-hide snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.slug}
-              initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="w-[340px] shrink-0 snap-start md:w-[480px]"
-            >
-              <Link
-                href={`/proyectos/${project.slug}`}
-                className="group block overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"
+          {projects.map((project, index) => {
+            const image = project.hero_image_url || STATIC_HERO_IMAGES[project.slug];
+            const meta = [
+              project.location_description,
+              project.bedroom_range ? `${project.bedroom_range} hab.` : null,
+            ]
+              .filter(Boolean)
+              .join(" · ");
+            return (
+              <motion.div
+                key={project.slug}
+                initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="w-[320px] shrink-0 snap-start md:w-[400px]"
               >
-                <div className="relative overflow-hidden" style={{ height: "360px" }}>
-                  {(project.hero_image_url || STATIC_HERO_IMAGES[project.slug]) ? (
-                    <Image
-                      src={project.hero_image_url || STATIC_HERO_IMAGES[project.slug]}
-                      alt={project.name}
-                      fill
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.07]"
-                      sizes="(max-width: 768px) 340px, 480px"
-                    />
-                  ) : (
-                    <div className="flex h-full w-full items-center justify-center bg-navy/5">
-                      <span className="text-sm text-gray/40">
-                        [ Imagen del proyecto ]
-                      </span>
+                <Link
+                  href={`/proyectos/${project.slug}`}
+                  className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-navy/5 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-navy/10"
+                >
+                  <div className="relative h-[260px] overflow-hidden md:h-[300px]">
+                    {image ? (
+                      <Image
+                        src={image}
+                        alt={project.name}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-[1.06]"
+                        sizes="(max-width: 768px) 320px, 400px"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-navy/5" />
+                    )}
+                    <div className="absolute inset-x-0 top-0 flex items-start justify-between p-4">
+                      <CategoryTag label={project.category_tag} />
+                      <ProjectStatusBadge
+                        status={project.status}
+                        className="ml-auto bg-white/90 backdrop-blur"
+                      />
                     </div>
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  <div className="absolute left-4 top-4">
-                    <ProjectStatusBadge status={project.status} />
                   </div>
-                </div>
 
-                <div className="p-5">
-                  <h3 className="font-heading text-xl font-bold text-navy">
-                    {project.name}
-                  </h3>
-                  {project.location_description && (
-                    <p className="mt-1 text-sm text-gray">
-                      {project.location_description}
-                    </p>
-                  )}
-                  <div className="mt-4 flex items-center justify-between">
-                    {project.starting_price_display && (
-                      <p className="text-sm font-semibold text-navy">
-                        Desde{" "}
-                        <span className="text-celeste">
-                          {project.starting_price_display}
-                        </span>
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="font-heading text-2xl font-bold leading-tight text-navy">
+                      {project.name}
+                    </h3>
+                    {meta && <p className="mt-1.5 text-sm text-gray">{meta}</p>}
+                    <div className="mt-auto flex items-center justify-between border-t border-navy/10 pt-4">
+                      <p className="text-sm font-semibold text-primary">
+                        {project.starting_price_display
+                          ? `Desde ${project.starting_price_display}`
+                          : "Consultar disponibilidad"}
                       </p>
-                    )}
-                    {project.bedroom_range && (
-                      <p className="text-xs text-gray">
-                        {project.bedroom_range} hab.
-                      </p>
-                    )}
+                      <ArrowRight
+                        className="h-4 w-4 text-navy transition-transform duration-300 group-hover:translate-x-1"
+                        aria-hidden="true"
+                      />
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </motion.div>
-          ))}
+                </Link>
+              </motion.div>
+            );
+          })}
         </div>
 
         {/* Mobile scroll hint */}
         <div className="mt-4 flex justify-center md:hidden">
           <div className="flex gap-1">
             {projects.map((_, i) => (
-              <div
-                key={i}
-                className="h-1.5 w-1.5 rounded-full bg-gray/20"
-              />
+              <div key={i} className="h-1.5 w-1.5 rounded-full bg-navy/15" />
             ))}
           </div>
         </div>

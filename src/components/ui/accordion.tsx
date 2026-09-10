@@ -20,7 +20,7 @@ export function AccordionItem({
   return (
     <div className="border-b border-gray/10">
       <button
-        className="flex w-full items-center justify-between py-5 text-left font-medium text-navy transition-colors hover:text-celeste"
+        className="flex w-full items-center justify-between py-5 text-left font-medium text-navy transition-colors hover:text-primary"
         onClick={onToggle}
         aria-expanded={isOpen}
       >

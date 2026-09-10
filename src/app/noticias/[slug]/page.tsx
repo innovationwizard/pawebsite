@@ -78,7 +78,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           <div className="mt-6">
             {article.category_name && (
-              <span className="rounded-full bg-celeste/10 px-3 py-1 text-xs font-medium text-celeste">
+              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
                 {article.category_name}
               </span>
             )}

@@ -4,6 +4,8 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle } from "lucide-react";
 import { getUtmParams } from "@/lib/utils/utm-params";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 
 interface ProjectContactFormProps {
   projectId: string;
@@ -68,14 +70,15 @@ export function ProjectContactForm({ projectId, projectName }: ProjectContactFor
         <div className="grid items-start gap-12 lg:grid-cols-2">
           {/* Left — copy */}
           <div>
-            <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
-              ¿Te interesa {projectName}?
-            </h2>
-            <p className="mt-4 text-lg leading-relaxed text-gray">
-              Completa el formulario y un asesor de Puerta Abierta te
-              contactará en menos de 24 horas con toda la información que
-              necesitas.
-            </p>
+            <SectionHeading
+              eyebrow="Solicita información"
+              title={
+                <>
+                  ¿Te interesa <OutlineText>{projectName}</OutlineText>?
+                </>
+              }
+              lead="Completa el formulario y un asesor de Puerta Abierta te contactará en menos de 24 horas con toda la información que necesitas."
+            />
 
             <ul className="mt-8 space-y-3">
               {BENEFITS.map((benefit) => (
@@ -88,7 +91,7 @@ export function ProjectContactForm({ projectId, projectName }: ProjectContactFor
           </div>
 
           {/* Right — form */}
-          <div className="rounded-2xl bg-white p-8 shadow-sm">
+          <div className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-navy/5">
             <h3 className="font-heading text-xl font-bold text-navy">
               Solicitar información
             </h3>
@@ -167,7 +170,7 @@ export function ProjectContactForm({ projectId, projectName }: ProjectContactFor
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full rounded-full bg-navy px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-navy/90 hover:shadow-lg disabled:opacity-50"
+                className="btn-sweep w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-lg disabled:opacity-50 [--sweep-color:var(--color-celeste)]"
               >
                 {isSubmitting ? "Enviando..." : "Solicitar información"}
               </button>

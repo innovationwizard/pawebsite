@@ -40,7 +40,7 @@ export function AvatarCallCard({ photoUrl, name, title }: AvatarCallCardProps) {
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl bg-navy">
+    <div className="overflow-hidden rounded-2xl bg-navy ring-1 ring-white/10 shadow-2xl shadow-navy-deep/60">
       <div className="flex flex-col items-center px-8 py-12 text-center">
         <div className="relative">
           {photoUrl ? (
@@ -75,7 +75,7 @@ export function AvatarCallCard({ photoUrl, name, title }: AvatarCallCardProps) {
 
         <button
           onClick={() => setCallState("active")}
-          className="mt-8 flex items-center gap-2.5 rounded-full bg-celeste px-8 py-3.5 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:bg-celeste/90 hover:shadow-celeste/30 hover:shadow-xl active:scale-95"
+          className="btn-sweep mt-8 flex items-center gap-2.5 rounded-full bg-primary px-8 py-3.5 text-sm font-bold text-white shadow-lg transition-all duration-300 hover:bg-primary/90 hover:shadow-primary/30 hover:shadow-xl active:scale-95 [--sweep-color:var(--color-celeste)]"
         >
           <Phone className="h-4 w-4" />
           LLAMAR

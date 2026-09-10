@@ -43,7 +43,7 @@ export function ProjectOverview({ project }: ProjectOverviewProps) {
         <div className="grid gap-12 lg:grid-cols-2">
           {/* Description */}
           <div>
-            <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+            <h2 className="font-heading text-2xl font-extrabold tracking-tight text-navy md:text-3xl">
               Acerca del Proyecto
             </h2>
             {project.description ? (

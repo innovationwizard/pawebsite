@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
+import { ButtonLink } from "@/components/ui/button-link";
 import { Accordion } from "@/components/ui/accordion";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { getPublishedFAQs } from "@/lib/queries/faqs";
@@ -36,13 +38,17 @@ export default async function PreguntasFrecuentesPage() {
       <Navbar solid />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-3xl px-6 py-16">
-          <h1 className="font-heading text-4xl font-bold text-navy md:text-5xl">
-            Preguntas Frecuentes
-          </h1>
-          <p className="mt-4 text-lg text-gray">
-            Todo lo que necesitas saber para comprar tu apartamento en
-            Guatemala.
-          </p>
+          <SectionHeading
+            as="h1"
+            size="lg"
+            eyebrow="FAQ"
+            title={
+              <>
+                Preguntas <OutlineText>frecuentes</OutlineText>.
+              </>
+            }
+            lead="Todo lo que necesitas saber para comprar tu apartamento en Guatemala."
+          />
 
           {faqCategories.length === 0 ? (
             <p className="mt-16 text-center text-gray/40">
@@ -64,12 +70,10 @@ export default async function PreguntasFrecuentesPage() {
                             <>
                               <p>{faq.answer}</p>
                               {faq.cta_text && faq.cta_url && (
-                                <Link
-                                  href={faq.cta_url}
-                                  className="mt-3 inline-flex items-center gap-2 rounded-full bg-celeste px-5 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-celeste/90 hover:shadow-lg"
-                                >
+                                <ButtonLink href={faq.cta_url} variant="primary" size="sm" className="mt-3">
                                   {faq.cta_text}
-                                </Link>
+                                  <span aria-hidden="true">→</span>
+                                </ButtonLink>
                               )}
                             </>
                           ),

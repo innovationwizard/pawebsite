@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { motion } from "framer-motion";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 
 interface ProcessStep {
   number: string;
@@ -71,14 +73,11 @@ export function WhyHowSection({
         {/* Why */}
         <ScrollReveal variant="fade-up">
           <div className="grid items-center gap-12 md:grid-cols-2">
-            <div>
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-                {whyTitle}
-              </h2>
-              <p className="mt-6 text-justify text-lg leading-relaxed text-gray">
-                {whyDescription}
-              </p>
-            </div>
+            <SectionHeading
+              eyebrow="Nuestro propósito"
+              title={whyTitle}
+              lead={whyDescription}
+            />
             <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
               <Image
                 src={resolvedTeamImage}
@@ -92,14 +91,19 @@ export function WhyHowSection({
         </ScrollReveal>
 
         {/* How — Process Steps */}
-        <div className="mt-20">
-          <ScrollReveal variant="fade-up" className="mb-12 text-center">
-            <h3 className="font-heading text-2xl font-bold text-navy md:text-3xl">
-              {howTitle}
-            </h3>
+        <div className="mt-24">
+          <ScrollReveal variant="fade-up" className="mb-12">
+            <SectionHeading
+              eyebrow={howTitle}
+              title={
+                <>
+                  Cinco etapas. <OutlineText>Una sola promesa</OutlineText>.
+                </>
+              }
+            />
           </ScrollReveal>
 
-          <div className="grid gap-6 md:grid-cols-5">
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {processSteps.map((step, index) => (
               <ScrollReveal
                 key={step.number}
@@ -107,23 +111,19 @@ export function WhyHowSection({
                 delay={index * 0.1}
               >
                 <motion.div
-                  whileHover={{ y: -8 }}
+                  whileHover={{ y: -6 }}
                   transition={{ duration: 0.3 }}
-                  className="group relative rounded-2xl bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-lg"
+                  className="group h-full rounded-2xl bg-white p-7 shadow-sm ring-1 ring-navy/5 transition-shadow duration-300 hover:shadow-lg"
                 >
-                  <span className="font-heading text-4xl font-bold text-celeste/20 transition-colors duration-300 group-hover:text-celeste/40">
+                  <span className="font-heading text-xs font-bold tracking-[0.25em] text-celeste">
                     {step.number}
                   </span>
-                  <h4 className="mt-3 font-heading text-lg font-bold text-navy">
+                  <h4 className="mt-4 font-heading text-xl font-bold text-navy">
                     {step.title}
                   </h4>
                   <p className="mt-2 text-sm leading-relaxed text-gray">
                     {step.description}
                   </p>
-                  {/* Connector line */}
-                  {index < processSteps.length - 1 && (
-                    <div className="absolute -right-3 top-1/2 hidden h-px w-6 bg-celeste/30 md:block" />
-                  )}
                 </motion.div>
               </ScrollReveal>
             ))}
@@ -136,7 +136,7 @@ export function WhyHowSection({
           <ScrollReveal variant="fade-up">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <h4 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+                <h4 className="font-heading text-2xl font-extrabold tracking-tight text-navy md:text-3xl">
                   Los mejores en lo que hacemos
                 </h4>
                 <p className="mt-4 text-lg leading-relaxed text-gray">
@@ -171,7 +171,7 @@ export function WhyHowSection({
                 />
               </div>
               <div className="md:order-2">
-                <h4 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+                <h4 className="font-heading text-2xl font-extrabold tracking-tight text-navy md:text-3xl">
                   Atención personalizada
                 </h4>
                 <p className="mt-4 text-lg leading-relaxed text-gray">
@@ -187,7 +187,7 @@ export function WhyHowSection({
           <ScrollReveal variant="fade-up">
             <div className="grid items-center gap-12 md:grid-cols-2">
               <div>
-                <h4 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+                <h4 className="font-heading text-2xl font-extrabold tracking-tight text-navy md:text-3xl">
                   Alianzas pensadas para ti
                 </h4>
                 <p className="mt-4 text-lg leading-relaxed text-gray">

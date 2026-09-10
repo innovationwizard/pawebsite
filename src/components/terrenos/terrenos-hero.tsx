@@ -1,44 +1,39 @@
-import Link from "next/link";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { ArrowDown } from "lucide-react";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { OutlineText } from "@/components/ui/outline-text";
+import { ButtonLink } from "@/components/ui/button-link";
 
 export function TerrenosHero() {
   return (
-    <section className="relative bg-navy pb-24 pt-40 md:pb-32 md:pt-52">
+    <section className="relative bg-hero-gradient pb-24 pt-40 md:pb-32 md:pt-52">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal variant="fade-up">
-          <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-block rounded-full bg-celeste/10 px-4 py-1.5 text-sm font-semibold text-celeste">
-              Compramos terrenos en Guatemala
-            </span>
+          <div className="max-w-3xl">
+            <Eyebrow className="mb-5">Compramos terrenos en Guatemala</Eyebrow>
 
-            <h1 className="mt-6 font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+            <h1 className="font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
               ¿Tienes un terreno?{" "}
-              <span className="text-celeste">Nosotros lo compramos.</span>
+              <OutlineText>Nosotros lo compramos</OutlineText>.
             </h1>
 
-            <p className="mt-6 text-lg leading-relaxed text-white/70 md:text-xl">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl">
               Proceso rápido, precio justo y cierre seguro. Evaluación gratuita
               en menos de 72 horas. Más de 22 años de experiencia en el mercado
               inmobiliario guatemalteco.
             </p>
 
-            <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Link
-                href="#formulario"
-                className="rounded-full bg-celeste px-8 py-4 text-base font-bold text-white shadow-lg transition-all duration-300 hover:bg-celeste/90 hover:shadow-celeste/30 hover:shadow-xl"
-              >
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <ButtonLink href="#formulario" variant="primary" size="lg">
                 Quiero que evalúen mi terreno
-              </Link>
-              <Link
-                href="tel:+50224249388"
-                className="rounded-full border border-white/20 px-8 py-4 text-base font-semibold text-white transition-all duration-300 hover:border-white/40 hover:bg-white/5"
-              >
+                <span aria-hidden="true">→</span>
+              </ButtonLink>
+              <ButtonLink href="tel:+50224249388" variant="outline-light" size="lg">
                 Llamar ahora
-              </Link>
+              </ButtonLink>
             </div>
 
-            <div className="mt-14 flex justify-center">
+            <div className="mt-14">
               <a
                 href="#formulario"
                 aria-label="Ir al formulario"

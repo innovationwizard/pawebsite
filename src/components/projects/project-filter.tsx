@@ -253,7 +253,7 @@ export function ProjectFilter({
           <button
             type="button"
             onClick={clearAll}
-            className="flex items-center gap-1.5 text-sm font-medium text-celeste transition-colors hover:text-navy"
+            className="flex items-center gap-1.5 text-sm font-medium text-primary transition-colors hover:text-navy"
           >
             <X className="h-3.5 w-3.5" />
             Limpiar filtros

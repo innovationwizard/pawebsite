@@ -4,6 +4,8 @@ import { useRef, useEffect, useState, useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star } from "lucide-react";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 
 interface Testimonial {
   id: string;
@@ -57,26 +59,27 @@ export function TestimonialsSlider({ testimonials }: TestimonialsSliderProps) {
     <section className="bg-off-white py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal variant="fade-up">
-          <div className="flex items-end justify-between">
-            <div>
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-                Lo que dicen nuestros clientes
-              </h2>
-              <p className="mt-3 text-lg text-gray">
-                Historias de quienes ya encontraron su hogar ideal.
-              </p>
-            </div>
-            <div className="hidden gap-2 md:flex">
+          <div className="flex items-end justify-between gap-6">
+            <SectionHeading
+              eyebrow="Lo que dicen nuestros clientes"
+              title={
+                <>
+                  Historias de quienes ya encontraron su{" "}
+                  <OutlineText>hogar ideal</OutlineText>.
+                </>
+              }
+            />
+            <div className="hidden shrink-0 gap-2 md:flex">
               <button
                 onClick={() => scroll("left")}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray/20 text-navy transition-colors hover:bg-navy hover:text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-navy/15 text-navy transition-colors hover:bg-navy hover:text-white"
                 aria-label="Anterior"
               >
                 <ChevronLeft className="h-5 w-5" />
               </button>
               <button
                 onClick={() => scroll("right")}
-                className="flex h-12 w-12 items-center justify-center rounded-full border border-gray/20 text-navy transition-colors hover:bg-navy hover:text-white"
+                className="flex h-12 w-12 items-center justify-center rounded-full border border-navy/15 text-navy transition-colors hover:bg-navy hover:text-white"
                 aria-label="Siguiente"
               >
                 <ChevronRight className="h-5 w-5" />
@@ -91,7 +94,7 @@ export function TestimonialsSlider({ testimonials }: TestimonialsSliderProps) {
           onMouseLeave={() => setIsPaused(false)}
           onTouchStart={() => setIsPaused(true)}
           onTouchEnd={() => setIsPaused(false)}
-          className="mt-10 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory"
+          className="mt-12 flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {testimonials.map((testimonial, index) => (
@@ -103,7 +106,10 @@ export function TestimonialsSlider({ testimonials }: TestimonialsSliderProps) {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="w-[340px] shrink-0 snap-start md:w-[380px]"
             >
-              <div className="flex h-full flex-col rounded-2xl bg-white p-6 shadow-sm">
+              <div className="flex h-full flex-col rounded-2xl bg-white p-7 shadow-sm ring-1 ring-navy/5">
+                <span className="font-heading text-5xl font-black leading-none text-celeste" aria-hidden="true">
+                  &ldquo;
+                </span>
                 {/* Rating */}
                 {testimonial.rating && (
                   <div className="flex gap-1">
@@ -121,13 +127,13 @@ export function TestimonialsSlider({ testimonials }: TestimonialsSliderProps) {
                 )}
 
                 {/* Content */}
-                <p className="mt-4 flex-1 text-sm leading-relaxed text-gray">
-                  &ldquo;{testimonial.content}&rdquo;
+                <p className="mt-4 flex-1 text-base leading-relaxed text-navy">
+                  {testimonial.content}
                 </p>
 
                 {/* Author */}
-                <div className="mt-6 border-t border-gray/10 pt-4">
-                  <p className="font-medium text-navy">
+                <div className="mt-6 border-t border-navy/10 pt-4">
+                  <p className="text-sm font-bold text-navy">
                     {testimonial.client_name}
                   </p>
                   {testimonial.client_title && (

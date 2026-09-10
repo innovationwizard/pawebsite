@@ -16,7 +16,7 @@ export function ProjectGallery({ images }: ProjectGalleryProps) {
     return (
       <section className="bg-off-white py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+          <h2 className="font-heading text-2xl font-extrabold tracking-tight text-navy md:text-3xl">
             Galería
           </h2>
           <p className="mt-4 text-gray/40">
@@ -40,7 +40,7 @@ export function ProjectGallery({ images }: ProjectGalleryProps) {
     <>
       <section className="bg-off-white py-16 md:py-20">
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="font-heading text-2xl font-bold text-navy md:text-3xl">
+          <h2 className="font-heading text-2xl font-extrabold tracking-tight text-navy md:text-3xl">
             Galería
           </h2>
 

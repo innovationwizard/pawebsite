@@ -2,6 +2,8 @@
 
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { CounterAnimation } from "@/components/animations/counter-animation";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 
 interface HighlightItem {
   value: number;
@@ -25,16 +27,24 @@ export function BrandHighlights({ items }: BrandHighlightsProps) {
   const highlights = items.length > 0 ? items : DEFAULT_HIGHLIGHTS;
 
   return (
-    <section className="py-20 md:py-28">
+    <section className="bg-navy py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal variant="fade-up">
-          <h2 className="mb-12 text-center font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-            Puerta Abierta en números
-          </h2>
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4 md:gap-12">
+          <SectionHeading
+            tone="dark"
+            eyebrow="Puerta Abierta en números"
+            title={
+              <>
+                Lo que hemos construido,
+                <br />
+                <OutlineText>paso a paso</OutlineText>.
+              </>
+            }
+          />
+          <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-white/10 pt-10 md:grid-cols-4">
             {highlights.map((item, index) => (
-              <div key={index} className="text-center">
-                <div className="font-heading text-4xl font-bold text-navy md:text-5xl lg:text-6xl">
+              <div key={index}>
+                <div className="font-heading text-4xl font-extrabold text-celeste md:text-5xl lg:text-6xl">
                   <CounterAnimation
                     end={item.value}
                     prefix={item.prefix}
@@ -42,7 +52,7 @@ export function BrandHighlights({ items }: BrandHighlightsProps) {
                     duration={2000}
                   />
                 </div>
-                <p className="mt-3 text-sm font-medium text-gray md:text-base">
+                <p className="mt-3 text-sm font-medium text-white/60 md:text-base">
                   {item.label}
                 </p>
               </div>

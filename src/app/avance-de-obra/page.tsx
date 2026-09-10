@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 import { ProgressIndicator } from "@/components/progress/progress-indicator";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { getLatestProgressPerProject } from "@/lib/queries/progress";
@@ -23,12 +25,17 @@ export default async function AvanceDeObraPage() {
       <Navbar solid />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-7xl px-6 py-16">
-          <h1 className="font-heading text-4xl font-bold text-navy md:text-5xl">
-            Avance de Obra
-          </h1>
-          <p className="mt-4 text-lg text-gray">
-            Conoce el progreso de construcción de nuestros proyectos.
-          </p>
+          <SectionHeading
+            as="h1"
+            size="lg"
+            eyebrow="Seguimiento"
+            title={
+              <>
+                Avance de <OutlineText>obra</OutlineText>.
+              </>
+            }
+            lead="Conoce el progreso de construcción de nuestros proyectos."
+          />
 
           {projectProgress.length === 0 ? (
             <p className="mt-16 text-center text-gray/40">
@@ -44,7 +51,7 @@ export default async function AvanceDeObraPage() {
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <h2 className="font-heading text-xl font-bold text-navy transition-colors group-hover:text-celeste">
+                        <h2 className="font-heading text-xl font-bold text-navy transition-colors group-hover:text-primary">
                           {project.name}
                         </h2>
                         {latestProgress && (
@@ -53,7 +60,7 @@ export default async function AvanceDeObraPage() {
                           </p>
                         )}
                       </div>
-                      <ArrowRight className="h-5 w-5 text-gray/30 transition-all group-hover:text-celeste group-hover:translate-x-1" />
+                      <ArrowRight className="h-5 w-5 text-gray/30 transition-all group-hover:text-primary group-hover:translate-x-1" />
                     </div>
 
                     {latestProgress?.progress_percent != null && (

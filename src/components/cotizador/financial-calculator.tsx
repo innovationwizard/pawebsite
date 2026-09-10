@@ -224,7 +224,7 @@ export function FinancialCalculator({ projectOptions }: FinancialCalculatorProps
         <button
           type="button"
           onClick={handleCalculate}
-          className="w-full rounded-full bg-celeste px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-celeste/90 hover:shadow-lg"
+          className="btn-sweep w-full rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-lg [--sweep-color:var(--color-celeste)]"
         >
           Calcular Financiamiento
         </button>

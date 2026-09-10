@@ -25,6 +25,9 @@ import {
   parseHighlightValue,
 } from "@/lib/queries/settings";
 import { CounterAnimation } from "@/components/animations/counter-animation";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { Eyebrow } from "@/components/ui/eyebrow";
+import { OutlineText } from "@/components/ui/outline-text";
 
 export const metadata: Metadata = {
   title: "Quiénes Somos | Puerta Abierta Inmobiliaria",
@@ -150,7 +153,7 @@ export default async function QuienesSomosPage() {
       <Navbar />
       <main className="flex-1">
         {/* Hero */}
-        <section className="relative overflow-hidden bg-navy pb-20 pt-40 md:pb-28 md:pt-48">
+        <section className="relative overflow-hidden bg-hero-gradient pb-20 pt-40 md:pb-28 md:pt-48">
           {/* Hero background media */}
           {hasHeroMedia && heroMedia!.type === "image" && (
             <Image
@@ -172,15 +175,16 @@ export default async function QuienesSomosPage() {
             />
           )}
           {hasHeroMedia && (
-            <div className="absolute inset-0 bg-navy/70" />
+            <div className="absolute inset-0 bg-gradient-to-br from-navy-deep/85 via-navy/70 to-navy/60" />
           )}
 
           <div className="relative mx-auto max-w-7xl px-6">
             <ScrollReveal variant="fade-up">
-              <h1 className="font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+              <Eyebrow className="mb-5">Inmobiliaria · Guatemala · Grupo Orión</Eyebrow>
+              <h1 className="font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
                 {heroH1}
               </h1>
-              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/70">
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-white/75 md:text-xl">
                 {heroSubtext}
               </p>
             </ScrollReveal>
@@ -192,21 +196,27 @@ export default async function QuienesSomosPage() {
           <div className="mx-auto max-w-7xl px-6">
             <div className="grid gap-16 md:grid-cols-2">
               <ScrollReveal variant="fade-up">
-                <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
-                  Nuestra Misión
-                </h2>
-                <p className="mt-6 text-lg leading-relaxed text-gray">
-                  {mission}
-                </p>
+                <SectionHeading
+                  eyebrow="Misión"
+                  title={
+                    <>
+                      Nuestra <OutlineText>misión</OutlineText>.
+                    </>
+                  }
+                  lead={mission}
+                />
               </ScrollReveal>
 
               <ScrollReveal variant="fade-up" delay={0.15}>
-                <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
-                  Nuestra Visión
-                </h2>
-                <p className="mt-6 text-lg leading-relaxed text-gray">
-                  {vision}
-                </p>
+                <SectionHeading
+                  eyebrow="Visión"
+                  title={
+                    <>
+                      Nuestra <OutlineText>visión</OutlineText>.
+                    </>
+                  }
+                  lead={vision}
+                />
               </ScrollReveal>
             </div>
           </div>
@@ -215,10 +225,15 @@ export default async function QuienesSomosPage() {
         {/* Values */}
         <section className="bg-off-white py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6">
-            <ScrollReveal variant="fade-up" className="text-center">
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-                Nuestros Valores
-              </h2>
+            <ScrollReveal variant="fade-up">
+              <SectionHeading
+                eyebrow="Nuestros valores"
+                title={
+                  <>
+                    Lo que guía cada <OutlineText>decisión</OutlineText>.
+                  </>
+                }
+              />
             </ScrollReveal>
 
             <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -230,7 +245,7 @@ export default async function QuienesSomosPage() {
                     variant="fade-up"
                     delay={index * 0.1}
                   >
-                    <div className="h-full rounded-2xl bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg">
+                    <div className="h-full rounded-2xl bg-white p-8 shadow-sm ring-1 ring-navy/5 transition-shadow duration-300 hover:shadow-lg">
                       <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-celeste/10 text-celeste">
                         <Icon className="h-6 w-6" />
                       </div>
@@ -251,10 +266,15 @@ export default async function QuienesSomosPage() {
         {/* Diferenciadores */}
         <section className="py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6">
-            <ScrollReveal variant="fade-up" className="text-center">
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-                Nuestros Diferenciadores
-              </h2>
+            <ScrollReveal variant="fade-up">
+              <SectionHeading
+                eyebrow="Nuestros diferenciadores"
+                title={
+                  <>
+                    Por qué elegir <OutlineText>Puerta Abierta</OutlineText>.
+                  </>
+                }
+              />
             </ScrollReveal>
 
             <div className="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
@@ -266,7 +286,7 @@ export default async function QuienesSomosPage() {
                     variant="fade-up"
                     delay={index * 0.1}
                   >
-                    <div className="h-full rounded-2xl border border-gray/10 bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg">
+                    <div className="h-full rounded-2xl bg-off-white p-8 transition-shadow duration-300 hover:shadow-lg">
                       <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-navy/5 text-navy">
                         <Icon className="h-6 w-6" />
                       </div>
@@ -288,27 +308,36 @@ export default async function QuienesSomosPage() {
         {highlights.length > 0 && (
           <section className="bg-navy py-20 md:py-28">
             <div className="mx-auto max-w-7xl px-6">
-              <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                {highlights
-                  .map((h) => {
-                    const { prefix, end, suffix } = parseHighlightValue(h.value);
-                    return { value: end, prefix, suffix, label: h.label };
-                  })
-                  .map((item) => (
-                  <ScrollReveal key={item.label} variant="fade-up">
-                    <div className="text-center">
-                      <p className="font-heading text-4xl font-bold text-white md:text-5xl">
-                        <CounterAnimation
-                          end={item.value}
-                          prefix={item.prefix}
-                          suffix={item.suffix}
-                        />
-                      </p>
-                      <p className="mt-2 text-sm text-white/60">{item.label}</p>
-                    </div>
-                  </ScrollReveal>
-                ))}
-              </div>
+              <ScrollReveal variant="fade-up">
+                <SectionHeading
+                  tone="dark"
+                  eyebrow="Puerta Abierta en números"
+                  title={
+                    <>
+                      Lo que hemos construido, <OutlineText>paso a paso</OutlineText>.
+                    </>
+                  }
+                />
+                <div className="mt-12 grid grid-cols-2 gap-x-8 gap-y-10 border-t border-white/10 pt-10 lg:grid-cols-4">
+                  {highlights
+                    .map((h) => {
+                      const { prefix, end, suffix } = parseHighlightValue(h.value);
+                      return { value: end, prefix, suffix, label: h.label };
+                    })
+                    .map((item) => (
+                      <div key={item.label}>
+                        <p className="font-heading text-4xl font-extrabold text-celeste md:text-5xl">
+                          <CounterAnimation
+                            end={item.value}
+                            prefix={item.prefix}
+                            suffix={item.suffix}
+                          />
+                        </p>
+                        <p className="mt-3 text-sm text-white/60">{item.label}</p>
+                      </div>
+                    ))}
+                </div>
+              </ScrollReveal>
             </div>
           </section>
         )}
@@ -316,13 +345,17 @@ export default async function QuienesSomosPage() {
         {/* Trayectoria */}
         <section className="py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6">
-            <ScrollReveal variant="fade-up" className="mx-auto max-w-3xl text-center">
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl lg:text-5xl">
-                Nuestra Trayectoria
-              </h2>
-              <p className="mt-6 text-lg leading-relaxed text-gray">
-                {trayectoria}
-              </p>
+            <ScrollReveal variant="fade-up">
+              <SectionHeading
+                eyebrow="Nuestra trayectoria"
+                title={
+                  <>
+                    Más de dos décadas <OutlineText>abriendo puertas</OutlineText>.
+                  </>
+                }
+                lead={trayectoria}
+                className="max-w-4xl"
+              />
             </ScrollReveal>
           </div>
         </section>

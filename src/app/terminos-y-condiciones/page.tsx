@@ -16,7 +16,7 @@ export default async function TerminosYCondicionesPage() {
       <Navbar solid />
       <main className="flex-1 pt-24">
         <div className="mx-auto max-w-3xl px-6 py-16">
-          <h1 className="font-heading text-3xl font-bold text-navy md:text-4xl">
+          <h1 className="font-heading text-3xl font-extrabold tracking-tight text-navy md:text-5xl">
             Términos y Condiciones
           </h1>
           {content?.html ? (

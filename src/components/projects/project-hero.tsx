@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ProjectStatusBadge } from "@/components/ui/badge";
+import { ProjectStatusBadge, CategoryTag } from "@/components/ui/badge";
 import type { ProjectStatus } from "@/lib/types/database";
 import { Building2 } from "lucide-react";
 
@@ -9,6 +9,7 @@ interface ProjectHeroProps {
   logo_url: string | null;
   status: ProjectStatus;
   location_description: string | null;
+  category_tag?: string | null;
 }
 
 export function ProjectHero({
@@ -17,6 +18,7 @@ export function ProjectHero({
   logo_url,
   status,
   location_description,
+  category_tag,
 }: ProjectHeroProps) {
   return (
     <section className="relative flex min-h-[40vh] items-end overflow-hidden bg-navy md:min-h-[50vh]">
@@ -30,14 +32,17 @@ export function ProjectHero({
           sizes="100vw"
         />
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-navy via-navy/90 to-dark">
+        <div className="absolute inset-0 flex items-center justify-center bg-hero-gradient">
           <Building2 className="h-24 w-24 text-white/10" />
         </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/50 to-navy-deep/20" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-12 pt-32">
-        <ProjectStatusBadge status={status} className="mb-4" />
+        <div className="mb-5 flex flex-wrap items-center gap-2">
+          <CategoryTag label={category_tag} className="bg-white/15 backdrop-blur" />
+          <ProjectStatusBadge status={status} />
+        </div>
 
         {logo_url && (
           <Image
@@ -49,12 +54,12 @@ export function ProjectHero({
           />
         )}
 
-        <h1 className="font-heading text-4xl font-bold text-white md:text-5xl lg:text-6xl">
+        <h1 className="font-heading text-4xl font-extrabold leading-[1.05] tracking-tight text-white md:text-6xl lg:text-7xl">
           {name}
         </h1>
 
         {location_description && (
-          <p className="mt-3 text-lg text-white/70">{location_description}</p>
+          <p className="mt-4 text-lg text-white/75">{location_description}</p>
         )}
       </div>
     </section>

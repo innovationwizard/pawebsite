@@ -18,6 +18,7 @@ interface ProjectData {
   bedroom_range: string | null;
   total_units: number;
   project_type: string;
+  category_tag: string | null;
 }
 
 interface ProjectsListingProps {
@@ -88,7 +89,7 @@ export function ProjectsListing({ projects, zones }: ProjectsListingProps) {
           <button
             type="button"
             onClick={() => setFilters(EMPTY_FILTERS)}
-            className="mt-4 text-sm font-medium text-celeste hover:underline"
+            className="mt-4 text-sm font-medium text-primary hover:underline"
           >
             Limpiar filtros
           </button>

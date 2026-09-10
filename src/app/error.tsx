@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
+import { ButtonLink } from "@/components/ui/button-link";
 
 export default function Error({
   error,
@@ -25,9 +26,9 @@ export default function Error({
         </p>
         <div className="mt-8 flex justify-center gap-4">
           <Button onClick={reset}>Intentar de nuevo</Button>
-          <a href="/">
-            <Button variant="outline">Volver al Inicio</Button>
-          </a>
+          <ButtonLink href="/" variant="outline" external>
+            Volver al Inicio
+          </ButtonLink>
         </div>
       </div>
     </div>

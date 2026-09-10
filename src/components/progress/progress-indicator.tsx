@@ -17,7 +17,7 @@ export function ProgressIndicator({ percent, label }: ProgressIndicatorProps) {
     <div ref={ref} className="w-full">
       <div className="flex items-center justify-between mb-2">
         {label && <span className="text-sm font-medium text-navy">{label}</span>}
-        <span className="text-sm font-bold text-celeste">{clampedPercent}%</span>
+        <span className="text-sm font-bold text-primary">{clampedPercent}%</span>
       </div>
       <div className="h-3 w-full overflow-hidden rounded-full bg-gray/10">
         <motion.div

@@ -72,6 +72,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           logo_url={project.logo_url}
           status={project.status}
           location_description={project.location_description}
+          category_tag={project.category_tag}
         />
 
         <ProjectOverview project={project} />

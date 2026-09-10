@@ -9,7 +9,8 @@ export type ButtonVariant =
   | "outline"
   | "outline-light"
   | "ghost"
-  | "celeste";
+  | "celeste"
+  | "whatsapp";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const BASE =
@@ -27,6 +28,8 @@ const VARIANT: Record<ButtonVariant, string> = {
   "outline-light":
     "border-2 border-white/30 text-white hover:bg-white/10 focus-visible:ring-white/50 [--sweep-color:var(--color-celeste)]",
   ghost: "text-navy hover:bg-navy/5 focus-visible:ring-navy/50 [--sweep-color:var(--color-celeste)]",
+  whatsapp:
+    "bg-[#25D366] text-white hover:bg-[#1fb757] hover:shadow-lg focus-visible:ring-[#25D366]/50 [--sweep-color:var(--color-white)]",
 };
 
 const SIZE: Record<ButtonSize, string> = {

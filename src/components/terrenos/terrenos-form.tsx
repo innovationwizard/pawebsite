@@ -60,7 +60,7 @@ export function TerrenosForm() {
   }
 
   return (
-    <div className="rounded-2xl bg-off-white p-8 shadow-sm">
+    <div className="rounded-2xl bg-off-white p-8 ring-1 ring-navy/5">
       <h2 className="font-heading text-2xl font-bold text-navy">
         Cuéntanos sobre tu terreno
       </h2>
@@ -171,7 +171,7 @@ export function TerrenosForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full rounded-full bg-navy px-6 py-4 text-sm font-bold text-white transition-all duration-300 hover:bg-navy/90 hover:shadow-lg disabled:opacity-50"
+          className="btn-sweep w-full rounded-full bg-primary px-6 py-4 text-sm font-bold text-white transition-all duration-300 hover:bg-primary/90 hover:shadow-lg disabled:opacity-50 [--sweep-color:var(--color-celeste)]"
         >
           {isSubmitting ? "Enviando..." : "Solicitar evaluación gratuita"}
         </button>

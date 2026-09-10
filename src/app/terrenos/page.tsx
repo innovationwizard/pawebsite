@@ -5,6 +5,8 @@ import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { TerrenosHero } from "@/components/terrenos/terrenos-hero";
 import { TerrenosForm } from "@/components/terrenos/terrenos-form";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { OutlineText } from "@/components/ui/outline-text";
 import { MapPin, ShieldCheck, Clock, CheckCircle } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -109,19 +111,22 @@ export default function TerrenosPage() {
         {/* 3. Benefits */}
         <section className="bg-off-white py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6">
-            <ScrollReveal variant="fade-up" className="text-center">
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
-                ¿Por qué vender tu terreno con Puerta Abierta?
-              </h2>
-              <p className="mt-4 text-lg text-gray">
-                Más de dos décadas comprando terrenos en Guatemala con total confianza y transparencia.
-              </p>
+            <ScrollReveal variant="fade-up">
+              <SectionHeading
+                eyebrow="Por qué Puerta Abierta"
+                title={
+                  <>
+                    ¿Por qué vender tu terreno con <OutlineText>Puerta Abierta</OutlineText>?
+                  </>
+                }
+                lead="Más de dos décadas comprando terrenos en Guatemala con total confianza y transparencia."
+              />
             </ScrollReveal>
 
             <div className="mt-14 grid gap-8 md:grid-cols-3">
               {BENEFITS.map((benefit, index) => (
                 <ScrollReveal key={benefit.title} variant="fade-up" delay={index * 0.1}>
-                  <div className="rounded-2xl bg-white p-8 shadow-sm transition-shadow duration-300 hover:shadow-lg">
+                  <div className="rounded-2xl bg-white p-8 shadow-sm ring-1 ring-navy/5 transition-shadow duration-300 hover:shadow-lg">
                     <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-celeste/10">
                       <benefit.icon className="h-6 w-6 text-celeste" />
                     </div>
@@ -145,18 +150,21 @@ export default function TerrenosPage() {
               {/* Steps */}
               <ScrollReveal variant="fade-up">
                 <div>
-                  <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
-                    ¿Cómo funciona?
-                  </h2>
-                  <p className="mt-4 text-lg text-gray">
-                    Sin complicaciones, sin compromisos. Así de simple es vender tu terreno con nosotros.
-                  </p>
+                  <SectionHeading
+                    eyebrow="¿Cómo funciona?"
+                    title={
+                      <>
+                        Tres pasos. <OutlineText>Cero complicaciones</OutlineText>.
+                      </>
+                    }
+                    lead="Sin complicaciones, sin compromisos. Así de simple es vender tu terreno con nosotros."
+                  />
 
                   <div className="mt-10 space-y-8">
                     {STEPS.map((step) => (
                       <div key={step.number} className="flex gap-5">
-                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-celeste/10">
-                          <span className="font-heading text-lg font-bold text-celeste">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-celeste/15">
+                          <span className="font-heading text-sm font-bold tracking-[0.15em] text-primary">
                             {step.number}
                           </span>
                         </div>
@@ -172,7 +180,7 @@ export default function TerrenosPage() {
                     ))}
                   </div>
 
-                  <div className="mt-10 rounded-2xl bg-navy p-6">
+                  <div className="mt-10 rounded-2xl bg-hero-gradient p-6">
                     <p className="font-heading text-lg font-bold text-white">
                       Evaluación 100% gratuita
                     </p>
@@ -206,10 +214,15 @@ export default function TerrenosPage() {
         {/* 5. FAQ */}
         <section className="bg-off-white py-20 md:py-28">
           <div className="mx-auto max-w-3xl px-6">
-            <ScrollReveal variant="fade-up" className="text-center">
-              <h2 className="font-heading text-3xl font-bold text-navy md:text-4xl">
-                Preguntas frecuentes
-              </h2>
+            <ScrollReveal variant="fade-up">
+              <SectionHeading
+                eyebrow="Dudas comunes"
+                title={
+                  <>
+                    Preguntas <OutlineText>frecuentes</OutlineText>.
+                  </>
+                }
+              />
             </ScrollReveal>
 
             <div className="mt-10 space-y-4">

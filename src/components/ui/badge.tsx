@@ -57,3 +57,21 @@ export function ProjectStatusBadge({
     </Badge>
   );
 }
+
+/** Navy uppercase pill for a project's category tag (NATURALEZA, SMART LIVING…). */
+export function CategoryTag({
+  label,
+  className = "",
+}: {
+  label: string | null | undefined;
+  className?: string;
+}) {
+  if (!label || !label.trim()) return null;
+  return (
+    <span
+      className={`inline-flex items-center rounded-full bg-navy px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-white ${className}`}
+    >
+      {label}
+    </span>
+  );
+}
