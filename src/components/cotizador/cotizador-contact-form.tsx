@@ -54,7 +54,7 @@ export function CotizadorContactForm({ projectOptions }: CotizadorContactFormPro
         return;
       }
 
-      router.push("/graciasportucontacto");
+      router.push("/graciasportucontacto?tipo=cotizador");
     } catch {
       setError("Error de conexi\u00f3n. Intenta de nuevo.");
     } finally {

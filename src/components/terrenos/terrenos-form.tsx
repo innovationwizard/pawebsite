@@ -51,7 +51,7 @@ export function TerrenosForm() {
         return;
       }
 
-      router.push("/graciasportucontacto");
+      router.push("/graciasportucontacto?tipo=terrenos");
     } catch {
       setError("Error de conexión. Intenta de nuevo.");
     } finally {

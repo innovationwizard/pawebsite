@@ -54,7 +54,7 @@ export function ProjectContactForm({ projectId, projectName }: ProjectContactFor
         return;
       }
 
-      router.push("/graciasportucontacto");
+      router.push("/graciasportucontacto?tipo=proyecto");
     } catch {
       setError("Error de conexión. Intenta de nuevo.");
     } finally {

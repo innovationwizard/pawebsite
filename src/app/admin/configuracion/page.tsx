@@ -57,6 +57,14 @@ export default function AdminConfiguracionPage() {
   const [capsula2Url, setCapsula2Url] = useState<string | null>(null);
   const [capsula3Url, setCapsula3Url] = useState<string | null>(null);
 
+  // Servicios (desarrolladores) — hero image + KPIs
+  const [serviciosHeroImageUrl, setServiciosHeroImageUrl] = useState<string | null>(null);
+  const [serviciosKpis, setServiciosKpis] = useState<{ label: string; value: string; note: string }[]>([
+    { label: "", value: "", note: "" },
+    { label: "", value: "", note: "" },
+    { label: "", value: "", note: "" },
+  ]);
+
   // Team members (Quiénes Somos)
   const [teamMembers, setTeamMembers] = useState<Array<{ name: string; title: string; photo_url: string; bio: string }>>([]);
 
@@ -168,6 +176,20 @@ export default function AdminConfiguracionPage() {
       setLicPuertasPhoto(asObjString(licPuertas, "photo_url") || null);
       setLicPuertasName(asObjString(licPuertas, "name"));
       setLicPuertasTitle(asObjString(licPuertas, "title"));
+
+      // Servicios hero + KPIs
+      const servHero = asObj(map.servicios_hero);
+      setServiciosHeroImageUrl(asObjString(servHero, "url") || null);
+      const servKpis = asArray(map.servicios_kpis);
+      if (servKpis.length > 0) {
+        setServiciosKpis(
+          [0, 1, 2].map((i) => ({
+            label: asObjString(servKpis[i] ?? {}, "label"),
+            value: asObjString(servKpis[i] ?? {}, "value"),
+            note: asObjString(servKpis[i] ?? {}, "note"),
+          }))
+        );
+      }
 
       // Quiénes Somos hero
       const qsHero = asObj(map.quienes_somos_hero);
@@ -792,6 +814,120 @@ export default function AdminConfiguracionPage() {
                   name: licPuertasName,
                   title: licPuertasTitle,
                 })
+              }
+            >
+              Guardar
+            </Button>
+          </div>
+        </section>
+
+        {/* Servicios — Hero */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Servicios — Hero
+              </h2>
+              <p className="mt-1 text-xs text-gray">
+                Imagen de fondo del hero de la página Servicios (para
+                desarrolladores). Mientras no haya imagen se muestra el
+                degradado de marca.
+              </p>
+            </div>
+            {successSection === "servicios_hero" && (
+              <span className="text-sm text-green-600">Guardado</span>
+            )}
+          </div>
+          <ImageUploader
+            bucket="site-assets"
+            currentUrl={serviciosHeroImageUrl}
+            onUpload={setServiciosHeroImageUrl}
+            onRemove={() => setServiciosHeroImageUrl(null)}
+            label="Imagen de fondo del hero"
+          />
+          <div className="mt-4">
+            <Button
+              size="sm"
+              isLoading={savingSection === "servicios_hero"}
+              onClick={() =>
+                saveSection("servicios_hero", "servicios_hero", {
+                  type: "image",
+                  url: serviciosHeroImageUrl ?? "",
+                })
+              }
+            >
+              Guardar
+            </Button>
+          </div>
+        </section>
+
+        {/* Servicios — Hitos y números */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Servicios — Hitos y números
+              </h2>
+              <p className="mt-1 text-xs text-gray">
+                Tres indicadores de la sección de resultados. El valor admite
+                prefijo/sufijo (ej. &quot;8%&quot;, &quot;1,200&quot;, &quot;Q15&quot;); la nota
+                es el texto pequeño bajo la etiqueta.
+              </p>
+            </div>
+            {successSection === "servicios_kpis" && (
+              <span className="text-sm text-green-600">Guardado</span>
+            )}
+          </div>
+          <div className="space-y-4">
+            {serviciosKpis.map((kpi, idx) => (
+              <div key={idx} className="grid gap-3 rounded-xl border border-gray/10 bg-off-white p-4 sm:grid-cols-3">
+                <Input
+                  id={`servicios_kpi_${idx}_value`}
+                  label={`Valor ${idx + 1}`}
+                  value={kpi.value}
+                  onChange={(e) =>
+                    setServiciosKpis((prev) =>
+                      prev.map((k, i) => (i === idx ? { ...k, value: e.target.value } : k))
+                    )
+                  }
+                />
+                <Input
+                  id={`servicios_kpi_${idx}_label`}
+                  label={`Etiqueta ${idx + 1}`}
+                  value={kpi.label}
+                  onChange={(e) =>
+                    setServiciosKpis((prev) =>
+                      prev.map((k, i) => (i === idx ? { ...k, label: e.target.value } : k))
+                    )
+                  }
+                />
+                <Input
+                  id={`servicios_kpi_${idx}_note`}
+                  label={`Nota ${idx + 1}`}
+                  value={kpi.note}
+                  onChange={(e) =>
+                    setServiciosKpis((prev) =>
+                      prev.map((k, i) => (i === idx ? { ...k, note: e.target.value } : k))
+                    )
+                  }
+                />
+              </div>
+            ))}
+          </div>
+          <div className="mt-4">
+            <Button
+              size="sm"
+              isLoading={savingSection === "servicios_kpis"}
+              onClick={() =>
+                saveSection(
+                  "servicios_kpis",
+                  "servicios_kpis",
+                  serviciosKpis.map((k) => ({
+                    label: k.label.trim(),
+                    value: k.value.trim(),
+                    note: k.note.trim(),
+                  }))
+                )
               }
             >
               Guardar

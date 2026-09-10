@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
-import { DataLayerPush } from "@/components/analytics/data-layer-push";
+import { ButtonLink } from "@/components/ui/button-link";
+import { LeadTypePush } from "@/components/analytics/lead-type-push";
 
 export const metadata: Metadata = {
   title: "¡Gracias por tu contacto! | Puerta Abierta Inmobiliaria",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function GraciasPorTuContactoPage() {
   return (
     <>
-      <DataLayerPush event="lead_form_submitted" />
+      <LeadTypePush />
       <Navbar solid />
       <main className="flex min-h-[calc(100vh-80px)] flex-col">
         <section className="flex flex-1 items-center justify-center bg-off-white px-6 py-24">
@@ -53,18 +53,12 @@ export default function GraciasPorTuContactoPage() {
             </p>
 
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <Link
-                href="/proyectos"
-                className="rounded-full bg-navy px-8 py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-navy/90 hover:shadow-lg"
-              >
+              <ButtonLink href="/proyectos" variant="secondary" size="sm" className="px-8 py-3.5">
                 Ver Proyectos
-              </Link>
-              <Link
-                href="/"
-                className="rounded-full border border-gray/20 px-8 py-3.5 text-sm font-semibold text-navy transition-all duration-300 hover:border-navy hover:shadow-sm"
-              >
+              </ButtonLink>
+              <ButtonLink href="/" variant="outline" size="sm" className="px-8 py-3.5">
                 Volver al Inicio
-              </Link>
+              </ButtonLink>
             </div>
           </div>
         </section>

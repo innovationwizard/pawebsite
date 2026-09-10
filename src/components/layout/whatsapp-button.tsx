@@ -12,13 +12,15 @@ interface WhatsAppButtonProps {
    * company number.
    */
   phoneNumber?: string | null;
+  /** Prefilled message; defaults to the generic project inquiry. */
+  message?: string;
 }
 
-export function WhatsAppButton({ phoneNumber }: WhatsAppButtonProps = {}) {
+const DEFAULT_MESSAGE = "Hola, me gustaría obtener más información sobre sus proyectos.";
+
+export function WhatsAppButton({ phoneNumber, message }: WhatsAppButtonProps = {}) {
   const number = phoneNumber || FALLBACK_NUMBER;
-  const href = `https://wa.me/${number}?text=${encodeURIComponent(
-    "Hola, me gustaría obtener más información sobre sus proyectos."
-  )}`;
+  const href = `https://wa.me/${number}?text=${encodeURIComponent(message || DEFAULT_MESSAGE)}`;
 
   return (
     <a

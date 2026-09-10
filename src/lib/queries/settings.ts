@@ -22,18 +22,7 @@ export interface BrandHighlightItem {
   value: string;
 }
 
-export function parseHighlightValue(raw: string): {
-  prefix: string;
-  end: number;
-  suffix: string;
-} {
-  const match = String(raw ?? "").match(/^(\D*)([\d,.]*)(\D*)$/);
-  const prefix = match?.[1] ?? "";
-  const digits = (match?.[2] ?? "").replace(/,/g, "");
-  const suffix = match?.[3] ?? "";
-  const end = Number(digits);
-  return { prefix, end: Number.isFinite(end) ? end : 0, suffix };
-}
+export { parseHighlightValue } from "@/lib/utils/parse-highlight-value";
 
 export interface TertiaryBannerSettings {
   image_url: string;
@@ -130,4 +119,28 @@ export interface QuienesSomosContent {
 
 export async function getQuienesSomosContent(): Promise<QuienesSomosContent | null> {
   return getSiteSetting<QuienesSomosContent>("quienes_somos_content");
+}
+
+export interface ServiciosHero {
+  type: "image";
+  url: string;
+}
+
+export async function getServiciosHero(): Promise<ServiciosHero | null> {
+  return getSiteSetting<ServiciosHero>("servicios_hero");
+}
+
+export interface ServiciosKpi {
+  label: string;
+  value: string;
+  note: string;
+}
+
+/** KPIs for the /servicios results section; only complete rows (label + value) are returned. */
+export async function getServiciosKpis(): Promise<ServiciosKpi[]> {
+  const data = await getSiteSetting<ServiciosKpi[]>("servicios_kpis");
+  if (!Array.isArray(data)) return [];
+  return data.filter(
+    (k) => k && typeof k.label === "string" && k.label.trim() && typeof k.value === "string" && k.value.trim()
+  );
 }
