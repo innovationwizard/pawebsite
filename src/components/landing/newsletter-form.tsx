@@ -7,6 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select } from "@/components/ui/select";
 import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { Send, CheckCircle } from "lucide-react";
+import { getUtmParams } from "@/lib/utils/utm-params";
 
 interface ProjectOption {
   id: string;
@@ -36,9 +37,6 @@ export function NewsletterForm({ projects }: NewsletterFormProps) {
       return;
     }
 
-    // Capture UTM params from URL
-    const searchParams = new URLSearchParams(window.location.search);
-
     const body = {
       first_name: formData.get("first_name") as string,
       last_name: formData.get("last_name") as string,
@@ -47,9 +45,7 @@ export function NewsletterForm({ projects }: NewsletterFormProps) {
       project_interest_id: (formData.get("project_interest_id") as string) || undefined,
       message: formData.get("message") as string,
       is_newsletter_subscriber: formData.get("newsletter") === "on",
-      utm_source: searchParams.get("utm_source") ?? undefined,
-      utm_medium: searchParams.get("utm_medium") ?? undefined,
-      utm_campaign: searchParams.get("utm_campaign") ?? undefined,
+      ...getUtmParams(),
     };
 
     try {

@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle } from "lucide-react";
+import { getUtmParams } from "@/lib/utils/utm-params";
 
 interface ProjectContactFormProps {
   projectId: string;
@@ -36,6 +37,7 @@ export function ProjectContactForm({ projectId, projectName }: ProjectContactFor
       project_interest_id: projectId,
       source: "pagina_web",
       honeypot: formData.get("honeypot") as string,
+      ...getUtmParams(),
     };
 
     try {

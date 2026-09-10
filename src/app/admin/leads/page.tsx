@@ -14,7 +14,7 @@ import type { LeadStage, LeadSource, Database } from "@/lib/types/database";
 type LeadRow = Database["public"]["Tables"]["leads"]["Row"];
 
 interface LeadWithProject extends LeadRow {
-  project_name: string | null;
+  project_interest_name: string | null;
 }
 
 export default function LeadsPage() {
@@ -41,7 +41,7 @@ export default function LeadsPage() {
       setLeads(
         leadsData.map((l: any) => ({
           ...l,
-          project_name: l.projects?.name ?? null,
+          project_interest_name: l.projects?.name ?? null,
         }))
       );
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -236,7 +236,7 @@ export default function LeadsPage() {
                       <p className="text-xs text-gray">{lead.phone ?? ""}</p>
                     </td>
                     <td className="px-4 py-3 text-sm text-gray">
-                      {lead.project_name ?? "—"}
+                      {lead.project_interest_name ?? "—"}
                     </td>
                     <td className="px-4 py-3">
                       <Badge variant="default">

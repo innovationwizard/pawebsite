@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { LEAD_STAGES } from "@/lib/constants/lead-stages";
 import { LEAD_SOURCES } from "@/lib/constants/lead-sources";
+import { getLeadProjectStageLabel } from "@/lib/constants/lead-project-stages";
 import { formatDate, formatRelativeDate } from "@/lib/utils/format-date";
 import type { LeadStage, Database } from "@/lib/types/database";
 
@@ -34,7 +35,7 @@ interface LeadDetailProps {
 export default function LeadDetailPage({ params }: LeadDetailProps) {
   const { id } = use(params);
   const router = useRouter();
-  const [lead, setLead] = useState<(LeadRow & { project_name: string | null }) | null>(null);
+  const [lead, setLead] = useState<(LeadRow & { project_interest_name: string | null }) | null>(null);
   const [notes, setNotes] = useState<LeadNoteRow[]>([]);
   const [activity, setActivity] = useState<LeadActivityRow[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -60,7 +61,7 @@ export default function LeadDetailPage({ params }: LeadDetailProps) {
 
       setLead({
         ...leadData,
-        project_name: leadData.projects?.name ?? null,
+        project_interest_name: leadData.projects?.name ?? null,
       });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       setNotes(((notesRes as any).data ?? []) as LeadNoteRow[]);
@@ -166,10 +167,10 @@ export default function LeadDetailPage({ params }: LeadDetailProps) {
                 <Tag className="h-4 w-4 shrink-0 text-gray/40" />
                 <span className="text-sm text-gray">{sourceName}</span>
               </div>
-              {lead.project_name && (
+              {lead.project_interest_name && (
                 <div className="flex items-center gap-3">
                   <Building2 className="h-4 w-4 shrink-0 text-gray/40" />
-                  <span className="text-sm text-navy">{lead.project_name}</span>
+                  <span className="text-sm text-navy">{lead.project_interest_name}</span>
                 </div>
               )}
               <div className="flex items-center gap-3">
@@ -177,6 +178,33 @@ export default function LeadDetailPage({ params }: LeadDetailProps) {
                 <span className="text-sm text-gray">{formatDate(lead.created_at)}</span>
               </div>
             </div>
+
+            {/* B2B data (developer services leads) */}
+            {(lead.company || lead.job_title || lead.project_name || lead.project_location || lead.project_stage || lead.project_units) && (
+              <div className="mt-6 border-t border-gray/10 pt-4">
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray/40">Desarrollador</p>
+                <dl className="mt-2 space-y-1.5 text-sm">
+                  {lead.company && (
+                    <div className="flex gap-2"><dt className="shrink-0 text-gray/60">Empresa:</dt><dd className="text-navy">{lead.company}</dd></div>
+                  )}
+                  {lead.job_title && (
+                    <div className="flex gap-2"><dt className="shrink-0 text-gray/60">Cargo:</dt><dd className="text-navy">{lead.job_title}</dd></div>
+                  )}
+                  {lead.project_name && (
+                    <div className="flex gap-2"><dt className="shrink-0 text-gray/60">Proyecto:</dt><dd className="text-navy">{lead.project_name}</dd></div>
+                  )}
+                  {lead.project_location && (
+                    <div className="flex gap-2"><dt className="shrink-0 text-gray/60">Ubicación:</dt><dd className="text-navy">{lead.project_location}</dd></div>
+                  )}
+                  {lead.project_stage && (
+                    <div className="flex gap-2"><dt className="shrink-0 text-gray/60">Etapa:</dt><dd className="text-navy">{getLeadProjectStageLabel(lead.project_stage)}</dd></div>
+                  )}
+                  {lead.project_units !== null && lead.project_units !== undefined && (
+                    <div className="flex gap-2"><dt className="shrink-0 text-gray/60">Unidades:</dt><dd className="text-navy">{lead.project_units.toLocaleString("es-GT")}</dd></div>
+                  )}
+                </dl>
+              </div>
+            )}
 
             {/* UTM data */}
             {(lead.utm_source || lead.utm_medium || lead.utm_campaign) && (

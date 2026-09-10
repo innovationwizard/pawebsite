@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { getUtmParams } from "@/lib/utils/utm-params";
 
 export function TerrenosForm() {
   const router = useRouter();
@@ -33,6 +34,7 @@ export function TerrenosForm() {
       message: messageParts.join(" | "),
       source: "terrenos",
       honeypot: formData.get("honeypot") as string,
+      ...getUtmParams(),
     };
 
     try {

@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import type { Currency } from "@/lib/types/database";
+import { getUtmParams } from "@/lib/utils/utm-params";
 
 interface ProjectOption {
   id: string;
@@ -36,6 +37,7 @@ export function CotizadorContactForm({ projectOptions }: CotizadorContactFormPro
       message: formData.get("message") as string,
       source_detail: "cotizador",
       honeypot: formData.get("honeypot") as string,
+      ...getUtmParams(),
     };
 
     try {

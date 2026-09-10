@@ -78,6 +78,7 @@ export default function EditarProyectoPage() {
   const [areaRangeM2, setAreaRangeM2] = useState("");
   const [zonaId, setZonaId] = useState<string | null>(null);
   const [whatsappNumber, setWhatsappNumber] = useState("");
+  const [categoryTag, setCategoryTag] = useState("");
   const [sortOrder, setSortOrder] = useState("0");
   const [isPublished, setIsPublished] = useState(false);
   const [metaTitle, setMetaTitle] = useState("");
@@ -135,6 +136,7 @@ export default function EditarProyectoPage() {
       setAreaRangeM2(p.area_range_m2 ?? "");
       setZonaId(p.zona_id ?? null);
       setWhatsappNumber(p.whatsapp_number ?? "");
+      setCategoryTag(p.category_tag ?? "");
       setSortOrder(p.sort_order.toString());
       setIsPublished(p.is_published);
       setMetaTitle(p.meta_title ?? "");
@@ -184,6 +186,7 @@ export default function EditarProyectoPage() {
       area_range_m2: areaRangeM2 || null,
       zona_id: zonaId,
       whatsapp_number: whatsappNumber.replace(/\D/g, "") || null,
+      category_tag: categoryTag.trim() || null,
       sort_order: parseInt(sortOrder) || 0,
       is_published: isPublished,
       meta_title: metaTitle || null,
@@ -412,6 +415,25 @@ export default function EditarProyectoPage() {
             value={whatsappNumber}
             onChange={(e) => setWhatsappNumber(e.target.value)}
             placeholder="502 4240 3164"
+          />
+        </section>
+
+        {/* Etiqueta de categoría */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <h2 className="mb-1 font-heading text-lg font-semibold text-navy">
+            Etiqueta de categoría
+          </h2>
+          <p className="mb-4 text-sm text-gray">
+            Texto corto que aparece en la tarjeta del proyecto (ej. Naturaleza,
+            Smart Living, Premium). Se muestra en mayúsculas. Déjalo vacío para
+            no mostrar etiqueta.
+          </p>
+          <Input
+            id="category_tag"
+            label="Etiqueta"
+            value={categoryTag}
+            onChange={(e) => setCategoryTag(e.target.value)}
+            maxLength={30}
           />
         </section>
 

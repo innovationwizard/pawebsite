@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { generateCSV } from "@/lib/utils/csv";
+import { getLeadProjectStageLabel } from "@/lib/constants/lead-project-stages";
 
 export async function GET(request: Request) {
   const supabase = await createClient();
@@ -44,6 +45,12 @@ export async function GET(request: Request) {
     "Etapa",
     "Proyecto",
     "Mensaje",
+    "Empresa",
+    "Cargo",
+    "Proyecto del desarrollador",
+    "Ubicación del proyecto",
+    "Etapa del proyecto",
+    "Unidades",
     "Suscriptor",
     "UTM Source",
     "UTM Medium",
@@ -60,6 +67,12 @@ export async function GET(request: Request) {
     lead.stage ?? "",
     lead.projects?.name ?? "",
     lead.message ?? "",
+    lead.company ?? "",
+    lead.job_title ?? "",
+    lead.project_name ?? "",
+    lead.project_location ?? "",
+    getLeadProjectStageLabel(lead.project_stage),
+    lead.project_units != null ? String(lead.project_units) : "",
     lead.is_newsletter_subscriber ? "Sí" : "No",
     lead.utm_source ?? "",
     lead.utm_medium ?? "",

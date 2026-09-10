@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { contactFormSchema } from "@/lib/utils/validators";
 import { checkRateLimit, getClientIp } from "@/lib/utils/rate-limit";
+import { isLeadSource } from "@/lib/constants/lead-sources";
 import type { Database, LeadSource } from "@/lib/types/database";
 
 export async function POST(request: Request) {
@@ -39,15 +40,7 @@ export async function POST(request: Request) {
     const supabase = createAdminClient();
 
     // Create lead
-    const validSources: LeadSource[] = [
-      "facebook","meta","tiktok","linkedin","pagina_web","inbox","mailing","wati",
-      "referido","visita_inedita","senaletica","valla","pbx","prospeccion",
-      "activacion","evento","friends_and_family","terrenos","other",
-    ];
-    const source: LeadSource =
-      data.source && validSources.includes(data.source as LeadSource)
-        ? (data.source as LeadSource)
-        : "pagina_web";
+    const source: LeadSource = isLeadSource(data.source) ? data.source : "pagina_web";
 
     const leadInsert: Database["public"]["Tables"]["leads"]["Insert"] = {
       first_name: data.first_name,
@@ -62,6 +55,12 @@ export async function POST(request: Request) {
       utm_source: data.utm_source ?? null,
       utm_medium: data.utm_medium ?? null,
       utm_campaign: data.utm_campaign ?? null,
+      company: data.company ?? null,
+      job_title: data.job_title ?? null,
+      project_name: data.project_name ?? null,
+      project_location: data.project_location ?? null,
+      project_stage: data.project_stage ?? null,
+      project_units: data.project_units ?? null,
     };
     const { error: leadError } = await supabase.from("leads").insert(leadInsert as never);
 

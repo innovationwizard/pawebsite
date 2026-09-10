@@ -34,7 +34,10 @@ export type LeadSource =
   | "evento"
   | "friends_and_family"
   | "terrenos"
+  | "servicios"
   | "other";
+
+export type LeadProjectStage = "preventa" | "construccion" | "entregado";
 
 export type ProjectType =
   | "casas"
@@ -88,6 +91,7 @@ export interface Database {
           area_range_m2: string | null;
           zona_id: string | null;
           whatsapp_number: string | null;
+          category_tag: string | null;
           sort_order: number;
           is_published: boolean;
           meta_title: string | null;
@@ -127,6 +131,7 @@ export interface Database {
           area_range_m2?: string | null;
           zona_id?: string | null;
           whatsapp_number?: string | null;
+          category_tag?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;
@@ -166,6 +171,7 @@ export interface Database {
           area_range_m2?: string | null;
           zona_id?: string | null;
           whatsapp_number?: string | null;
+          category_tag?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;
@@ -587,6 +593,12 @@ export interface Database {
           utm_source: string | null;
           utm_medium: string | null;
           utm_campaign: string | null;
+          company: string | null;
+          job_title: string | null;
+          project_name: string | null;
+          project_location: string | null;
+          project_stage: LeadProjectStage | null;
+          project_units: number | null;
           created_at: string;
           updated_at: string;
         };
@@ -606,6 +618,12 @@ export interface Database {
           utm_source?: string | null;
           utm_medium?: string | null;
           utm_campaign?: string | null;
+          company?: string | null;
+          job_title?: string | null;
+          project_name?: string | null;
+          project_location?: string | null;
+          project_stage?: LeadProjectStage | null;
+          project_units?: number | null;
         };
         Update: {
           first_name?: string;
@@ -622,6 +640,12 @@ export interface Database {
           utm_source?: string | null;
           utm_medium?: string | null;
           utm_campaign?: string | null;
+          company?: string | null;
+          job_title?: string | null;
+          project_name?: string | null;
+          project_location?: string | null;
+          project_stage?: LeadProjectStage | null;
+          project_units?: number | null;
         };
       };
       lead_notes: {

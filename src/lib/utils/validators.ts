@@ -26,6 +26,18 @@ export const contactFormSchema = z.object({
   utm_medium: z.string().optional(),
   utm_campaign: z.string().optional(),
   source: z.string().max(50).optional(),
+  // B2B fields used by the /servicios (developer services) form
+  company: z.string().max(150, "El nombre de la empresa es demasiado largo").optional(),
+  job_title: z.string().max(100, "El cargo es demasiado largo").optional(),
+  project_name: z.string().max(150, "El nombre del proyecto es demasiado largo").optional(),
+  project_location: z.string().max(150, "La ubicación es demasiado larga").optional(),
+  project_stage: z.enum(["preventa", "construccion", "entregado"]).optional(),
+  project_units: z
+    .number()
+    .int("Las unidades deben ser un número entero")
+    .positive("Las unidades deben ser mayores a 0")
+    .max(100000, "Las unidades exceden el máximo permitido")
+    .optional(),
   honeypot: z.string().max(0, "Invalid submission").optional(),
 });
 

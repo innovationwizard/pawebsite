@@ -6,7 +6,7 @@ type LeadNoteRow = Database["public"]["Tables"]["lead_notes"]["Row"];
 type LeadActivityRow = Database["public"]["Tables"]["lead_activity_log"]["Row"];
 
 export interface LeadWithDetails extends LeadRow {
-  project_name: string | null;
+  project_interest_name: string | null;
 }
 
 export async function getLeads(): Promise<LeadWithDetails[]> {
@@ -24,7 +24,7 @@ export async function getLeads(): Promise<LeadWithDetails[]> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ((data ?? []) as any[]).map((lead) => ({
     ...lead,
-    project_name: lead.projects?.name ?? null,
+    project_interest_name: lead.projects?.name ?? null,
   }));
 }
 
@@ -47,7 +47,7 @@ export async function getLeadById(id: string) {
   return {
     lead: {
       ...lead,
-      project_name: lead.projects?.name ?? null,
+      project_interest_name: lead.projects?.name ?? null,
     } as LeadWithDetails,
     notes: (notesRes.data ?? []) as LeadNoteRow[],
     activity: (activityRes.data ?? []) as LeadActivityRow[],

@@ -23,5 +23,14 @@ export const LEAD_SOURCES: LeadSourceOption[] = [
   { value: "activacion", label: "Activación" },
   { value: "evento", label: "Evento" },
   { value: "friends_and_family", label: "Friends & Family" },
+  { value: "terrenos", label: "Terrenos (web)" },
+  { value: "servicios", label: "Servicios (web)" },
   { value: "other", label: "Otro" },
 ];
+
+/** Every value the contact API accepts; derived so the two lists cannot drift. */
+export const LEAD_SOURCE_VALUES: readonly LeadSource[] = LEAD_SOURCES.map((s) => s.value);
+
+export function isLeadSource(value: unknown): value is LeadSource {
+  return typeof value === "string" && (LEAD_SOURCE_VALUES as readonly string[]).includes(value);
+}
