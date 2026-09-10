@@ -3,8 +3,6 @@ import { createUtmClient, requireUtmUser } from "@/lib/utm/server";
 import { keysToCamel, keysToSnake } from "@/lib/utm/transform";
 import { getUtmUserMap } from "@/lib/utm/users";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 // POST: create or update a QA review (upsert on campaign_id)
 export async function POST(request: NextRequest) {
   try {
@@ -26,7 +24,7 @@ export async function POST(request: NextRequest) {
     delete qaData.createdAt;
     delete qaData.updatedAt;
 
-    const row = keysToSnake<any>({ ...qaData, campaignId });
+    const row = keysToSnake<Record<string, unknown>>({ ...qaData, campaignId });
 
     const { data, error } = await supabase
       .from("utm_qa_reviews")
@@ -66,10 +64,12 @@ export async function GET(request: NextRequest) {
     }
 
     const users = await getUtmUserMap();
-    const review = keysToCamel<any>(data);
-    review.implementedBy = review.implementedBy ? users[review.implementedBy] ?? null : null;
-    review.reviewedBy = review.reviewedBy ? users[review.reviewedBy] ?? null : null;
-    return NextResponse.json(review);
+    const review = keysToCamel<Record<string, unknown> & { implementedBy?: string | null; reviewedBy?: string | null }>(data);
+    return NextResponse.json({
+      ...review,
+      implementedBy: review.implementedBy ? users[review.implementedBy] ?? null : null,
+      reviewedBy: review.reviewedBy ? users[review.reviewedBy] ?? null : null,
+    });
   } catch (error) {
     console.error("UTM QA GET error:", error);
     return NextResponse.json({ error: "Error fetching QA review" }, { status: 500 });

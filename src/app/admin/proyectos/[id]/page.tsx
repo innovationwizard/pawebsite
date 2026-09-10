@@ -99,8 +99,7 @@ export default function EditarProyectoPage() {
         return;
       }
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data: imagesData } = await (supabase as any)
+      const { data: imagesData } = await supabase
         .from("project_images")
         .select("*")
         .eq("project_id", id)
@@ -206,8 +205,7 @@ export default function EditarProyectoPage() {
 
   async function handleGalleryUpload(url: string) {
     const supabase = createClient();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data, error: err } = await (supabase as any)
+    const { data, error: err } = await supabase
       .from("project_images")
       .insert({ project_id: id, image_url: url, sort_order: galleryImages.length })
       .select()
@@ -219,8 +217,7 @@ export default function EditarProyectoPage() {
   async function handleGalleryDelete(imageId: string) {
     if (!confirm("¿Eliminar esta imagen de la galería?")) return;
     const supabase = createClient();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error: err } = await (supabase as any)
+    const { error: err } = await supabase
       .from("project_images")
       .delete()
       .eq("id", imageId);

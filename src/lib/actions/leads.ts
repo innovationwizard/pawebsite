@@ -9,11 +9,9 @@ export async function updateLead(id: string, data: LeadUpdate) {
   const supabase = await createClient();
 
   // Get current lead to log changes
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: currentLead } = await supabase.from("leads").select("stage, assigned_to").eq("id", id).single() as { data: any };
+  const { data: currentLead } = await supabase.from("leads").select("stage, assigned_to").eq("id", id).single();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: lead, error } = await (supabase.from("leads") as any).update(data).eq("id", id).select().single();
+  const { data: lead, error } = await supabase.from("leads").update(data).eq("id", id).select().single();
 
   if (error) {
     return { error: error.message };
@@ -29,7 +27,7 @@ export async function updateLead(id: string, data: LeadUpdate) {
       action: "stage_changed",
       old_value: currentLead.stage,
       new_value: data.stage,
-    } as never);
+    });
   }
 
   if (data.assigned_to && currentLead && data.assigned_to !== currentLead.assigned_to) {
@@ -39,7 +37,7 @@ export async function updateLead(id: string, data: LeadUpdate) {
       action: "assigned",
       old_value: currentLead.assigned_to,
       new_value: data.assigned_to,
-    } as never);
+    });
   }
 
   return { data: lead };
@@ -53,12 +51,11 @@ export async function addLeadNote(leadId: string, content: string) {
     return { error: "No autenticado" };
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { data: note, error } = await supabase.from("lead_notes").insert({
     lead_id: leadId,
     author_id: user.user.id,
     content,
-  } as any).select().single();
+  }).select().single();
 
   if (error) {
     return { error: error.message };
@@ -70,7 +67,7 @@ export async function addLeadNote(leadId: string, content: string) {
     user_id: user.user.id,
     action: "note_added",
     new_value: content.substring(0, 100),
-  } as never);
+  });
 
   return { data: note };
 }

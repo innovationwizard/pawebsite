@@ -103,8 +103,7 @@ export default function AdminConfiguracionPage() {
       const { data } = await supabase.from("site_settings").select("*");
 
       const map: SettingsMap = {};
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ((data as any[]) ?? []).forEach((row: { key: string; value: Json }) => {
+      (data ?? []).forEach((row) => {
         map[row.key] = row.value;
       });
 

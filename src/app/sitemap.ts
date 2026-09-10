@@ -12,14 +12,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     supabase.from("news_articles").select("slug, updated_at").eq("is_published", true),
   ]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const projects = ((projectsRes.data ?? []) as any[]).map((p) => ({
+  const projects = (projectsRes.data ?? []).map((p) => ({
     slug: p.slug as string,
     updated_at: p.updated_at as string,
   }));
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const articles = ((articlesRes.data ?? []) as any[]).map((a) => ({
+  const articles = (articlesRes.data ?? []).map((a) => ({
     slug: a.slug as string,
     updated_at: a.updated_at as string,
   }));

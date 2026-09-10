@@ -9,8 +9,7 @@ type ArticleUpdate = Database["public"]["Tables"]["news_articles"]["Update"];
 
 export async function createArticle(data: ArticleInsert) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: article, error } = await (supabase.from("news_articles") as any).insert(data).select("*").single();
+  const { data: article, error } = await supabase.from("news_articles").insert(data).select("*").single();
 
   if (error) {
     return { error: error.message };
@@ -24,8 +23,7 @@ export async function createArticle(data: ArticleInsert) {
 
 export async function updateArticle(id: string, data: ArticleUpdate) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: article, error } = await (supabase.from("news_articles") as any).update(data).eq("id", id).select().single();
+  const { data: article, error } = await supabase.from("news_articles").update(data).eq("id", id).select().single();
 
   if (error) {
     return { error: error.message };
@@ -33,15 +31,14 @@ export async function updateArticle(id: string, data: ArticleUpdate) {
 
   revalidatePath("/");
   revalidatePath("/noticias");
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  revalidatePath(`/noticias/${(article as any).slug}`);
+  revalidatePath(`/noticias/${article.slug}`);
   revalidatePath("/sitemap.xml");
   return { data: article };
 }
 
 export async function deleteArticle(id: string) {
   const supabase = await createClient();
-  const { error } = await (supabase.from("news_articles") as any).delete().eq("id", id);
+  const { error } = await supabase.from("news_articles").delete().eq("id", id);
 
   if (error) {
     return { error: error.message };

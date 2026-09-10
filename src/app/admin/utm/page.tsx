@@ -2,15 +2,26 @@ import Link from "next/link";
 import { Wand2, ClipboardCheck, CheckCircle, Clock } from "lucide-react";
 import { createUtmClient } from "@/lib/utm/server";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 export const dynamic = "force-dynamic";
+
+interface RecentCampaign {
+  id: string;
+  naming_campaign: string | null;
+  brand: { name: string } | null;
+  platform: { name: string } | null;
+  qaReview: { status: string } | null;
+}
+
+function firstEmbed<T>(value: T | T[] | null | undefined): T | null {
+  if (Array.isArray(value)) return value[0] ?? null;
+  return value ?? null;
+}
 
 export default async function UtmDashboardPage() {
   let total = 0;
   let pending = 0;
   let approved = 0;
-  let recent: any[] = [];
+  let recent: RecentCampaign[] = [];
 
   try {
     const supabase = await createUtmClient();
@@ -27,7 +38,15 @@ export default async function UtmDashboardPage() {
     total = tRes.count ?? 0;
     pending = pRes.count ?? 0;
     approved = aRes.count ?? 0;
-    recent = rRes.data ?? [];
+    // The untyped UTM client cannot tell many-to-one embeds from arrays;
+    // normalise each embed to its single row.
+    recent = (rRes.data ?? []).map((c) => ({
+      id: String(c.id),
+      naming_campaign: c.naming_campaign ?? null,
+      brand: firstEmbed(c.brand),
+      platform: firstEmbed(c.platform),
+      qaReview: firstEmbed(c.qaReview),
+    }));
   } catch (e) {
     console.error("UTM dashboard error:", e);
   }

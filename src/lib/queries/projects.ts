@@ -16,8 +16,7 @@ export type ProjectRowWithZona = ProjectRow & {
 
 export async function getPublishedProjects(): Promise<ProjectRowWithZona[]> {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data, error } = await (supabase as any)
+  const { data, error } = await supabase
     .from("projects")
     .select("*, zona:zonas(name, slug, municipio:municipios(name, slug))")
     .eq("is_published", true)
@@ -28,7 +27,7 @@ export async function getPublishedProjects(): Promise<ProjectRowWithZona[]> {
     return [];
   }
 
-  return (data ?? []) as ProjectRowWithZona[];
+  return data ?? [];
 }
 
 /**
@@ -96,8 +95,7 @@ export async function getPublishedProjectSlugs(): Promise<{ slug: string }[]> {
     return [];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ((data ?? []) as any[]).map((p) => ({ slug: p.slug as string }));
+  return (data ?? []).map((p) => ({ slug: p.slug }));
 }
 
 export async function getProjectBySlug(slug: string): Promise<ProjectRow | null> {

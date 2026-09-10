@@ -9,12 +9,11 @@ export async function updateSiteSetting(key: string, value: Json) {
 
   const { data: user } = await supabase.auth.getUser();
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { error } = await supabase.from("site_settings").upsert({
     key,
     value,
     updated_by: user.user?.id ?? null,
-  } as any, { onConflict: "key" });
+  }, { onConflict: "key" });
 
   if (error) {
     return { error: error.message };

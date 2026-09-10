@@ -6,8 +6,6 @@ import {
   type MasterDataCategory,
 } from "@/lib/utm/types";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 const CATEGORIES = Object.keys(MASTER_DATA_TABLES) as MasterDataCategory[];
 
 function tableFor(category: string | null): string | null {
@@ -47,7 +45,7 @@ export async function GET(request: NextRequest) {
       )
     );
 
-    const payload: Record<string, any> = {};
+    const payload: Record<string, unknown> = {};
     CATEGORIES.forEach((cat, i) => {
       const { data, error } = results[i];
       if (error) throw error;

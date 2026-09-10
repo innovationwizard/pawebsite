@@ -10,8 +10,7 @@ type FaqCategoryInsert = Database["public"]["Tables"]["faq_categories"]["Insert"
 
 export async function createFaq(data: FaqInsert) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: faq, error } = await (supabase.from("faqs") as any).insert(data).select("*").single();
+  const { data: faq, error } = await supabase.from("faqs").insert(data).select("*").single();
 
   if (error) {
     return { error: error.message };
@@ -23,8 +22,7 @@ export async function createFaq(data: FaqInsert) {
 
 export async function updateFaq(id: string, data: FaqUpdate) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: faq, error } = await (supabase.from("faqs") as any).update(data).eq("id", id).select().single();
+  const { data: faq, error } = await supabase.from("faqs").update(data).eq("id", id).select().single();
 
   if (error) {
     return { error: error.message };
@@ -36,7 +34,7 @@ export async function updateFaq(id: string, data: FaqUpdate) {
 
 export async function deleteFaq(id: string) {
   const supabase = await createClient();
-  const { error } = await (supabase.from("faqs") as any).delete().eq("id", id);
+  const { error } = await supabase.from("faqs").delete().eq("id", id);
 
   if (error) {
     return { error: error.message };
@@ -48,8 +46,7 @@ export async function deleteFaq(id: string) {
 
 export async function createFaqCategory(data: FaqCategoryInsert) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: category, error } = await (supabase.from("faq_categories") as any).insert(data).select("*").single();
+  const { data: category, error } = await supabase.from("faq_categories").insert(data).select("*").single();
 
   if (error) {
     return { error: error.message };

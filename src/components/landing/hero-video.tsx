@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+  type ReactNode,
+} from "react";
 import Script from "next/script";
 import { motion } from "framer-motion";
 import { Eyebrow } from "@/components/ui/eyebrow";
@@ -55,6 +62,10 @@ function extractYouTubeId(url: string): string | null {
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
+const subscribeNoop = () => () => {};
+const getOrigin = () => window.location.origin;
+const getServerOrigin = () => "";
+
 export function HeroVideo({
   videoUrl,
   eyebrow,
@@ -71,12 +82,9 @@ export function HeroVideo({
   const playerRef = useRef<YTPlayer | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   // The embed URL carries the page origin (required by the IFrame API), which
-  // is only known in the browser — so the iframe mounts after hydration.
-  const [origin, setOrigin] = useState("");
-
-  useEffect(() => {
-    setOrigin(window.location.origin);
-  }, []);
+  // is only known in the browser — "" during SSR/hydration, so the iframe
+  // mounts once the client has rendered.
+  const origin = useSyncExternalStore(subscribeNoop, getOrigin, getServerOrigin);
 
   // Attach to the iframe through the IFrame API so the brand-gradient cover
   // is only lifted once the player is actually PLAYING. While YouTube is

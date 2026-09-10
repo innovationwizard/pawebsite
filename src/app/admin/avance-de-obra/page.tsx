@@ -32,11 +32,11 @@ export default function AdminAvanceDeObraPage() {
       ]);
 
       const projectsMap = new Map<string, string>();
-      ((((projectsRes as any).data) as Pick<Project, "id" | "name">[]) ?? []).forEach((p) => {
+      (((projectsRes.data) as Pick<Project, "id" | "name">[]) ?? []).forEach((p) => {
         projectsMap.set(p.id, p.name);
       });
 
-      const entriesWithProject: ProgressWithProject[] = ((((progressRes as any).data) as ProgressEntry[]) ?? []).map((e) => ({
+      const entriesWithProject: ProgressWithProject[] = (((progressRes.data) as ProgressEntry[]) ?? []).map((e) => ({
         ...e,
         project_name: projectsMap.get(e.project_id) ?? "Proyecto desconocido",
       }));

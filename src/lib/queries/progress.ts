@@ -30,8 +30,7 @@ export async function getProgressByProject(projectId: string): Promise<ProgressW
     return [];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (data ?? []) as any as ProgressWithPhotos[];
+  return data ?? [];
 }
 
 interface ProjectSummary {
@@ -58,11 +57,8 @@ export async function getLatestProgressPerProject(): Promise<ProjectWithLatestPr
     return [];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const projectList = (projects as any[]) as ProjectSummary[];
-
   const results = await Promise.all(
-    projectList.map(async (project) => {
+    projects.map(async (project: ProjectSummary) => {
       const { data } = await supabase
         .from("construction_progress")
         .select(
@@ -80,8 +76,7 @@ export async function getLatestProgressPerProject(): Promise<ProjectWithLatestPr
 
       return {
         project,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        latestProgress: data ? (data as any as ProgressWithPhotos) : null,
+        latestProgress: data ?? null,
       };
     })
   );

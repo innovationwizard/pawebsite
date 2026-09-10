@@ -4,8 +4,6 @@ import { generateNaming } from "@/lib/utm/naming";
 import { keysToCamel, keysToSnake } from "@/lib/utm/transform";
 import { getUtmUserMap } from "@/lib/utm/users";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 // Embeds aliased to the camelCase relation names the original Prisma app returned.
 const CAMPAIGN_SELECT = `*,
   industry:utm_industries(*),
@@ -18,9 +16,15 @@ const CAMPAIGN_SELECT = `*,
   campaignType:utm_campaign_types(*),
   qaReview:utm_qa_reviews(*)`;
 
+/** camelCase campaign row as returned by the UTM API (embeds included). */
+type CampaignRecord = Record<string, unknown> & { createdBy: string };
+
 /** Attach a resolved createdBy {name,email} and keep createdById (like Prisma). */
-function withCreator(campaign: any, users: Record<string, { name: string | null; email: string | null }>) {
-  const uid = campaign.createdBy as string;
+function withCreator(
+  campaign: CampaignRecord,
+  users: Record<string, { name: string | null; email: string | null }>
+) {
+  const uid = campaign.createdBy;
   return {
     ...campaign,
     createdById: uid,
@@ -41,7 +45,7 @@ export async function GET() {
     if (error) throw error;
 
     const users = await getUtmUserMap();
-    const campaigns = keysToCamel<any[]>(data ?? []).map((c) => withCreator(c, users));
+    const campaigns = keysToCamel<CampaignRecord[]>(data ?? []).map((c) => withCreator(c, users));
     return NextResponse.json(campaigns);
   } catch (error) {
     console.error("UTM campaigns GET error:", error);
@@ -134,7 +138,7 @@ export async function POST(request: NextRequest) {
     if (qaErr) throw qaErr;
 
     const users = await getUtmUserMap();
-    return NextResponse.json(withCreator(keysToCamel<any>(campaign), users), { status: 201 });
+    return NextResponse.json(withCreator(keysToCamel<CampaignRecord>(campaign), users), { status: 201 });
   } catch (error) {
     console.error("UTM campaigns POST error:", error);
     return NextResponse.json({ error: "Error creating campaign" }, { status: 500 });

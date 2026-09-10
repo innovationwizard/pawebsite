@@ -43,8 +43,7 @@ export async function getPublishedArticles(limit?: number): Promise<ArticleWithC
     return [];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ((data ?? []) as any[]).map((article) => ({
+  return (data ?? []).map((article) => ({
     ...article,
     category_name: article.news_categories?.name ?? null,
   }));
@@ -62,8 +61,7 @@ export async function getPublishedArticleSlugs(): Promise<{ slug: string }[]> {
     return [];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ((data ?? []) as any[]).map((a) => ({ slug: a.slug as string }));
+  return (data ?? []).map((a) => ({ slug: a.slug }));
 }
 
 export async function getArticleBySlug(slug: string): Promise<ArticleWithCategory | null> {
@@ -79,10 +77,8 @@ export async function getArticleBySlug(slug: string): Promise<ArticleWithCategor
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const article = data as any;
   return {
-    ...article,
-    category_name: article.news_categories?.name ?? null,
+    ...data,
+    category_name: data.news_categories?.name ?? null,
   };
 }

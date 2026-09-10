@@ -13,8 +13,7 @@ export async function getSiteSetting<T = Json>(key: string): Promise<T | null> {
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (data as any).value as T;
+  return data.value as T;
 }
 
 export interface BrandHighlightItem {

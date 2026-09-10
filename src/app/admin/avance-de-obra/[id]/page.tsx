@@ -72,24 +72,20 @@ export default function EditarAvancePage() {
             .order("sort_order"),
         ]);
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        if (!(entryRes as any).data) {
+        if (!entryRes.data) {
           router.push("/admin/avance-de-obra");
           return;
         }
 
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const entry = (entryRes as any).data as ProgressEntry;
+        const entry = entryRes.data as ProgressEntry;
         setProjectId(entry.project_id);
         setTitle(entry.title);
         setDescription(entry.description ?? "");
         setProgressPercent(entry.progress_percent?.toString() ?? "0");
         setEntryDate(entry.entry_date);
         setIsPublished(entry.is_published);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setPhotos(((photosRes as any).data as ProgressPhoto[]) ?? []);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setItems(((itemsRes as any).data as ProgressItem[]) ?? []);
+        setPhotos((photosRes.data as ProgressPhoto[]) ?? []);
+        setItems((itemsRes.data as ProgressItem[]) ?? []);
         setIsFetching(false);
       }
     }
@@ -160,10 +156,8 @@ export default function EditarAvancePage() {
       return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    if ((result as any).data) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setPhotos((prev) => [...prev, (result as any).data as ProgressPhoto]);
+    if (result.data) {
+      setPhotos((prev) => [...prev, result.data as ProgressPhoto]);
     }
   }
 
@@ -183,7 +177,7 @@ export default function EditarAvancePage() {
   // --- Progress Items CRUD ---
   async function handleAddItem() {
     const supabase = createClient();
-    const { data, error: err } = await (supabase as any)
+    const { data, error: err } = await supabase
       .from("progress_items")
       .insert({
         progress_id: id,
@@ -207,7 +201,7 @@ export default function EditarAvancePage() {
     const item = items.find((it) => it.id === itemId);
     if (!item) return;
     const supabase = createClient();
-    const { error: err } = await (supabase as any)
+    const { error: err } = await supabase
       .from("progress_items")
       .update({ label: item.label, percent: item.percent })
       .eq("id", itemId);
@@ -217,7 +211,7 @@ export default function EditarAvancePage() {
   async function handleDeleteItem(itemId: string) {
     if (!confirm("¿Eliminar este procedimiento?")) return;
     const supabase = createClient();
-    const { error: err } = await (supabase as any)
+    const { error: err } = await supabase
       .from("progress_items")
       .delete()
       .eq("id", itemId);

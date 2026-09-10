@@ -50,14 +50,14 @@ export default function EditarArticuloPage() {
         supabase.from("news_categories").select("*").order("name"),
       ]);
 
-      setCategories(((categoriesRes as any).data as Category[]) ?? []);
+      setCategories((categoriesRes.data as Category[]) ?? []);
 
       if (!articleRes.data) {
         router.push("/admin/noticias");
         return;
       }
 
-      const a = (articleRes as any).data as Article;
+      const a = articleRes.data as Article;
       setTitle(a.title);
       setSlug(a.slug);
       setExcerpt(a.excerpt ?? "");

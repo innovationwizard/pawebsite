@@ -9,8 +9,7 @@ type ProjectUpdate = Database["public"]["Tables"]["projects"]["Update"];
 
 export async function createProject(data: ProjectInsert) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: project, error } = await (supabase.from("projects") as any).insert(data).select("*").single();
+  const { data: project, error } = await supabase.from("projects").insert(data).select("*").single();
 
   if (error) {
     return { error: error.message };
@@ -24,8 +23,7 @@ export async function createProject(data: ProjectInsert) {
 
 export async function updateProject(id: string, data: ProjectUpdate) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: project, error } = await (supabase.from("projects") as any).update(data).eq("id", id).select().single();
+  const { data: project, error } = await supabase.from("projects").update(data).eq("id", id).select().single();
 
   if (error) {
     return { error: error.message };
@@ -41,7 +39,7 @@ export async function updateProject(id: string, data: ProjectUpdate) {
 
 export async function deleteProject(id: string) {
   const supabase = await createClient();
-  const { error } = await (supabase.from("projects") as any).delete().eq("id", id);
+  const { error } = await supabase.from("projects").delete().eq("id", id);
 
   if (error) {
     return { error: error.message };

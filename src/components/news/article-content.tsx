@@ -1,6 +1,7 @@
 "use client";
 
 import { generateHTML } from "@tiptap/html";
+import type { JSONContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TiptapLink from "@tiptap/extension-link";
 import TiptapImage from "@tiptap/extension-image";
@@ -27,8 +28,8 @@ export function ArticleContent({ content }: ArticleContentProps) {
 
   let html: string;
   try {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    html = generateHTML(content as any, extensions);
+    // Stored as Json in Postgres; written by the Tiptap editor in the admin.
+    html = generateHTML(content as JSONContent, extensions);
   } catch {
     return (
       <p className="text-gray/40">

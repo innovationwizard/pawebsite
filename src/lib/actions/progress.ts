@@ -10,8 +10,7 @@ type ProgressPhotoInsert = Database["public"]["Tables"]["construction_progress_p
 
 export async function createProgressEntry(data: ProgressInsert) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: entry, error } = await (supabase.from("construction_progress") as any).insert(data).select("*").single();
+  const { data: entry, error } = await supabase.from("construction_progress").insert(data).select("*").single();
 
   if (error) {
     return { error: error.message };
@@ -23,8 +22,7 @@ export async function createProgressEntry(data: ProgressInsert) {
 
 export async function updateProgressEntry(id: string, data: ProgressUpdate) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: entry, error } = await (supabase.from("construction_progress") as any).update(data).eq("id", id).select().single();
+  const { data: entry, error } = await supabase.from("construction_progress").update(data).eq("id", id).select().single();
 
   if (error) {
     return { error: error.message };
@@ -36,7 +34,7 @@ export async function updateProgressEntry(id: string, data: ProgressUpdate) {
 
 export async function deleteProgressEntry(id: string) {
   const supabase = await createClient();
-  const { error } = await (supabase.from("construction_progress") as any).delete().eq("id", id);
+  const { error } = await supabase.from("construction_progress").delete().eq("id", id);
 
   if (error) {
     return { error: error.message };
@@ -48,8 +46,7 @@ export async function deleteProgressEntry(id: string) {
 
 export async function addProgressPhoto(data: ProgressPhotoInsert) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: photo, error } = await (supabase.from("construction_progress_photos") as any).insert(data).select("*").single();
+  const { data: photo, error } = await supabase.from("construction_progress_photos").insert(data).select("*").single();
 
   if (error) {
     return { error: error.message };
@@ -61,7 +58,7 @@ export async function addProgressPhoto(data: ProgressPhotoInsert) {
 
 export async function deleteProgressPhoto(id: string) {
   const supabase = await createClient();
-  const { error } = await (supabase.from("construction_progress_photos") as any).delete().eq("id", id);
+  const { error } = await supabase.from("construction_progress_photos").delete().eq("id", id);
 
   if (error) {
     return { error: error.message };

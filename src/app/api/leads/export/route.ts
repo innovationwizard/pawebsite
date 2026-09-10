@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { generateCSV } from "@/lib/utils/csv";
 import { getLeadProjectStageLabel } from "@/lib/constants/lead-project-stages";
+import { isLeadStage } from "@/lib/constants/lead-stages";
+import { isLeadSource } from "@/lib/constants/lead-sources";
 
 export async function GET(request: Request) {
   const supabase = await createClient();
@@ -14,9 +16,11 @@ export async function GET(request: Request) {
 
   // Parse filters from URL
   const { searchParams } = new URL(request.url);
-  const stage = searchParams.get("stage");
-  const source = searchParams.get("source");
+  const stageParam = searchParams.get("stage");
+  const sourceParam = searchParams.get("source");
   const projectId = searchParams.get("project_id");
+  const stage = isLeadStage(stageParam) ? stageParam : null;
+  const source = isLeadSource(sourceParam) ? sourceParam : null;
 
   let query = supabase
     .from("leads")
@@ -33,8 +37,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const leads = (data ?? []) as any[];
+  const leads = data ?? [];
 
   const headers = [
     "Nombre",

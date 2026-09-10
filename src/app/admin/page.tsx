@@ -44,12 +44,9 @@ export default function AdminDashboard() {
         supabase.from("newsletter_subscribers").select("id", { count: "exact", head: true }).eq("is_active", true),
       ]);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const leads = (leadsRes.data ?? []) as any[];
       const leadsByStage: Record<string, number> = {};
-      for (const lead of leads) {
-        const stage = lead.stage as string;
-        leadsByStage[stage] = (leadsByStage[stage] ?? 0) + 1;
+      for (const lead of leadsRes.data ?? []) {
+        leadsByStage[lead.stage] = (leadsByStage[lead.stage] ?? 0) + 1;
       }
 
       setStats({

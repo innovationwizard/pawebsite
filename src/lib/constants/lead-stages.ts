@@ -6,6 +6,10 @@ export interface LeadStageOption {
   color: string;
 }
 
+export function isLeadStage(value: unknown): value is LeadStage {
+  return typeof value === "string" && LEAD_STAGES.some((s) => s.value === value);
+}
+
 export const LEAD_STAGES: LeadStageOption[] = [
   { value: "new", label: "Nuevo", color: "#04b0d6" },
   { value: "contacted", label: "Contactado", color: "#3b82f6" },

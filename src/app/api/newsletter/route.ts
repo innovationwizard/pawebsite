@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     };
     const { error } = await supabase
       .from("newsletter_subscribers")
-      .upsert(subscriberInsert as never, { onConflict: "email" });
+      .upsert(subscriberInsert, { onConflict: "email" });
 
     if (error) {
       console.error("Error subscribing:", error.message);

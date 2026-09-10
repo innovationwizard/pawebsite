@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       project_stage: data.project_stage ?? null,
       project_units: data.project_units ?? null,
     };
-    const { error: leadError } = await supabase.from("leads").insert(leadInsert as never);
+    const { error: leadError } = await supabase.from("leads").insert(leadInsert);
 
     if (leadError) {
       console.error("Error creating lead:", leadError.message);
@@ -84,7 +84,7 @@ export async function POST(request: Request) {
       };
       await supabase
         .from("newsletter_subscribers")
-        .upsert(subscriberInsert as never, { onConflict: "email" });
+        .upsert(subscriberInsert, { onConflict: "email" });
     }
 
     return NextResponse.json({ success: true });

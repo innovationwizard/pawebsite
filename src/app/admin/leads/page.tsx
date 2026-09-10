@@ -36,16 +36,13 @@ export default function LeadsPage() {
         supabase.from("projects").select("id, name").order("name"),
       ]);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const leadsData = (((leadsRes as any).data) ?? []) as any[];
       setLeads(
-        leadsData.map((l: any) => ({
+        (leadsRes.data ?? []).map((l) => ({
           ...l,
           project_interest_name: l.projects?.name ?? null,
         }))
       );
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setProjects((((projectsRes as any).data) ?? []) as { id: string; name: string }[]);
+      setProjects(projectsRes.data ?? []);
       setIsLoading(false);
     }
     fetchData();

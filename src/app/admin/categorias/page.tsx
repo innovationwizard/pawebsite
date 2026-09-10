@@ -29,8 +29,7 @@ export default function AdminCategoriasPage() {
   const [newName, setNewName] = useState("");
   const [isAdding, setIsAdding] = useState(false);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const supabase = createClient() as any;
+  const supabase = createClient();
 
   async function fetchCategories() {
     const { data } = await supabase

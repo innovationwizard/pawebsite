@@ -21,8 +21,7 @@ export async function getLeads(): Promise<LeadWithDetails[]> {
     return [];
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ((data ?? []) as any[]).map((lead) => ({
+  return (data ?? []).map((lead) => ({
     ...lead,
     project_interest_name: lead.projects?.name ?? null,
   }));
@@ -41,14 +40,13 @@ export async function getLeadById(id: string) {
     return null;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const lead = leadRes.data as any;
+  const lead = leadRes.data;
 
   return {
     lead: {
       ...lead,
       project_interest_name: lead.projects?.name ?? null,
-    } as LeadWithDetails,
+    },
     notes: (notesRes.data ?? []) as LeadNoteRow[],
     activity: (activityRes.data ?? []) as LeadActivityRow[],
   };

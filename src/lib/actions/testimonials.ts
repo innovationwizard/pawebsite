@@ -9,8 +9,7 @@ type TestimonialUpdate = Database["public"]["Tables"]["testimonials"]["Update"];
 
 export async function createTestimonial(data: TestimonialInsert) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: testimonial, error } = await (supabase.from("testimonials") as any).insert(data).select("*").single();
+  const { data: testimonial, error } = await supabase.from("testimonials").insert(data).select("*").single();
 
   if (error) {
     return { error: error.message };
@@ -22,8 +21,7 @@ export async function createTestimonial(data: TestimonialInsert) {
 
 export async function updateTestimonial(id: string, data: TestimonialUpdate) {
   const supabase = await createClient();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { data: testimonial, error } = await (supabase.from("testimonials") as any).update(data).eq("id", id).select().single();
+  const { data: testimonial, error } = await supabase.from("testimonials").update(data).eq("id", id).select().single();
 
   if (error) {
     return { error: error.message };
@@ -35,7 +33,7 @@ export async function updateTestimonial(id: string, data: TestimonialUpdate) {
 
 export async function deleteTestimonial(id: string) {
   const supabase = await createClient();
-  const { error } = await (supabase.from("testimonials") as any).delete().eq("id", id);
+  const { error } = await supabase.from("testimonials").delete().eq("id", id);
 
   if (error) {
     return { error: error.message };

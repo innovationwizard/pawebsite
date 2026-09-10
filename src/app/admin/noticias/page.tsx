@@ -32,11 +32,11 @@ export default function AdminNoticiasPage() {
       ]);
 
       const categoriesMap = new Map<string, string>();
-      ((((categoriesRes as any).data) as Category[]) ?? []).forEach((c) => {
+      (((categoriesRes.data) as Category[]) ?? []).forEach((c) => {
         categoriesMap.set(c.id, c.name);
       });
 
-      const articlesWithCat: ArticleWithCategory[] = ((((articlesRes as any).data) as Article[]) ?? []).map((a) => ({
+      const articlesWithCat: ArticleWithCategory[] = (((articlesRes.data) as Article[]) ?? []).map((a) => ({
         ...a,
         category_name: a.category_id ? categoriesMap.get(a.category_id) ?? "Sin categoría" : "Sin categoría",
       }));

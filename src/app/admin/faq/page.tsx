@@ -42,7 +42,7 @@ export default function AdminFaqPage() {
       supabase.from("faq_categories").select("*").order("sort_order"),
     ]);
 
-    const cats = ((categoriesRes as any).data as FaqCategory[]) ?? [];
+    const cats = (categoriesRes.data as FaqCategory[]) ?? [];
     setCategories(cats);
 
     const categoriesMap = new Map<string, string>();
@@ -50,7 +50,7 @@ export default function AdminFaqPage() {
       categoriesMap.set(c.id, c.name);
     });
 
-    const faqsWithCat: FaqWithCategory[] = ((((faqsRes as any).data) as Faq[]) ?? []).map((f) => ({
+    const faqsWithCat: FaqWithCategory[] = (((faqsRes.data) as Faq[]) ?? []).map((f) => ({
       ...f,
       category_name: f.category_id ? categoriesMap.get(f.category_id) ?? "Sin categoría" : "Sin categoría",
     }));

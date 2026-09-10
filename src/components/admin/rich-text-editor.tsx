@@ -1,6 +1,6 @@
 "use client";
 
-import { useEditor, EditorContent } from "@tiptap/react";
+import { useEditor, EditorContent, type JSONContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import TiptapLink from "@tiptap/extension-link";
 import TiptapImage from "@tiptap/extension-image";
@@ -42,8 +42,8 @@ export function RichTextEditor({
         HTMLAttributes: { class: "rounded-xl max-w-full" },
       }),
     ],
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    content: (content as any) ?? { type: "doc", content: [{ type: "paragraph" }] },
+    // Stored as Json in Postgres; the editor produced it, so it is Tiptap JSON.
+    content: (content as JSONContent | null) ?? { type: "doc", content: [{ type: "paragraph" }] },
     onUpdate: ({ editor }) => {
       onChange(editor.getJSON() as Json);
     },

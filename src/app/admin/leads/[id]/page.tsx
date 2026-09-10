@@ -52,8 +52,7 @@ export default function LeadDetailPage({ params }: LeadDetailProps) {
         supabase.from("lead_activity_log").select("*").eq("lead_id", id).order("created_at", { ascending: false }),
       ]);
 
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const leadData = (leadRes as any).data;
+      const leadData = leadRes.data;
       if (!leadData) {
         router.push("/admin/leads");
         return;
@@ -63,10 +62,8 @@ export default function LeadDetailPage({ params }: LeadDetailProps) {
         ...leadData,
         project_interest_name: leadData.projects?.name ?? null,
       });
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setNotes(((notesRes as any).data ?? []) as LeadNoteRow[]);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setActivity(((activityRes as any).data ?? []) as LeadActivityRow[]);
+      setNotes(notesRes.data ?? []);
+      setActivity(activityRes.data ?? []);
       setIsLoading(false);
     }
     fetchLead();
@@ -81,9 +78,8 @@ export default function LeadDetailPage({ params }: LeadDetailProps) {
       setLead((prev) => (prev ? { ...prev, stage: newStage } : prev));
       // Refresh activity log
       const supabase = createClient();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { data } = await supabase.from("lead_activity_log").select("*").eq("lead_id", id).order("created_at", { ascending: false }) as { data: any };
-      setActivity((data ?? []) as LeadActivityRow[]);
+      const { data } = await supabase.from("lead_activity_log").select("*").eq("lead_id", id).order("created_at", { ascending: false });
+      setActivity(data ?? []);
     }
     setIsChangingStage(false);
   }
@@ -102,10 +98,8 @@ export default function LeadDetailPage({ params }: LeadDetailProps) {
         supabase.from("lead_notes").select("*").eq("lead_id", id).order("created_at", { ascending: false }),
         supabase.from("lead_activity_log").select("*").eq("lead_id", id).order("created_at", { ascending: false }),
       ]);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setNotes(((notesRes as any).data ?? []) as LeadNoteRow[]);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      setActivity(((activityRes as any).data ?? []) as LeadActivityRow[]);
+      setNotes((notesRes.data ?? []) as LeadNoteRow[]);
+      setActivity((activityRes.data ?? []) as LeadActivityRow[]);
     }
     setIsSavingNote(false);
   }

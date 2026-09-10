@@ -32,11 +32,11 @@ export default function AdminTestimoniosPage() {
       ]);
 
       const projectsMap = new Map<string, string>();
-      ((((projectsRes as any).data) as Pick<Project, "id" | "name">[]) ?? []).forEach((p) => {
+      (((projectsRes.data) as Pick<Project, "id" | "name">[]) ?? []).forEach((p) => {
         projectsMap.set(p.id, p.name);
       });
 
-      const data: TestimonialWithProject[] = ((((testimonialsRes as any).data) as Testimonial[]) ?? []).map((t) => ({
+      const data: TestimonialWithProject[] = (((testimonialsRes.data) as Testimonial[]) ?? []).map((t) => ({
         ...t,
         project_name: t.project_id ? projectsMap.get(t.project_id) ?? "—" : "—",
       }));

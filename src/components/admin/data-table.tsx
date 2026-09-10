@@ -46,10 +46,8 @@ export function DataTable<T extends { id: string }>({
   const sorted = useMemo(() => {
     if (!sortKey) return filtered;
     return [...filtered].sort((a, b) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const aVal = (a as any)[sortKey] ?? "";
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const bVal = (b as any)[sortKey] ?? "";
+      const aVal = (a as Record<string, unknown>)[sortKey] ?? "";
+      const bVal = (b as Record<string, unknown>)[sortKey] ?? "";
       const cmp = String(aVal).localeCompare(String(bVal));
       return sortDirection === "asc" ? cmp : -cmp;
     });

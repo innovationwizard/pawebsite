@@ -56,9 +56,12 @@ export type Currency = "GTQ" | "USD";
 
 export type UserRole = "admin" | "editor";
 
-export interface Database {
-  public: {
-    Tables: {
+/**
+ * Hand-maintained table definitions (Row / Insert / Update). `Database`
+ * below adds the `Relationships` member supabase-js requires on every table
+ * so the typed client resolves real row types instead of `never`.
+ */
+interface PublicTables {
       projects: {
         Row: {
           id: string;
@@ -180,6 +183,15 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: "projects_zona_id_fkey";
+            columns: ["zona_id"];
+            isOneToOne: false;
+            referencedRelation: "zonas";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       departamentos: {
         Row: {
@@ -235,6 +247,15 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: "municipios_departamento_id_fkey";
+            columns: ["departamento_id"];
+            isOneToOne: false;
+            referencedRelation: "departamentos";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       zonas: {
         Row: {
@@ -264,6 +285,15 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: "zonas_municipio_id_fkey";
+            columns: ["municipio_id"];
+            isOneToOne: false;
+            referencedRelation: "municipios";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       unit_types: {
         Row: {
@@ -332,6 +362,15 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+        Relationships: [
+          {
+            foreignKeyName: "unit_types_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       news_articles: {
         Row: {
@@ -380,6 +419,15 @@ export interface Database {
           meta_description?: string | null;
           og_image_url?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "news_articles_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "news_categories";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       news_categories: {
         Row: {
@@ -430,6 +478,15 @@ export interface Database {
           entry_date?: string;
           is_published?: boolean;
         };
+        Relationships: [
+          {
+            foreignKeyName: "construction_progress_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       construction_progress_photos: {
         Row: {
@@ -452,6 +509,15 @@ export interface Database {
           caption?: string | null;
           sort_order?: number;
         };
+        Relationships: [
+          {
+            foreignKeyName: "construction_progress_photos_progress_id_fkey";
+            columns: ["progress_id"];
+            isOneToOne: false;
+            referencedRelation: "construction_progress";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       progress_items: {
         Row: {
@@ -474,6 +540,15 @@ export interface Database {
           percent?: number;
           sort_order?: number;
         };
+        Relationships: [
+          {
+            foreignKeyName: "progress_items_progress_id_fkey";
+            columns: ["progress_id"];
+            isOneToOne: false;
+            referencedRelation: "construction_progress";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       project_images: {
         Row: {
@@ -496,6 +571,15 @@ export interface Database {
           caption?: string | null;
           sort_order?: number;
         };
+        Relationships: [
+          {
+            foreignKeyName: "project_images_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       testimonials: {
         Row: {
@@ -532,6 +616,15 @@ export interface Database {
           is_published?: boolean;
           sort_order?: number;
         };
+        Relationships: [
+          {
+            foreignKeyName: "testimonials_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       faq_categories: {
         Row: {
@@ -575,6 +668,15 @@ export interface Database {
           is_published?: boolean;
           sort_order?: number;
         };
+        Relationships: [
+          {
+            foreignKeyName: "faqs_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "faq_categories";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       leads: {
         Row: {
@@ -647,6 +749,15 @@ export interface Database {
           project_stage?: LeadProjectStage | null;
           project_units?: number | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "leads_project_interest_id_fkey";
+            columns: ["project_interest_id"];
+            isOneToOne: false;
+            referencedRelation: "projects";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       lead_notes: {
         Row: {
@@ -663,6 +774,15 @@ export interface Database {
           content: string;
         };
         Update: { content?: string };
+        Relationships: [
+          {
+            foreignKeyName: "lead_notes_lead_id_fkey";
+            columns: ["lead_id"];
+            isOneToOne: false;
+            referencedRelation: "leads";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       lead_activity_log: {
         Row: {
@@ -687,6 +807,15 @@ export interface Database {
           old_value?: string | null;
           new_value?: string | null;
         };
+        Relationships: [
+          {
+            foreignKeyName: "lead_activity_log_lead_id_fkey";
+            columns: ["lead_id"];
+            isOneToOne: false;
+            referencedRelation: "leads";
+            referencedColumns: ["id"];
+          },
+        ];
       };
       newsletter_subscribers: {
         Row: {
@@ -730,7 +859,16 @@ export interface Database {
           updated_by?: string | null;
         };
       };
-    };
+}
+
+/** Tables that declare no FK relationships get an empty `Relationships` tuple. */
+type WithRelationships<T> = {
+  [K in keyof T]: T[K] extends { Relationships: unknown } ? T[K] : T[K] & { Relationships: [] };
+};
+
+export interface Database {
+  public: {
+    Tables: WithRelationships<PublicTables>;
     Views: Record<string, never>;
     Functions: {
       is_admin: {
@@ -742,5 +880,6 @@ export interface Database {
       lead_stage: LeadStage;
       lead_source: LeadSource;
     };
+    CompositeTypes: Record<string, never>;
   };
 }
