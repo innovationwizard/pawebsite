@@ -19,6 +19,26 @@ interface FaqWithCategory extends Faq {
   category_name: string;
 }
 
+/** Fetches FAQs with their category name resolved. */
+async function loadFaqData(): Promise<{ categories: FaqCategory[]; faqs: FaqWithCategory[] }> {
+  const supabase = createClient();
+
+  const [faqsRes, categoriesRes] = await Promise.all([
+    supabase.from("faqs").select("*").order("sort_order"),
+    supabase.from("faq_categories").select("*").order("sort_order"),
+  ]);
+
+  const categories = categoriesRes.data ?? [];
+  const categoriesMap = new Map(categories.map((c) => [c.id, c.name]));
+
+  const faqs: FaqWithCategory[] = (faqsRes.data ?? []).map((f) => ({
+    ...f,
+    category_name: f.category_id ? categoriesMap.get(f.category_id) ?? "Sin categoría" : "Sin categoría",
+  }));
+
+  return { categories, faqs };
+}
+
 export default function AdminFaqPage() {
   const router = useRouter();
   const [faqs, setFaqs] = useState<FaqWithCategory[]>([]);
@@ -31,41 +51,19 @@ export default function AdminFaqPage() {
   const [categoryError, setCategoryError] = useState("");
 
   useEffect(() => {
-    fetchData();
+    async function load() {
+      const { categories: cats, faqs: rows } = await loadFaqData();
+      setCategories(cats);
+      setFaqs(rows);
+      setIsLoading(false);
+    }
+    load();
   }, []);
 
   async function fetchData() {
-    const supabase = createClient();
-
-    const [faqsRes, categoriesRes] = await Promise.all([
-      supabase.from("faqs").select("*").order("sort_order"),
-      supabase.from("faq_categories").select("*").order("sort_order"),
-    ]);
-
-    const cats = (categoriesRes.data as FaqCategory[]) ?? [];
+    const { categories: cats, faqs: rows } = await loadFaqData();
     setCategories(cats);
-
-    const categoriesMap = new Map<string, string>();
-    cats.forEach((c) => {
-      categoriesMap.set(c.id, c.name);
-    });
-
-    const faqsWithCat: FaqWithCategory[] = (((faqsRes.data) as Faq[]) ?? []).map((f) => ({
-      ...f,
-      category_name: f.category_id ? categoriesMap.get(f.category_id) ?? "Sin categoría" : "Sin categoría",
-    }));
-
-    setFaqs(faqsWithCat);
-    setIsLoading(false);
-  }
-
-  function generateSlug(value: string) {
-    return value
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "");
+    setFaqs(rows);
   }
 
   async function handleCreateCategory(e: React.FormEvent) {

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
-import { Target, Users, Newspaper, Building2, TrendingUp, ArrowRight } from "lucide-react";
+import { Target, Newspaper, Building2, TrendingUp, ArrowRight } from "lucide-react";
 import { LEAD_STAGES } from "@/lib/constants/lead-stages";
 
 interface DashboardStats {

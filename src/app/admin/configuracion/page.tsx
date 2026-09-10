@@ -13,8 +13,33 @@ interface SettingsMap {
   [key: string]: Json;
 }
 
+/* Json accessors for the site_settings rows. */
+function asString(val: Json | undefined): string {
+  if (typeof val === "string") return val;
+  return "";
+}
+
+function asArray(val: Json | undefined): Json[] {
+  if (Array.isArray(val)) return val;
+  return [];
+}
+
+function asObj(val: Json | undefined): Record<string, Json | undefined> {
+  if (val && typeof val === "object" && !Array.isArray(val)) {
+    return val as Record<string, Json | undefined>;
+  }
+  return {};
+}
+
+function asObjString(obj: Json | Record<string, Json | undefined>, key: string): string {
+  if (obj && typeof obj === "object" && !Array.isArray(obj)) {
+    const val = (obj as Record<string, Json | undefined>)[key];
+    if (typeof val === "string") return val;
+  }
+  return "";
+}
+
 export default function AdminConfiguracionPage() {
-  const [settings, setSettings] = useState<SettingsMap>({});
   const [isLoading, setIsLoading] = useState(true);
   const [savingSection, setSavingSection] = useState<string | null>(null);
   const [successSection, setSuccessSection] = useState<string | null>(null);
@@ -106,8 +131,6 @@ export default function AdminConfiguracionPage() {
       (data ?? []).forEach((row) => {
         map[row.key] = row.value;
       });
-
-      setSettings(map);
 
       // Hero video — stored as { url: "..." } per schema
       setHeroVideoUrl(asObjString(asObj(map.hero_video_url), "url"));
@@ -222,31 +245,6 @@ export default function AdminConfiguracionPage() {
     }
     fetchSettings();
   }, []);
-
-  function asString(val: Json | undefined): string {
-    if (typeof val === "string") return val;
-    return "";
-  }
-
-  function asArray(val: Json | undefined): Json[] {
-    if (Array.isArray(val)) return val;
-    return [];
-  }
-
-  function asObj(val: Json | undefined): Record<string, Json | undefined> {
-    if (val && typeof val === "object" && !Array.isArray(val)) {
-      return val as Record<string, Json | undefined>;
-    }
-    return {};
-  }
-
-  function asObjString(obj: Json | Record<string, Json | undefined>, key: string): string {
-    if (obj && typeof obj === "object" && !Array.isArray(obj)) {
-      const val = (obj as Record<string, Json | undefined>)[key];
-      if (typeof val === "string") return val;
-    }
-    return "";
-  }
 
   async function saveSection(sectionKey: string, key: string, value: Json) {
     setErrorMessage("");

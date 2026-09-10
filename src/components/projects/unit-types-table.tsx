@@ -1,11 +1,13 @@
 import type { Database } from "@/lib/types/database";
 import { BedDouble, Ruler, Car } from "lucide-react";
+import { formatCurrency } from "@/lib/utils/format-currency";
+import type { Currency } from "@/lib/types/database";
 
 type UnitTypeRow = Database["public"]["Tables"]["unit_types"]["Row"];
 
 interface UnitTypesTableProps {
   unitTypes: UnitTypeRow[];
-  currency: string;
+  currency: Currency;
 }
 
 export function UnitTypesTable({ unitTypes, currency }: UnitTypesTableProps) {
@@ -76,7 +78,10 @@ export function UnitTypesTable({ unitTypes, currency }: UnitTypesTableProps) {
                     {unit.parking_description ?? (unit.parking_spaces ? `${unit.parking_spaces}` : "—")}
                   </td>
                   <td className="px-4 py-4 text-right text-sm font-semibold text-navy">
-                    {unit.price_display ?? "Consultar"}
+                    {unit.price_display ??
+                      (unit.list_price !== null
+                        ? formatCurrency(unit.list_price, unit.price_currency ?? currency)
+                        : "Consultar")}
                   </td>
                 </tr>
               ))}

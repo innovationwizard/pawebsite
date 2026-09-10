@@ -11,8 +11,12 @@ import { MobileMenu } from "./mobile-menu";
 
 export function Navbar({ solid = false }: { solid?: boolean }) {
   const [isScrolled, setIsScrolled] = useState(solid);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  // The menu remembers the route it was opened on, so a navigation closes it
+  // without an effect.
+  const [menuOpenedOn, setMenuOpenedOn] = useState<string | null>(null);
+  const isMobileMenuOpen = menuOpenedOn === pathname;
+  const setIsMobileMenuOpen = (open: boolean) => setMenuOpenedOn(open ? pathname : null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,11 +25,6 @@ export function Navbar({ solid = false }: { solid?: boolean }) {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [solid]);
-
-  // Close mobile menu on route change
-  useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [pathname]);
 
   return (
     <>

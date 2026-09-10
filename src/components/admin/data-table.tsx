@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import { Search, ChevronUp, ChevronDown } from "lucide-react";
-import { Input } from "@/components/ui/input";
 
 interface Column<T> {
   key: string;

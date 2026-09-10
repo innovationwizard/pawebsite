@@ -38,8 +38,12 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
   const [zonas, setZonas] = useState<Zona[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const [deptoId, setDeptoId] = useState<string>("");
-  const [muniId, setMuniId] = useState<string>("");
+  // While no zona is selected the user's in-progress choice lives here; once
+  // `value` is set, departamento/municipio are derived from the zona itself.
+  const [draft, setDraft] = useState<{ deptoId: string; muniId: string }>({
+    deptoId: "",
+    muniId: "",
+  });
 
   useEffect(() => {
     let cancelled = false;
@@ -71,23 +75,12 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
     };
   }, []);
 
-  useEffect(() => {
-    if (loading) return;
-    if (!value) {
-      setDeptoId("");
-      setMuniId("");
-      return;
-    }
-    const zona = zonas.find((z) => z.id === value);
-    if (!zona) {
-      setDeptoId("");
-      setMuniId("");
-      return;
-    }
-    const muni = municipios.find((m) => m.id === zona.municipio_id);
-    setMuniId(muni?.id ?? "");
-    setDeptoId(muni?.departamento_id ?? "");
-  }, [value, loading, zonas, municipios]);
+  const selectedZona = value ? zonas.find((z) => z.id === value) : undefined;
+  const selectedMuni = selectedZona
+    ? municipios.find((m) => m.id === selectedZona.municipio_id)
+    : undefined;
+  const muniId = selectedMuni?.id ?? draft.muniId;
+  const deptoId = selectedMuni?.departamento_id ?? draft.deptoId;
 
   const filteredMunicipios = useMemo(
     () => municipios.filter((m) => m.departamento_id === deptoId),
@@ -100,13 +93,12 @@ export function LocationPicker({ value, onChange }: LocationPickerProps) {
   );
 
   function handleDeptoChange(id: string) {
-    setDeptoId(id);
-    setMuniId("");
+    setDraft({ deptoId: id, muniId: "" });
     onChange(null);
   }
 
   function handleMuniChange(id: string) {
-    setMuniId(id);
+    setDraft({ deptoId, muniId: id });
     onChange(null);
   }
 
