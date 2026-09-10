@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import { Search, SlidersHorizontal, X, ChevronDown } from "lucide-react";
 
 export interface ProjectFilters {
@@ -19,10 +20,22 @@ const EMPTY_FILTERS: ProjectFilters = {
   priceMax: "",
 };
 
-const PROJECT_TYPE_OPTIONS = [
+interface ProjectTypeOption {
+  value: string;
+  label: string;
+  /**
+   * Landing to navigate to when this type has no published projects.
+   * "Terrenos" always appears in the select (ajustes6): with no land
+   * projects it sends the visitor to the /terrenos landing instead of
+   * filtering to an empty list.
+   */
+  fallbackHref?: string;
+}
+
+const PROJECT_TYPE_OPTIONS: ProjectTypeOption[] = [
   { value: "apartamentos", label: "Apartamentos" },
   { value: "casas", label: "Casas" },
-  { value: "terrenos", label: "Terrenos" },
+  { value: "terrenos", label: "Terrenos", fallbackHref: "/terrenos" },
 ];
 
 const BEDROOM_OPTIONS = [
@@ -58,8 +71,9 @@ export function ProjectFilter({
   onFiltersChange,
   totalResults,
 }: ProjectFilterProps) {
-  const visibleTypeOptions = PROJECT_TYPE_OPTIONS.filter((opt) =>
-    availableTypes.includes(opt.value),
+  const router = useRouter();
+  const visibleTypeOptions = PROJECT_TYPE_OPTIONS.filter(
+    (opt) => opt.fallbackHref || availableTypes.includes(opt.value),
   );
   const [mobileOpen, setMobileOpen] = useState(false);
   const activeCount = activeFilterCount(filters);
@@ -85,7 +99,14 @@ export function ProjectFilter({
         <div className="relative">
           <select
             value={filters.projectType}
-            onChange={(e) => update("projectType", e.target.value)}
+            onChange={(e) => {
+              const option = PROJECT_TYPE_OPTIONS.find((o) => o.value === e.target.value);
+              if (option?.fallbackHref && !availableTypes.includes(option.value)) {
+                router.push(option.fallbackHref);
+                return;
+              }
+              update("projectType", e.target.value);
+            }}
             className="w-full appearance-none rounded-lg border border-gray/20 bg-white px-4 py-2.5 pr-9 text-sm text-navy outline-none transition-colors focus:border-celeste focus:ring-2 focus:ring-celeste/20"
           >
             <option value="">Todos</option>

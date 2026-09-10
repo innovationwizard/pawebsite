@@ -3,6 +3,7 @@ import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { HomeStructuredData } from "@/components/layout/structured-data";
 import { HeroVideo } from "@/components/landing/hero-video";
+import { OutlineText } from "@/components/ui/outline-text";
 import { ProjectLogosRibbon } from "@/components/landing/project-logos-ribbon";
 import { ProjectShowcaseSlider } from "@/components/landing/project-showcase-slider";
 import { TertiaryBanner } from "@/components/landing/tertiary-banner";
@@ -44,6 +45,20 @@ export default async function Home() {
     return { value: end, prefix, suffix, label: h.label };
   });
 
+  // Hero trust row: years + projects from the admin-managed highlights, plus
+  // the live count of units across published projects. Anything missing is
+  // simply omitted.
+  const findHighlight = (keyword: string) =>
+    highlights.find((h) => h.label.toLowerCase().includes(keyword));
+  const yearsHighlight = findHighlight("años");
+  const projectsHighlight = findHighlight("proyectos");
+  const activeUnits = projects.reduce((sum, p) => sum + (p.total_units ?? 0), 0);
+  const trustItems = [
+    yearsHighlight ? `${yearsHighlight.value} años` : null,
+    projectsHighlight ? `${projectsHighlight.value} proyectos` : null,
+    activeUnits > 0 ? `${activeUnits.toLocaleString("es-GT")} unidades activas` : null,
+  ].filter((item): item is string => item !== null);
+
   return (
     <>
       <Navbar />
@@ -51,10 +66,20 @@ export default async function Home() {
         {/* 1. Hero Video Section */}
         <HeroVideo
           videoUrl={heroVideoUrl || "https://www.youtube.com/watch?v=rutCVOOj4KQ"}
-          title="Tu hogar ideal te espera"
-          subtitle="Más de 22 años comercializando proyectos inmobiliarios de alta calidad en Guatemala."
-          ctaText="Conoce Nuestros Proyectos"
+          eyebrow="Inmobiliaria · Guatemala · Grupo Orión"
+          title={
+            <>
+              Tu hogar <OutlineText>ideal</OutlineText>
+              <br />
+              te <OutlineText>espera</OutlineText>
+            </>
+          }
+          subtitle="Más de 22 años comercializando proyectos inmobiliarios de alta calidad en Guatemala. Acompañamos cada decisión, desde el primer recorrido hasta las llaves."
+          ctaText="Conoce nuestros proyectos"
           ctaHref="/proyectos"
+          secondaryCtaText="Cotiza ahora"
+          secondaryCtaHref="/cotizador"
+          trustItems={trustItems}
         />
 
         {/* 2. Project Logos Ribbon */}
