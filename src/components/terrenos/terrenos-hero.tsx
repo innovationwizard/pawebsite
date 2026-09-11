@@ -6,7 +6,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 
 export function TerrenosHero() {
   return (
-    <section className="relative bg-hero-gradient pb-24 pt-40 md:pb-32 md:pt-52">
+    <section data-tone="dark" className="relative bg-hero-gradient pb-24 pt-40 md:pb-32 md:pt-52">
       <div className="mx-auto max-w-7xl px-6">
         <ScrollReveal variant="fade-up">
           <div className="max-w-3xl">

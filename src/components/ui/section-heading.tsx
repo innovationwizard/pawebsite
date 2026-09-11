@@ -33,7 +33,7 @@ export function SectionHeading({
       : "text-3xl md:text-4xl lg:text-[2.75rem]";
 
   return (
-    <div className={`max-w-3xl ${alignment} ${className}`}>
+    <div className={`max-w-3xl ${alignment} ${className}`} data-tone={tone}>
       {eyebrow && <Eyebrow className="mb-4">{eyebrow}</Eyebrow>}
       <Tag
         className={`font-heading font-extrabold leading-[1.08] tracking-tight ${titleSize} ${titleColor}`}

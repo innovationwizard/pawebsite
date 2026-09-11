@@ -4,7 +4,6 @@ import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/layout/whatsapp-button";
 import { ServiciosHero } from "@/components/servicios/servicios-hero";
 import { ProjectLogosRibbon } from "@/components/landing/project-logos-ribbon";
-import { ServiciosMethodBanner } from "@/components/servicios/servicios-method-banner";
 import { ServiciosReasons } from "@/components/servicios/servicios-reasons";
 import { ServiciosPillars } from "@/components/servicios/servicios-pillars";
 import { ServiciosApproach } from "@/components/servicios/servicios-approach";
@@ -83,7 +82,6 @@ export default async function ServiciosPage() {
         <ProjectLogosRibbon
           projects={projects.map((p) => ({ slug: p.slug, name: p.name, logo_url: p.logo_url }))}
         />
-        <ServiciosMethodBanner />
         <ServiciosReasons />
         <ServiciosPillars />
         <ServiciosApproach />

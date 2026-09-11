@@ -23,9 +23,8 @@ export function ServiciosReasons() {
             eyebrow="Por qué trabajar con nosotros"
             title={
               <>
-                No contratas una agencia.
-                <br />
-                Sumas un <OutlineText>equipo que ya vende</OutlineText>.
+                Así es como Puerta Abierta lleva tu operación y ventas a{" "}
+                <OutlineText>otro nivel</OutlineText>.
               </>
             }
             className="max-w-4xl"

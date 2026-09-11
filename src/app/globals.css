@@ -57,14 +57,21 @@ html {
   background-image: var(--gradient-hero);
 }
 
-/* Outlined italic accent word used inside headings (mockup: "ideal", "espera", "tecnología") */
+/*
+ * Accent word inside headings (mockup: "ideal", "espera", "tecnología").
+ * Solid celeste on light surfaces; outlined (stroke only) inside any
+ * ancestor marked data-tone="dark" — ajustes7 item 6.
+ */
 @utility text-outline {
+  color: var(--color-celeste);
+}
+[data-tone="dark"] .text-outline {
   color: transparent;
   -webkit-text-stroke: 0.04em var(--color-celeste);
   paint-order: stroke fill;
 }
 @supports not (-webkit-text-stroke: 1px #000) {
-  .text-outline {
+  [data-tone="dark"] .text-outline {
     color: var(--color-celeste);
   }
 }

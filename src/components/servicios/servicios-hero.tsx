@@ -16,7 +16,10 @@ const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
 export function ServiciosHero({ imageUrl, whatsappHref }: ServiciosHeroProps) {
   return (
-    <section className="relative flex min-h-[92vh] w-full items-center overflow-hidden bg-hero-gradient">
+    <section
+      data-tone="dark"
+      className="relative flex min-h-[92vh] w-full items-center overflow-hidden bg-hero-gradient"
+    >
       {imageUrl && (
         <div className="absolute inset-0">
           <Image

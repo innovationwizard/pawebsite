@@ -134,7 +134,10 @@ export function HeroVideo({
       : null;
 
   return (
-    <section className="relative flex min-h-[100vh] w-full items-center overflow-hidden bg-hero-gradient">
+    <section
+      data-tone="dark"
+      className="relative flex min-h-[100vh] w-full items-center overflow-hidden bg-hero-gradient"
+    >
       {embedSrc && (
         <div className="absolute inset-0">
           <div className="relative h-full w-full overflow-hidden">

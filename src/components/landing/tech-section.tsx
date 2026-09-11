@@ -15,7 +15,7 @@ export function TechSection({
   licPuertasTitle,
 }: TechSectionProps) {
   return (
-    <section className="bg-hero-gradient py-20 md:py-28">
+    <section data-tone="dark" className="bg-hero-gradient py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-12 md:grid-cols-2">
           <ScrollReveal variant="fade-up">

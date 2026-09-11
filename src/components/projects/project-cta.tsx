@@ -23,7 +23,7 @@ export function ProjectCTA({ projectName, whatsappNumber }: ProjectCTAProps) {
   )}`;
 
   return (
-    <section className="bg-hero-gradient py-20 md:py-24">
+    <section data-tone="dark" className="bg-hero-gradient py-20 md:py-24">
       <div className="mx-auto max-w-3xl px-6 text-center">
         <Eyebrow className="mb-4">Agenda tu visita</Eyebrow>
         <h2 className="font-heading text-3xl font-extrabold leading-[1.08] tracking-tight text-white md:text-5xl">
