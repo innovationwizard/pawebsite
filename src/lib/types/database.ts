@@ -95,6 +95,9 @@ interface PublicTables {
           zona_id: string | null;
           whatsapp_number: string | null;
           category_tag: string | null;
+          website_url: string | null;
+          facebook_url: string | null;
+          instagram_url: string | null;
           sort_order: number;
           is_published: boolean;
           meta_title: string | null;
@@ -135,6 +138,9 @@ interface PublicTables {
           zona_id?: string | null;
           whatsapp_number?: string | null;
           category_tag?: string | null;
+          website_url?: string | null;
+          facebook_url?: string | null;
+          instagram_url?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;
@@ -175,6 +181,9 @@ interface PublicTables {
           zona_id?: string | null;
           whatsapp_number?: string | null;
           category_tag?: string | null;
+          website_url?: string | null;
+          facebook_url?: string | null;
+          instagram_url?: string | null;
           sort_order?: number;
           is_published?: boolean;
           meta_title?: string | null;

@@ -79,6 +79,9 @@ export default function EditarProyectoPage() {
   const [zonaId, setZonaId] = useState<string | null>(null);
   const [whatsappNumber, setWhatsappNumber] = useState("");
   const [categoryTag, setCategoryTag] = useState("");
+  const [websiteUrl, setWebsiteUrl] = useState("");
+  const [facebookUrl, setFacebookUrl] = useState("");
+  const [instagramUrl, setInstagramUrl] = useState("");
   const [sortOrder, setSortOrder] = useState("0");
   const [isPublished, setIsPublished] = useState(false);
   const [metaTitle, setMetaTitle] = useState("");
@@ -136,6 +139,9 @@ export default function EditarProyectoPage() {
       setZonaId(p.zona_id ?? null);
       setWhatsappNumber(p.whatsapp_number ?? "");
       setCategoryTag(p.category_tag ?? "");
+      setWebsiteUrl(p.website_url ?? "");
+      setFacebookUrl(p.facebook_url ?? "");
+      setInstagramUrl(p.instagram_url ?? "");
       setSortOrder(p.sort_order.toString());
       setIsPublished(p.is_published);
       setMetaTitle(p.meta_title ?? "");
@@ -186,6 +192,9 @@ export default function EditarProyectoPage() {
       zona_id: zonaId,
       whatsapp_number: whatsappNumber.replace(/\D/g, "") || null,
       category_tag: categoryTag.trim() || null,
+      website_url: websiteUrl.trim() || null,
+      facebook_url: facebookUrl.trim() || null,
+      instagram_url: instagramUrl.trim() || null,
       sort_order: parseInt(sortOrder) || 0,
       is_published: isPublished,
       meta_title: metaTitle || null,
@@ -432,6 +441,44 @@ export default function EditarProyectoPage() {
             onChange={(e) => setCategoryTag(e.target.value)}
             maxLength={30}
           />
+        </section>
+
+        {/* Enlaces del proyecto */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <h2 className="mb-1 font-heading text-lg font-semibold text-navy">
+            Enlaces del proyecto
+          </h2>
+          <p className="mb-4 text-sm text-gray">
+            Sitio web y redes sociales propias del proyecto. Se muestran en
+            &quot;Acerca del proyecto&quot; junto al WhatsApp del proyecto; los
+            enlaces vacíos no se muestran.
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            <Input
+              id="website_url"
+              type="url"
+              label="Sitio web"
+              value={websiteUrl}
+              onChange={(e) => setWebsiteUrl(e.target.value)}
+              placeholder="https://"
+            />
+            <Input
+              id="facebook_url"
+              type="url"
+              label="Facebook"
+              value={facebookUrl}
+              onChange={(e) => setFacebookUrl(e.target.value)}
+              placeholder="https://www.facebook.com/"
+            />
+            <Input
+              id="instagram_url"
+              type="url"
+              label="Instagram"
+              value={instagramUrl}
+              onChange={(e) => setInstagramUrl(e.target.value)}
+              placeholder="https://www.instagram.com/"
+            />
+          </div>
         </section>
 
         {/* Imágenes */}

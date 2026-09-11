@@ -1,4 +1,5 @@
-import { Building2, Layers, BedDouble, Ruler, Sparkles } from "lucide-react";
+import { Building2, Layers, BedDouble, Ruler, Sparkles, Globe } from "lucide-react";
+import { FacebookIcon, InstagramIcon, WhatsappIcon } from "@/components/ui/social-icons";
 import type { Database } from "@/lib/types/database";
 
 type ProjectRow = Database["public"]["Tables"]["projects"]["Row"];
@@ -7,7 +8,29 @@ interface ProjectOverviewProps {
   project: ProjectRow;
 }
 
+interface ProjectLink {
+  href: string;
+  label: string;
+  Icon: React.ComponentType<{ className?: string }>;
+}
+
+const FALLBACK_WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50224249388";
+
+const LINK_CLASS =
+  "btn-sweep inline-flex items-center gap-2 rounded-full border-2 border-navy/15 px-4 py-2 text-sm font-semibold text-navy transition-colors hover:bg-navy/5 [--sweep-color:var(--color-primary)]";
+
 export function ProjectOverview({ project }: ProjectOverviewProps) {
+  const whatsappNumber = project.whatsapp_number || FALLBACK_WHATSAPP;
+  const whatsappHref = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(
+    `Hola, me interesa obtener más información sobre el proyecto ${project.name}.`
+  )}`;
+  const links: ProjectLink[] = [
+    ...(project.website_url ? [{ href: project.website_url, label: "Sitio web", Icon: Globe }] : []),
+    ...(project.facebook_url ? [{ href: project.facebook_url, label: "Facebook", Icon: FacebookIcon }] : []),
+    ...(project.instagram_url ? [{ href: project.instagram_url, label: "Instagram", Icon: InstagramIcon }] : []),
+    { href: whatsappHref, label: "WhatsApp", Icon: WhatsappIcon },
+  ];
+
   const specs = [
     project.total_units > 0 && {
       icon: Building2,
@@ -55,6 +78,22 @@ export function ProjectOverview({ project }: ProjectOverviewProps) {
                 [ Descripción del proyecto — administrable desde el CMS ]
               </p>
             )}
+
+            {/* Website, social networks and WhatsApp of the project */}
+            <div className="mt-8 flex flex-wrap gap-3">
+              {links.map(({ href, label, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={LINK_CLASS}
+                >
+                  <Icon className="h-4 w-4 text-primary" />
+                  {label}
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Key specs */}
