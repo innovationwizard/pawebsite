@@ -2,7 +2,7 @@
 **Date:** 2026-09-11
 **Branch:** main (base `85d9204`)
 **Source:** `ajustes7/Puerta Abierta Inmobiliaria Updates - Website.pdf` (3 pp.)
-**Status:** APPROVED 2026-09-11 — see decisions in §9. Q6/Q7 (Boulevard 5 Instagram, Casa Elisa links) still open; those two values are left empty and admin-editable.
+**Status:** IMPLEMENTED 2026-09-11 on `main` (`83a2d64` → Pipedrive embed). **Pending on the client:** (1) run `00029` in the Supabase SQL editor, (2) set `NEXT_PUBLIC_PIPEDRIVE_SERVICIOS_FORM_URL` in Vercel (§10) and redeploy, (3) Pipedrive team applies §2b. Q6/Q7 (Boulevard 5 Instagram, Casa Elisa links) still open — empty and admin-editable.
 
 ---
 
