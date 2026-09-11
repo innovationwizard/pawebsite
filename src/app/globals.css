@@ -71,11 +71,13 @@ html {
 
 /*
  * Button hover: a border line draws itself once around the button perimeter.
- * A conic-gradient ring (width --sweep-width) is masked onto the element's
- * edge; --sweep-angle grows from 0 to 360deg on hover, so the stroke starts
- * at 12 o'clock and runs clockwise until it closes. Leaving the button
- * reverses the draw. Colour defaults to currentColor; set --sweep-color to
- * override per variant.
+ * The ::after pseudo-element owns the animated angle (a registered custom
+ * property does not reach pseudo-elements by inheritance, so the variable
+ * and its transition live on ::after itself). A conic-gradient ring is
+ * masked onto the element's edge; --sweep-angle grows 0 → 360deg on hover,
+ * so the stroke starts at 12 o'clock and runs clockwise until it closes,
+ * then un-draws on leave. Colour defaults to currentColor; set
+ * --sweep-color on the button to override per variant.
  */
 @property --sweep-angle {
   syntax: "<angle>";
@@ -86,12 +88,8 @@ html {
 @utility btn-sweep {
   position: relative;
   isolation: isolate;
-  --sweep-angle: 0deg;
   --sweep-width: 2px;
   --sweep-color: currentColor;
-  transition-property: --sweep-angle, background-color, color, box-shadow, transform, opacity;
-  transition-duration: 0.55s, 0.3s, 0.3s, 0.3s, 0.3s, 0.3s;
-  transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1), ease, ease, ease, ease, ease;
 
   &::after {
     content: "";
@@ -100,6 +98,7 @@ html {
     z-index: 1;
     border-radius: inherit;
     padding: var(--sweep-width);
+    --sweep-angle: 0deg;
     background: conic-gradient(
       from 0deg,
       var(--sweep-color) var(--sweep-angle),
@@ -114,10 +113,11 @@ html {
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
+    transition: --sweep-angle 0.9s cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  &:hover,
-  &:focus-visible {
+  &:hover::after,
+  &:focus-visible::after {
     --sweep-angle: 360deg;
   }
 }
