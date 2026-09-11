@@ -8,6 +8,7 @@ import { ScrollReveal } from "@/components/animations/scroll-reveal";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { OutlineText } from "@/components/ui/outline-text";
 import { MapPin, ShieldCheck, Clock, CheckCircle } from "lucide-react";
+import { getTerrenosHero } from "@/lib/queries/settings";
 
 export const metadata: Metadata = {
   title: "Vende tu Terreno en Guatemala | Puerta Abierta Inmobiliaria",
@@ -81,13 +82,15 @@ const FAQS = [
   },
 ];
 
-export default function TerrenosPage() {
+export default async function TerrenosPage() {
+  const heroMedia = await getTerrenosHero();
+
   return (
     <>
       <Navbar solid />
       <main className="flex-1">
         {/* 1. Hero */}
-        <TerrenosHero />
+        <TerrenosHero media={heroMedia} />
 
         {/* 2. Trust Strip */}
         <section className="border-y border-gray/10 bg-white py-8">

@@ -1,38 +1,29 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
+import { HeroBackground, type HeroMedia } from "@/components/landing/hero-background";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { OutlineText } from "@/components/ui/outline-text";
 import { ButtonLink } from "@/components/ui/button-link";
 import { SERVICIOS_CTA_LABEL } from "@/lib/constants/servicios";
 
 interface ServiciosHeroProps {
-  imageUrl: string | null;
+  media: HeroMedia | null;
   whatsappHref: string;
 }
 
 const EASE = [0.25, 0.46, 0.45, 0.94] as const;
 
-export function ServiciosHero({ imageUrl, whatsappHref }: ServiciosHeroProps) {
+export function ServiciosHero({ media, whatsappHref }: ServiciosHeroProps) {
   return (
     <section
       data-tone="dark"
       className="relative flex min-h-[92vh] w-full items-center overflow-hidden bg-hero-gradient"
     >
-      {imageUrl && (
-        <div className="absolute inset-0">
-          <Image
-            src={imageUrl}
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-navy-deep/90 via-navy/75 to-navy/60" />
-        </div>
-      )}
+      <HeroBackground
+        media={media}
+        overlayClassName="bg-gradient-to-br from-navy-deep/90 via-navy/75 to-navy/60"
+      />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-6 pb-20 pt-36 md:pb-28 md:pt-44">
         <motion.div

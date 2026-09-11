@@ -78,7 +78,7 @@ export default async function ServiciosPage() {
     <>
       <Navbar />
       <main className="flex-1">
-        <ServiciosHero imageUrl={hero?.url || null} whatsappHref={whatsappHref} />
+        <ServiciosHero media={hero} whatsappHref={whatsappHref} />
         <ProjectLogosRibbon
           projects={projects.map((p) => ({ slug: p.slug, name: p.name, logo_url: p.logo_url }))}
         />

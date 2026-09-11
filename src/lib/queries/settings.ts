@@ -120,13 +120,18 @@ export async function getQuienesSomosContent(): Promise<QuienesSomosContent | nu
   return getSiteSetting<QuienesSomosContent>("quienes_somos_content");
 }
 
-export interface ServiciosHero {
-  type: "image";
+/** Hero media for the Servicios and Terrenos landings: image, YouTube link or direct video URL. */
+export interface PageHeroMedia {
+  type: "image" | "video";
   url: string;
 }
 
-export async function getServiciosHero(): Promise<ServiciosHero | null> {
-  return getSiteSetting<ServiciosHero>("servicios_hero");
+export async function getServiciosHero(): Promise<PageHeroMedia | null> {
+  return getSiteSetting<PageHeroMedia>("servicios_hero");
+}
+
+export async function getTerrenosHero(): Promise<PageHeroMedia | null> {
+  return getSiteSetting<PageHeroMedia>("terrenos_hero");
 }
 
 export interface ServiciosKpi {

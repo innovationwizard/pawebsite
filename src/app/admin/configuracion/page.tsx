@@ -13,6 +13,73 @@ interface SettingsMap {
   [key: string]: Json;
 }
 
+interface HeroMediaFieldsProps {
+  idPrefix: string;
+  type: "image" | "video";
+  onTypeChange: (type: "image" | "video") => void;
+  imageUrl: string | null;
+  onImageChange: (url: string | null) => void;
+  videoUrl: string;
+  onVideoChange: (url: string) => void;
+}
+
+/** Image / video toggle for a page hero: uploader for images, URL (YouTube or mp4) for video. */
+function HeroMediaFields({
+  idPrefix,
+  type,
+  onTypeChange,
+  imageUrl,
+  onImageChange,
+  videoUrl,
+  onVideoChange,
+}: HeroMediaFieldsProps) {
+  return (
+    <>
+      <div className="mb-4 flex gap-4">
+        <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-navy">
+          <input
+            type="radio"
+            name={`${idPrefix}_type`}
+            value="image"
+            checked={type === "image"}
+            onChange={() => onTypeChange("image")}
+            className="accent-celeste"
+          />
+          Imagen
+        </label>
+        <label className="flex cursor-pointer items-center gap-2 text-sm font-medium text-navy">
+          <input
+            type="radio"
+            name={`${idPrefix}_type`}
+            value="video"
+            checked={type === "video"}
+            onChange={() => onTypeChange("video")}
+            className="accent-celeste"
+          />
+          Video
+        </label>
+      </div>
+      {type === "image" ? (
+        <ImageUploader
+          bucket="site-assets"
+          currentUrl={imageUrl}
+          onUpload={onImageChange}
+          onRemove={() => onImageChange(null)}
+          label="Imagen de fondo del hero"
+        />
+      ) : (
+        <Input
+          id={`${idPrefix}_video_url`}
+          label="Link del video (YouTube, o mp4 directo desde Supabase Storage)"
+          value={videoUrl}
+          onChange={(e) => onVideoChange(e.target.value)}
+          placeholder="https://www.youtube.com/watch?v=..."
+        />
+      )}
+    </>
+  );
+}
+
 /* Json accessors for the site_settings rows. */
 function asString(val: Json | undefined): string {
   if (typeof val === "string") return val;
@@ -83,7 +150,14 @@ export default function AdminConfiguracionPage() {
   const [capsula3Url, setCapsula3Url] = useState<string | null>(null);
 
   // Servicios (desarrolladores) — hero image + KPIs
+  const [serviciosHeroType, setServiciosHeroType] = useState<"image" | "video">("image");
   const [serviciosHeroImageUrl, setServiciosHeroImageUrl] = useState<string | null>(null);
+  const [serviciosHeroVideoUrl, setServiciosHeroVideoUrl] = useState("");
+
+  // Terrenos — hero
+  const [terrenosHeroType, setTerrenosHeroType] = useState<"image" | "video">("image");
+  const [terrenosHeroImageUrl, setTerrenosHeroImageUrl] = useState<string | null>(null);
+  const [terrenosHeroVideoUrl, setTerrenosHeroVideoUrl] = useState("");
   const [serviciosKpis, setServiciosKpis] = useState<{ label: string; value: string; note: string }[]>([
     { label: "", value: "", note: "" },
     { label: "", value: "", note: "" },
@@ -201,7 +275,19 @@ export default function AdminConfiguracionPage() {
 
       // Servicios hero + KPIs
       const servHero = asObj(map.servicios_hero);
-      setServiciosHeroImageUrl(asObjString(servHero, "url") || null);
+      const servHeroType = asObjString(servHero, "type") === "video" ? "video" : "image";
+      const servHeroUrl = asObjString(servHero, "url");
+      setServiciosHeroType(servHeroType);
+      if (servHeroType === "image") setServiciosHeroImageUrl(servHeroUrl || null);
+      else setServiciosHeroVideoUrl(servHeroUrl);
+
+      // Terrenos hero
+      const terrHero = asObj(map.terrenos_hero);
+      const terrHeroType = asObjString(terrHero, "type") === "video" ? "video" : "image";
+      const terrHeroUrl = asObjString(terrHero, "url");
+      setTerrenosHeroType(terrHeroType);
+      if (terrHeroType === "image") setTerrenosHeroImageUrl(terrHeroUrl || null);
+      else setTerrenosHeroVideoUrl(terrHeroUrl);
       const servKpis = asArray(map.servicios_kpis);
       if (servKpis.length > 0) {
         setServiciosKpis(
@@ -826,21 +912,23 @@ export default function AdminConfiguracionPage() {
                 Servicios — Hero
               </h2>
               <p className="mt-1 text-xs text-gray">
-                Imagen de fondo del hero de la página Servicios (para
-                desarrolladores). Mientras no haya imagen se muestra el
-                degradado de marca.
+                Imagen o video de fondo del hero de la página Servicios (para
+                desarrolladores). Mientras no haya nada se muestra el degradado
+                de marca.
               </p>
             </div>
             {successSection === "servicios_hero" && (
               <span className="text-sm text-green-600">Guardado</span>
             )}
           </div>
-          <ImageUploader
-            bucket="site-assets"
-            currentUrl={serviciosHeroImageUrl}
-            onUpload={setServiciosHeroImageUrl}
-            onRemove={() => setServiciosHeroImageUrl(null)}
-            label="Imagen de fondo del hero"
+          <HeroMediaFields
+            idPrefix="servicios_hero"
+            type={serviciosHeroType}
+            onTypeChange={setServiciosHeroType}
+            imageUrl={serviciosHeroImageUrl}
+            onImageChange={setServiciosHeroImageUrl}
+            videoUrl={serviciosHeroVideoUrl}
+            onVideoChange={setServiciosHeroVideoUrl}
           />
           <div className="mt-4">
             <Button
@@ -848,8 +936,49 @@ export default function AdminConfiguracionPage() {
               isLoading={savingSection === "servicios_hero"}
               onClick={() =>
                 saveSection("servicios_hero", "servicios_hero", {
-                  type: "image",
-                  url: serviciosHeroImageUrl ?? "",
+                  type: serviciosHeroType,
+                  url: serviciosHeroType === "image" ? (serviciosHeroImageUrl ?? "") : serviciosHeroVideoUrl.trim(),
+                })
+              }
+            >
+              Guardar
+            </Button>
+          </div>
+        </section>
+
+        {/* Terrenos — Hero */}
+        <section className="rounded-2xl border border-gray/10 bg-white p-6">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="font-heading text-lg font-semibold text-navy">
+                Terrenos — Hero
+              </h2>
+              <p className="mt-1 text-xs text-gray">
+                Imagen o video de fondo del hero de la página Terrenos.
+                Mientras no haya nada se muestra el degradado de marca.
+              </p>
+            </div>
+            {successSection === "terrenos_hero" && (
+              <span className="text-sm text-green-600">Guardado</span>
+            )}
+          </div>
+          <HeroMediaFields
+            idPrefix="terrenos_hero"
+            type={terrenosHeroType}
+            onTypeChange={setTerrenosHeroType}
+            imageUrl={terrenosHeroImageUrl}
+            onImageChange={setTerrenosHeroImageUrl}
+            videoUrl={terrenosHeroVideoUrl}
+            onVideoChange={setTerrenosHeroVideoUrl}
+          />
+          <div className="mt-4">
+            <Button
+              size="sm"
+              isLoading={savingSection === "terrenos_hero"}
+              onClick={() =>
+                saveSection("terrenos_hero", "terrenos_hero", {
+                  type: terrenosHeroType,
+                  url: terrenosHeroType === "image" ? (terrenosHeroImageUrl ?? "") : terrenosHeroVideoUrl.trim(),
                 })
               }
             >

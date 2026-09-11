@@ -3,11 +3,23 @@ import { ArrowDown } from "lucide-react";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { OutlineText } from "@/components/ui/outline-text";
 import { ButtonLink } from "@/components/ui/button-link";
+import { HeroBackground, type HeroMedia } from "@/components/landing/hero-background";
 
-export function TerrenosHero() {
+interface TerrenosHeroProps {
+  media: HeroMedia | null;
+}
+
+export function TerrenosHero({ media }: TerrenosHeroProps) {
   return (
-    <section data-tone="dark" className="relative bg-hero-gradient pb-24 pt-40 md:pb-32 md:pt-52">
-      <div className="mx-auto max-w-7xl px-6">
+    <section
+      data-tone="dark"
+      className="relative overflow-hidden bg-hero-gradient pb-24 pt-40 md:pb-32 md:pt-52"
+    >
+      <HeroBackground
+        media={media}
+        overlayClassName="bg-gradient-to-br from-navy-deep/90 via-navy/75 to-navy/60"
+      />
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
         <ScrollReveal variant="fade-up">
           <div className="max-w-3xl">
             <Eyebrow className="mb-5">Compramos terrenos en Guatemala</Eyebrow>
