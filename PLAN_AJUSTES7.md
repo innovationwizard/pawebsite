@@ -2,7 +2,7 @@
 **Date:** 2026-09-11
 **Branch:** main (base `85d9204`)
 **Source:** `ajustes7/Puerta Abierta Inmobiliaria Updates - Website.pdf` (3 pp.)
-**Status:** IMPLEMENTED 2026-09-11 on `main` (`83a2d64` → Pipedrive embed). **Pending on the client:** (1) run `00029` in the Supabase SQL editor, (2) set `NEXT_PUBLIC_PIPEDRIVE_SERVICIOS_FORM_URL` in Vercel (§10) and redeploy, (3) Pipedrive team applies §2b. Q6/Q7 (Boulevard 5 Instagram, Casa Elisa links) still open — empty and admin-editable.
+**Status:** IMPLEMENTED 2026-09-11 on `main` (`83a2d64` → Pipedrive embed). **Pending on the client:** (1) run `00029` in the Supabase SQL editor, (2) set `NEXT_PUBLIC_PIPEDRIVE_SERVICIOS_FORM_URL` in Vercel (§10) and redeploy, (3) Pipedrive team applies §2b. Q6/Q7 answered; `00030` completes the links.
 
 ---
 
@@ -167,8 +167,8 @@ Each step = one commit; `tsc`, `lint` (now green — keep it so) and `build` bef
 | Q2 | Styling inside the form | Done by the **Pipedrive team** using the §2b checklist |
 | Q4 | UTM hidden fields | **Deferred** — the page still sets `window.pd_webform` so it works the day the fields are added |
 | Q5 | Form URL location | Vercel env var `NEXT_PUBLIC_PIPEDRIVE_SERVICIOS_FORM_URL`; instructions in §10 |
-| Q6 | Boulevard 5 Instagram | **Open** — left empty |
-| Q7 | Casa Elisa links / WhatsApp | **Open** — links left empty; WhatsApp falls back to the company line |
+| Q6 | Boulevard 5 Instagram | `https://www.instagram.com/boulevard5gt/` — seeded by `00030` |
+| Q7 | Casa Elisa links / WhatsApp | `https://casaelisa.gt/` · `facebook.com/casaelisagt` · `instagram.com/casaelisagt/` — seeded by `00030`; WhatsApp = company line |
 | Q8 | Servicios copy | Eyebrow "POR QUÉ TRABAJAR CON NOSOTROS" kept; deleted band's lead sentence dropped |
 | Q9 | Hero video sources | YouTube links **and** direct MP4 |
 | Q10 | Button draw duration | 0.9 s |
