@@ -20,6 +20,7 @@ import {
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://puertaabierta.com.gt";
 const COMPANY_WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "50224249388";
+const PIPEDRIVE_FORM_URL = process.env.NEXT_PUBLIC_PIPEDRIVE_SERVICIOS_FORM_URL?.trim() || null;
 
 export const metadata: Metadata = {
   title: "Marketing y Ventas para Desarrolladores Inmobiliarios | Puerta Abierta",
@@ -87,7 +88,7 @@ export default async function ServiciosPage() {
         <ServiciosApproach />
         <ServiciosKpis kpis={kpis.length > 0 ? kpis : SERVICIOS_DEFAULT_KPIS} />
         <ServiciosShowcase projects={showcaseProjects} />
-        <ServiciosForm whatsappHref={whatsappHref} />
+        <ServiciosForm whatsappHref={whatsappHref} pipedriveFormUrl={PIPEDRIVE_FORM_URL} />
       </main>
       <Footer />
       <WhatsAppButton phoneNumber={COMPANY_WHATSAPP} message={SERVICIOS_WHATSAPP_TEXT} />
