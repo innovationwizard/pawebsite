@@ -56,12 +56,12 @@ const nextConfig: NextConfig = {
               "default-src 'self'",
               // Pipedrive: /f/loader 303-redirects to cdn.<dc>.pipedriveassets.com, and CSP
               // evaluates the redirect target too — both hosts must be listed.
-              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://webforms.pipedrive.com https://*.pipedriveassets.com",
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.youtube.com https://webforms.pipedrive.com https://*.pipedriveassets.com https://connect.facebook.net",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
               "font-src 'self' https://fonts.gstatic.com",
-              "img-src 'self' data: blob: https://*.supabase.co https://img.youtube.com https://*.google.com https://*.googleapis.com https://*.gstatic.com",
+              "img-src 'self' data: blob: https://*.supabase.co https://img.youtube.com https://*.google.com https://*.googleapis.com https://*.gstatic.com https://www.facebook.com",
               "frame-src https://www.youtube.com https://www.google.com https://maps.google.com https://webforms.pipedrive.com https://*.pipedrive.com",
-              "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com wss://*.livekit.cloud https://*.livekit.cloud https://*.livekit.io https://webforms.pipedrive.com",
+              "connect-src 'self' https://*.supabase.co https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://connect.facebook.net wss://*.livekit.cloud https://*.livekit.cloud https://*.livekit.io https://webforms.pipedrive.com",
               "media-src 'self' https://*.supabase.co",
               "object-src 'none'",
               "base-uri 'self'",

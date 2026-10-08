@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@/components/analytics/google-analytics";
+import { MetaPixel } from "@/components/analytics/meta-pixel";
 import { DEFAULT_METADATA } from "@/lib/constants/metadata";
 import "./globals.css";
 
@@ -36,6 +37,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-body text-navy">
         {children}
         <GoogleAnalytics />
+        <MetaPixel />
       </body>
     </html>
   );
